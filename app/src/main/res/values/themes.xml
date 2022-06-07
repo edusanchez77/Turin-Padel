@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TurinPadel" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@color/light</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary</item>
+        <item name="colorOnSecondary">@color/dark</item>
+        <!-- Status bar color. -->
+        <item name="titleTextColor">@color/light</item>
+        <item name="android:windowDisablePreview">true</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+    <style name="FullScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="themeOnverlay_timePicker" parent="@style/ThemeOverlay.Material3.Dialog">
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="colorAccent">@color/secondary</item>
+        <item name="android:textColorPrimary">@color/primary_shadow</item>
+        <item name="android:textColorSecondary">@color/background_dark</item>
+    </style>
+</resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by Cba Electronics on 19/7/21 00:19
+  ~ Copyright (c) 2021 . All rights reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/primary_shadow"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txtFechaAgenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nova_square"
+                android:text="Lunes, 19 de julio de 2021, 15:00hs"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:id="@+id/txtCanchaAgenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nova_square"
+                android:text="Cancha 1"
+                android:textColor="@color/text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintStart_toStartOf="@+id/txtFechaAgenda"
+                app:layout_constraintTop_toBottomOf="@+id/txtFechaAgenda" />
+
+            <ImageView
+                android:id="@+id/imageViewClockIcon"
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/time_clock_circle"
+                app:tint="@color/light"
+                app:layout_constraintTop_toBottomOf="@id/txtCanchaAgenda"
+                app:layout_constraintStart_toStartOf="@id/txtCanchaAgenda"/>
+
+            <Chronometer
+                android:id="@+id/textViewTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="00:00:00"
+                app:layout_constraintStart_toEndOf="@id/imageViewClockIcon"
+                app:layout_constraintTop_toTopOf="@id/imageViewClockIcon"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewClockIcon"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/secondary_button_round"
+                android:text="Cancelar\nTurno"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~ Created by CbaElectronics by Eduardo Sanchez on 10/5/22 15:37.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<resources>
+    <color name="primary">#f12f37</color>
+    <color name="primary_shadow">#851b1f</color>
+    <color name="secondary">#f26167</color>
+    <color name="light">#FFFFFFFF</color>
+    <color name="dark">#FF000000</color>
+    <color name="dark_shadow">#33000000</color>
+    <color name="background">#FF000000</color>
+    <color name="secondary_background">#FF0D0D0D</color>
+    <color name="text">#FFFFFFFF</color>
+    <color name="live">#FFFA2828</color>
+    <color name="semi_transparent">#22000000</color>
+</resources>

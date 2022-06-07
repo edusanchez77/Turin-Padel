@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~ Created by CbaElectronics by Eduardo Sanchez on 1/6/22 11:53.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".usecases.comments.CommentsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarComment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/ConstraintLayoutComment"
+        app:layout_constraintTop_toTopOf="@id/ConstraintLayoutComment"
+        app:layout_constraintVertical_bias="0"
+        app:navigationIcon="@drawable/keyboard_arrow_left" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayoutComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:id="@+id/textViewCommentUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Name" />
+
+                    <TextView
+                        android:id="@+id/textViewCommentPostDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Post date"/>
+
+                </LinearLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewCommentUserAvatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:src="@drawable/user"
+                    android:transitionName="transitionPostDetailsUserAvatar" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewCommentMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Post message" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayoutComments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_rounded_container"
+        app:layout_constraintBottom_toTopOf="@id/layoutCommentWriteComment"
+        app:layout_constraintTop_toBottomOf="@id/toolbarComment"
+        app:layout_constraintVertical_bias="1">
+
+        <TextView
+            android:id="@+id/textViewCommentTitleComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewComments"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewCommentTitleComment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewCommentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info"
+            android:layout_marginTop="8dp"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutCommentWriteComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_rectangle"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/editTextCommentWriteComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Comment"
+            android:inputType="textCapSentences"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonCommentSendComment"
+            />
+
+        <ImageButton
+            android:id="@+id/buttonCommentSendComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@id/editTextCommentWriteComment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

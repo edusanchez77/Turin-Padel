@@ -1,0 +1,8 @@
+<!--
+  ~ Created by ITDev by Eduardo Sanchez on 8/3/2022.
+  ~  www.itdev.com
+  -->
+
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/background_gradient.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/background_gradient_schedule_item.xml" value="0.1765" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/ic_send.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/item_round_primary.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/primary_button_round.xml" value="0.21" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/secondary_button_round.xml" value="0.21" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/shadow_rectangle.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-v24/twitter.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/background_gradient.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/background_rounded_container.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/primary_button_round.xml" value="0.21" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/secondary_button_round.xml" value="0.21" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/font/averia_libre_light.xml" value="0.2328125" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/font/cairo.xml" value="0.3537037037037037" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/font/oswald.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_add_turn.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_comments.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_fullscreen.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_home.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_launch.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_login.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_menu.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_agenda.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_comment.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_post.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_schedule.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_turn.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_turnos.xml" value="0.11493055555555555" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/custom_loading.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_account.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_curt1.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_curt2.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_grandtable.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_turn.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/item_calendar_horizontal.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/menu/home_bottom_navigation_menu.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/menu/home_settings_menu.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/menu/menu_context.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/menu/turn_menu_context.xml" value="0.3111111111111111" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Created by Cba Electronics on 19/08/20 10:44
+  Copyright (c) 2020 . All rights reserved.
+  Last modified 19/08/20 10:44
+  -->
+
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:textAppearance="?attr/textAppearanceSubtitle1"
+    android:fontFamily="@font/nova_square"
+    />

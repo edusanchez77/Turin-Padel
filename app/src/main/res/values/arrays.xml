@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~ Created by CbaElectronics by Eduardo Sanchez on 26/5/22 10:38.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<resources>
+
+    <string-array name="strCanchas">
+        <item>Cancha 1</item>
+        <item>Cancha 2</item>
+    </string-array>
+
+</resources>

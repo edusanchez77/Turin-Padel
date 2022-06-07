@@ -1,0 +1,110 @@
+<resources>
+
+    <!-- Generic -->
+    <string name="app_name">Turín Padel</string>
+    <string name="companyName">CbaElectronics</string>
+    <string name="title">Turín Padel</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="understood">Entendido</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="countdown.day">día,</string>
+    <string name="countdown.days">días,</string>
+
+    <!-- Push Notifications -->
+    <string name="notification.channel.id">Nos Falta Uno</string>
+    <string name="notification.channel.name">ChannelFirebaseMessaging</string>
+    <string name="notification.channel.description">My notification</string>
+    <string name="notification.topic.newmatch.title">Nuevo partido</string>
+    <string name="notification.topic.newmatch.body">Apurate a postularte, no te quedes sin jugar</string>
+    <string name="notification.topic.newpost.title">La tribuna está hablando</string>
+    <string name="notification.topic.newpost.body">No te pierdas los últimos mensajes</string>
+    <string name="notification.topic.comment.title">Tenés un nuevo mensaje</string>
+    <string name="notification.topic.comment.body">Han realizado un comentario en tu posteo</string>
+    <string name="notification.topic.match.request.title">Urgente!!</string>
+    <string name="notification.topic.match.request.body">Tenés una solicitud para ocupar el lugar vacante</string>
+    <string name="notification.topic.match.request.acept.title">Preparate para jugar!!</string>
+    <string name="notification.topic.match.request.acept.body">Aceptaron tu solicitud y sos uno de los jugadores</string>
+    <string name="notification.topic.match.request.deny.title">Malas noticias!!</string>
+    <string name="notification.topic.match.request.deny.body">Rechazaron tu solicitud y no vas a ser parte del partido</string>
+
+    <!-- Login -->
+    <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
+    <string name="login.body">Necesitas iniciar sesión para poder reservar los turnos.</string>
+    <string name="login.button">Iniciar sesión</string>
+    <string name="login.alert.error.token">Fetching FCM registration token failed</string>
+    <string name="login.alert.wait">Iniciando sesión</string>
+    <string name="login.alert.error.user">Ocurrió un error autenticando al usuario.</string>
+
+    <!-- Menu -->
+    <string name="menu.title.turn">Partidos</string>
+    <string name="menu.title.account">Agenda</string>
+    <string name="menu.title.grandtable">Tribuna</string>
+    <string name="menu.by">por</string>
+    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de Turín Padel.\n\nEsta App se ha desarrollado para ayudar a que nadie se quede sin jugar.\nPodes sumarte a partidos ya organizados o buscar jugadores si ya tenes un turno.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app. Mientras más jugadores la conozcan, más fácil será armar un partido.\nPueden encontrarme en redes sociales como @itdev.\n\n¡Muchas gracias!</string>
+    <string name="menu.site">Visita www.nosfaltauno.com.ar para consultar toda la información oficial</string>
+    <string name="menu.onboarding">Visualiza de nuevo el tutorial de bienvenida</string>
+    <string name="menu.version">Versión %s. </string>
+    <string name="menu.context.turn.edit">Modificar turno</string>
+    <string name="menu.context.turn.delete">Eliminar turno</string>
+
+    <!-- Turn -->
+    <string name="turn.curt.1">Cancha 1</string>
+    <string name="turn.curt.2">Cancha 2</string>
+    <string name="turn.info">No hay horarios cargados</string>
+    <string name="turn.available.yes">Disponible</string>
+    <string name="turn.available.not">Reservado</string>
+    <string name="turn.button.reserve">Reservar</string>
+    <string name="turn.button.addTurn">Cargar Turno</string>
+    <string name="turn.reserve.alert.1">¿Querés reservar este turno?</string>
+
+    <!-- Add Turn -->
+    <string name="addTurn.info">Cargar turno disponible</string>
+    <string name="addTurn.button.save">Guardar</string>
+    <string name="addTurn.button.cancel">Cancelar</string>
+
+    <!-- Grandtable -->
+    <string name="grandtable.info">La tribuna dice:</string>
+    <string name="grandtable.comment">No existen posteos. Sé el primero en escribir.</string>
+    <string name="grandtable.edittext.writePost">Escribí tu mensaje</string>
+    <string name="grandtable.button">Enviar mensaje</string>
+    <string name="grandtable.alert.incomplete">Tenés que escribir el mensaje</string>
+    <string name="grandtable.alert.ok">Tu mensaje se publicó correctamente</string>
+    <string name="grandtable.alert.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
+
+    <!-- Post Details -->
+    <string name="postDetails.title">Comentarios</string>
+    <string name="postDetails.comments">Todavía no hay comentarios en este post</string>
+    <string name="postDetails.edittext.writeComment">Escribí tu comentario</string>
+    <string name="postDetails.alert.incomplete">Tenés que escribir el comentario</string>
+    <string name="postDetails.alert.ok">Tu comentario se publicó correctamente</string>
+    <string name="postDetails.alert.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
+
+    <!-- Account -->
+    <string name="account.user.name">Eduardo Sanchez</string>
+    <string name="account.user.mail">eduardosanchez77@gmail.com</string>
+    <string name="account.user.schedule">Mi agenda</string>
+
+    <!-- Schedule -->
+    <string name="schedule.button">Cancelar Turno</string>
+    <string name="schedule.dialog.cancel">¿Estás seguro en cancelar el turno?</string>
+    <string name="schedule.countDown.live">EN JUEGO</string>
+
+    <!-- Settings -->
+    <string name="settings.info.personal">Mis datos personales</string>
+    <string name="settings.info.professional">Mis datos deportivos</string>
+    <string name="settings.info.notifications">Notificaciones</string>
+    <string name="settings.category">Categoría</string>
+    <string name="settings.position">Posición</string>
+    <string name="settings.button.cerrarSession">Cerrar sesión</string>
+    <string name="settings.button.save">Guardar ajustes</string>
+    <string name="settings.alert.logout">¿Estás seguro en cerrar sesión?</string>
+    <string name="settings.alert.button.ok">Si</string>
+    <string name="settings.alert.button.cancel">No</string>
+    <string name="settings.message.update.ok">Perfil actualizado</string>
+    <string name="settings.message.update.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
+    <string name="settings.notification.turn">Cuando hay un turno disponible</string>
+    <string name="settings.notification.post">Cuando alguien escribe en la tribuna</string>
+
+</resources>

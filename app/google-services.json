@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "232648996582",
+    "project_id": "turin-padel",
+    "storage_bucket": "turin-padel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232648996582:android:a0dfc2d8a03bf08bcc6d27",
+        "android_client_info": {
+          "package_name": "com.cbaelectronics.turinpadel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232648996582-gmqnp3vbos64qhpramk0puac3e086mnh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cbaelectronics.turinpadel",
+            "certificate_hash": "fa581a486e1a59d370db8201d4be902fc56b3b5d"
+          }
+        },
+        {
+          "client_id": "232648996582-rvqo24ktjdjeula2bks3j5dvobor01uq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdriPWE4hNhJehnfKZjIZzT4owHNYX5IY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232648996582-rvqo24ktjdjeula2bks3j5dvobor01uq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

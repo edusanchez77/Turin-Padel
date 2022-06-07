@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!--~
+  ~ Created by CbaElectronics by Eduardo Sanchez on 3/6/22 09:04.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/turnEdit"
+        android:orderInCategory="0"
+        android:title="@string/menu.context.turn.edit" />
+    <item
+        android:id="@+id/turnDelete"
+        android:orderInCategory="1"
+        android:title="@string/menu.context.turn.delete" />
+
+</menu>

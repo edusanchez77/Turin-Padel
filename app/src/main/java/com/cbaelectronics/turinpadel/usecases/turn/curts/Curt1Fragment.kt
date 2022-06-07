@@ -5,6 +5,7 @@
 
 package com.cbaelectronics.turinpadel.usecases.turn.curts
 
+import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -91,16 +92,30 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         })
     }
 
-    override fun onItemClick(turn: Turn) {
-        Toast.makeText(binding.root.context, "Eliminar turno", Toast.LENGTH_SHORT).show()
-    }
+    private fun showMessageOk() {
 
-    override fun onItemLongClick(turn: Turn) {
-        /*if(viewModel.user.type == Constants.TYPE_ADMIN){
+        val alertInfo = getString(viewModel.alertInfo)
+        val alertOk = getString(viewModel.alertOk)
 
-        }else{
-            Toast.makeText(binding.root.context, "No tenes permisos para modificar el turno", Toast.LENGTH_SHORT).show()
-        }*/
+        val mDialog = Dialog(binding.root.context)
+        val mWindows = mDialog.window!!
+
+        mWindows.attributes.windowAnimations = R.style.DialogAnimation
+        mDialog.setContentView(R.layout.custom_dialog_error)
+        mDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mDialog.setCancelable(false)
+        val mIcon = mDialog.findViewById<LottieAnimationView>(R.id.lottieDialogError)
+        val mText = mDialog.findViewById<TextView>(R.id.txtDialog)
+        val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialog)
+        mIcon.setAnimation(R.raw.turnos)
+        mText.text = alertInfo
+
+        mBtnOK.setOnClickListener {
+            mDialog.cancel()
+            Toast.makeText(binding.root.context, alertOk, Toast.LENGTH_SHORT).show()
+        }
+
+        mDialog.show()
     }
 
     override fun onItemButtonClick(turn: Turn) {
@@ -130,7 +145,7 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         mBtnOK.setOnClickListener {
             mDialog.cancel()
             viewModel.reserveTurn(turn)
-            //asyncAwait(pId, pHorario, pCancha, pStatus)
+            showMessageOk()
         }
 
         mBtnCancel.setOnClickListener {
@@ -139,16 +154,13 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         
     }
 
-
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             1 -> {
-                //Toast.makeText(binding.root.context, item.groupId.toString(), Toast.LENGTH_SHORT).show()
                 adapter.deleteTurn(item.groupId)
                 true
             }
             2 -> {
-                //Toast.makeText(binding.root.context, item.groupId.toString(), Toast.LENGTH_SHORT).show()
                 adapter.deleteTurn(item.groupId)
                 true
             }
@@ -161,7 +173,6 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.textViewInfoCurt1.visibility = View.VISIBLE
-        //registerForContextMenu(binding.recyclerViewCurt1)
     }
 
 

@@ -55,9 +55,12 @@
     <string name="turn.info">No hay horarios cargados</string>
     <string name="turn.available.yes">Disponible</string>
     <string name="turn.available.not">Reservado</string>
+    <string name="turn.outOfTime">Turno vencido</string>
     <string name="turn.button.reserve">Reservar</string>
     <string name="turn.button.addTurn">Cargar Turno</string>
     <string name="turn.reserve.alert.1">¿Querés reservar este turno?</string>
+    <string name="turn.reserve.alert.2">Podés cancelar el turno hasta 2 horas antes</string>
+    <string name="turn.reserve.alert.3">Turno Reservado</string>
 
     <!-- Add Turn -->
     <string name="addTurn.info">Cargar turno disponible</string>

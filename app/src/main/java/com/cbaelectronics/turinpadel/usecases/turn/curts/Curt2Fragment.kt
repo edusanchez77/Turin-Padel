@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -93,12 +94,30 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
             })
     }
 
-    override fun onItemClick(turn: Turn) {
-        Toast.makeText(binding.root.context, "Eliminar turno", Toast.LENGTH_SHORT).show()
-    }
+    private fun showMessageOk() {
 
-    override fun onItemLongClick(turn: Turn) {
-        //TODO("Not yet implemented")
+        val alertInfo = getString(viewModel.alertInfo)
+        val alertOk = getString(viewModel.alertOk)
+
+        val mDialog = Dialog(binding.root.context)
+        val mWindows = mDialog.window!!
+
+        mWindows.attributes.windowAnimations = R.style.DialogAnimation
+        mDialog.setContentView(R.layout.custom_dialog_error)
+        mDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mDialog.setCancelable(false)
+        val mIcon = mDialog.findViewById<LottieAnimationView>(R.id.lottieDialogError)
+        val mText = mDialog.findViewById<TextView>(R.id.txtDialog)
+        val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialog)
+        mIcon.setAnimation(R.raw.turnos)
+        mText.text = alertInfo
+
+        mBtnOK.setOnClickListener {
+            mDialog.cancel()
+            Toast.makeText(binding.root.context, alertOk, Toast.LENGTH_SHORT).show()
+        }
+
+        mDialog.show()
     }
 
     override fun onItemButtonClick(turn: Turn) {
@@ -128,6 +147,7 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         mBtnOK.setOnClickListener {
             mDialog.cancel()
             viewModel.reserveTurn(turn)
+            showMessageOk()
         }
 
         mBtnCancel.setOnClickListener {
@@ -136,8 +156,21 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
 
     }
 
-    fun reserveTurn(turn: Turn) = runBlocking {
-        //TODO: Save DataBase
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            1 -> {
+                adapter.deleteTurn(item.groupId)
+                true
+            }
+            2 -> {
+                adapter.deleteTurn(item.groupId)
+                true
+            }
+            else -> {
+                super.onContextItemSelected(item)
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

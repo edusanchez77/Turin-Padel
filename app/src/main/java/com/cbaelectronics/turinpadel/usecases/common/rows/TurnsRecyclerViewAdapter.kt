@@ -27,9 +27,7 @@ import com.itdev.nosfaltauno.util.extension.shortFormat
 class TurnsRecyclerViewAdapter(private val context: Context, private val itemClickListener: onClickTurnClickListener): RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
 
     interface onClickTurnClickListener{
-        fun onItemClick(turn: Turn)
         fun onItemButtonClick(turn: Turn)
-        fun onItemLongClick(turn: Turn)
     }
 
     private var dataList = mutableListOf<Turn>()
@@ -108,9 +106,11 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
             v: View,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            //MenuInflater(context).inflate(R.menu.turn_menu_context, menu)
-            menu.add(adapterPosition, 1, 0, "Edit")
-            menu.add(adapterPosition, 2, 1, "Delete")
+            val edit = R.string.menu_context_turn_edit
+            val delete = R.string.menu_context_turn_delete
+
+            menu.add(adapterPosition, 1, 0, edit)
+            menu.add(adapterPosition, 2, 1, delete)
         }
 
 

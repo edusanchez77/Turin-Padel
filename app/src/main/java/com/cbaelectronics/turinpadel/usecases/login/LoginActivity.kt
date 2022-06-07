@@ -142,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
         when (activityResult.resultCode) {
 
             RESULT_OK -> {
-                val message = getString(viewModel.alertWait)
+
                 mProgress.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 mProgress.setContentView(R.layout.custom_loading)
                 mProgress.setCanceledOnTouchOutside(false)

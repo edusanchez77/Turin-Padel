@@ -23,6 +23,8 @@ class TurnViewModel : ViewModel() {
     val curt2 = R.string.turn_curt_2
     val info = R.string.turn_info
     val alertReserve = R.string.turn_reserve_alert_1
+    val alertInfo = R.string.turn_reserve_alert_2
+    val alertOk = R.string.turn_reserve_alert_3
     val button = R.string.turn_button_addTurn
 
     // Public

@@ -14,9 +14,9 @@ import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemTurnBinding
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.util.Constants
-import com.cbaelectronics.turinpadel.util.Constants.DEFAULT_STATUS
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_AVAILABLE_NO
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_AVAILABLE_YES
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.itdev.nosfaltauno.util.extension.enable
@@ -74,14 +74,26 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
         fun bindView(turn: Turn){
 
             binding.txtHoraTurno.text = turn.date.shortFormat()
-            binding.txtTurnoStatus.text = if (turn.status == DEFAULT_STATUS) STATUS_AVAILABLE_YES else STATUS_AVAILABLE_NO
-            binding.btnReservarTurno.text = if (turn.status == DEFAULT_STATUS) context.getString(R.string.turn_button_reserve) else STATUS_AVAILABLE_NO
 
             // Buttons
 
-            if(turn.status == Constants.STATUS_RESERVED){
-                binding.btnReservarTurno.enable(false)
-                binding.btnReservarTurno.setBackgroundResource(R.drawable.secondary_button_round)
+            when(turn.status){
+                STATUS_DEFAULT -> {
+                    binding.btnReservarTurno.visibility = View.VISIBLE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_available_yes)
+                    binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_yes)
+                }
+                STATUS_RESERVED -> {
+                    binding.btnReservarTurno.visibility = View.VISIBLE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_available_not)
+                    binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_not)
+                    binding.btnReservarTurno.enable(false)
+                    binding.btnReservarTurno.setBackgroundResource(R.drawable.secondary_button_round)
+                }
+                STATUS_OUTOFTIME -> {
+                    binding.btnReservarTurno.visibility = View.GONE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_outOfTime)
+                }
             }
 
             binding.btnReservarTurno.setOnClickListener {
@@ -89,15 +101,6 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
             }
 
             binding.cardViewTurn.setOnCreateContextMenuListener(this)
-
-            /*itemView.setOnClickListener {
-                itemClickListener.onItemClick(turn)
-            }*/
-
-            /*itemView.setOnLongClickListener {
-                itemClickListener.onItemLongClick(turn)
-                true
-            }*/
 
         }
 

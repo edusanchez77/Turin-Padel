@@ -82,6 +82,7 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
 
     private fun observeData() {
         viewModel.loadTurn(getString(R.string.turn_curt_1), mDate).observe(viewLifecycleOwner, Observer {
+
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
 

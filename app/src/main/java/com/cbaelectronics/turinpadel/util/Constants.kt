@@ -27,8 +27,9 @@ object Constants {
     const val REQUEST_CODE_ADDRESS_CANCEL = 1
 
     // Turns
-    const val DEFAULT_STATUS = 0
+    const val STATUS_DEFAULT = 0
     const val STATUS_RESERVED = 1
+    const val STATUS_OUTOFTIME = 2
     const val STATUS_AVAILABLE_YES = "Disponible"
     const val STATUS_AVAILABLE_NO = "Reservado"
 

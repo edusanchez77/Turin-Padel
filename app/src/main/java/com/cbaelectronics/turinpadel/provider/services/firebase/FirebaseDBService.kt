@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
 import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
@@ -24,8 +25,9 @@ import com.itdev.nosfaltauno.util.extension.uppercaseFirst
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.HashMap
+import java.util.*
 
 enum class DatabaseField(val key: String) {
 
@@ -130,8 +132,10 @@ object FirebaseDBService {
         val mutableData = MutableLiveData<MutableList<Turn>>()
 
         turnRef.whereEqualTo(DatabaseField.TURN_CURT.key, curt)
+            .whereGreaterThan(DatabaseField.TURN_DATE.key, Timestamp(Date().time))
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Turn>()
+
                 for (document in value!!) {
 
                     val sfd = SimpleDateFormat("dd/MM/yyyy")
@@ -171,7 +175,7 @@ object FirebaseDBService {
             turnRef.document(id!!)
                 .update(
                     DatabaseField.TURN_STATUS.key,
-                    Constants.DEFAULT_STATUS,
+                    Constants.STATUS_DEFAULT,
                     DatabaseField.TURN_RESERVE.key,
                     FieldValue.delete()
                 )

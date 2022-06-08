@@ -40,6 +40,7 @@ class TurnViewModel : ViewModel() {
 
     }
 
+
     fun reserveTurn(turn: Turn){
 
         FirebaseDBService.updateTurn(turn, user)

@@ -14,7 +14,7 @@ data class Turn(
     val id: String? = null,
     val curt: String,
     val date: Date,
-    val status: Int = Constants.DEFAULT_STATUS
+    val status: Int = Constants.STATUS_DEFAULT
 ){
     fun toJSON(): Map<String, Any> {
 

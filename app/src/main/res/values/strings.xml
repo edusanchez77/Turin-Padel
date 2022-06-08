@@ -67,6 +67,11 @@
     <string name="addTurn.info">Cargar turno disponible</string>
     <string name="addTurn.button.save">Guardar</string>
     <string name="addTurn.button.cancel">Cancelar</string>
+    <string name="addTurn.button.back">Volver</string>
+    <string name="addTurn.alert.incomplete">Debes completar todos los campos para cargar el turno</string>
+    <string name="addTurn.alert.error">No se pudo cargar el turno</string>
+    <string name="addTurn.alert.ok">Turno cargado correctamente</string>
+    <string name="addTurn.alert.outoftime">No se puede cargar un turno ya vencido</string>
 
     <!-- Grandtable -->
     <string name="grandtable.info">La tribuna dice:</string>

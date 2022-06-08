@@ -21,6 +21,11 @@ fun Date.toJSON(): String {
     return formatter.format(this)
 }
 
+fun Date.calendarDate() : String{
+    val formatter = SimpleDateFormat("'dd/MM/yyyy HH:mm'", Locale.getDefault())
+    return formatter.format(this)
+}
+
 fun Date.longFormat(): String {
     return DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT, Locale.getDefault()).format(this).uppercaseFirst()
 }

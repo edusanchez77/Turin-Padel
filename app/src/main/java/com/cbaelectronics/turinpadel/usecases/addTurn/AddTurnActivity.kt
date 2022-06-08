@@ -10,10 +10,15 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityAddTurnBinding
@@ -22,16 +27,19 @@ import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.TURN_DATE_FORMAT
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
-import com.itdev.nosfaltauno.util.extension.addClose
-import com.itdev.nosfaltauno.util.extension.font
-import com.itdev.nosfaltauno.util.extension.hideSoftInput
+import com.itdev.nosfaltauno.util.extension.*
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
 
     private lateinit var binding: ActivityAddTurnBinding
     private lateinit var viewModel: AddTurnViewModel
+
+    private var dateEditText: String? = null
+    private var curtEditText: String? = null
 
     var day = 0
     var month = 0
@@ -65,7 +73,7 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private fun localize() {
         binding.textViewAddTurn.text = getString(viewModel.info)
         binding.buttonSaveTurn.text = getString(viewModel.save)
-        binding.buttonCancelTurn.text = getString(viewModel.cancel)
+        binding.buttonCancelTurn.text = getString(viewModel.back)
     }
 
     private fun setup() {
@@ -80,17 +88,24 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         )
 
         // Date and Time
-        
-        binding.etHorarioTurnoLibre.setOnFocusChangeListener { view, hasFocus -> 
-            if(hasFocus){
+
+        binding.etHorarioTurnoLibre.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
                 hideSoftInput()
                 getDateTimeCalendar()
-                DatePickerDialog(this, R.style.themeOnverlay_timePicker,this, year, month, day).show()
+                DatePickerDialog(
+                    this,
+                    R.style.themeOnverlay_timePicker,
+                    this,
+                    year,
+                    month,
+                    day
+                ).show()
             }
         }
-        
+
         // Curts
-        
+
         val arrayCanchas = resources.getStringArray(R.array.strCanchas)
         val adapterCanchas = ArrayAdapter(
             this,
@@ -99,9 +114,53 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         )
         binding.etCanchaTurnoLibre.setAdapter(adapterCanchas)
 
+        setupInfo()
+
     }
 
-    private fun getDateTimeCalendar(){
+
+    private fun setupInfo() {
+
+        // Date
+
+        binding.etHorarioTurnoLibre.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateEditText = binding.etHorarioTurnoLibre.text.toString()
+                checkEnableSave()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+
+        // Curt
+
+        binding.etCanchaTurnoLibre.setOnItemClickListener { adapterView, view, i, l ->
+            hideSoftInput()
+            curtEditText = binding.etCanchaTurnoLibre.text.toString()
+            checkEnableSave()
+        }
+
+    }
+
+    private fun checkEnableSave() {
+        if (!dateEditText.isNullOrEmpty() && !curtEditText.isNullOrEmpty()) {
+            binding.buttonSaveTurn.enable(true)
+            binding.buttonCancelTurn.text = getString(viewModel.cancel)
+        }
+    }
+
+    private fun disableSave() {
+        binding.buttonSaveTurn.enable(false)
+        binding.buttonCancelTurn.text = getString(viewModel.back)
+    }
+
+    private fun getDateTimeCalendar() {
 
         TimeZone.getDefault()
         val cal = Calendar.getInstance()
@@ -115,7 +174,7 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
         vYear = p1
-        vMonth = p2+1
+        vMonth = p2 + 1
         vDay = p3
 
         getDateTimeCalendar()
@@ -138,33 +197,55 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     @SuppressLint("SimpleDateFormat")
     private fun footer() {
+
         // Button Cancel
-        
-        binding.buttonCancelTurn.setOnClickListener { 
+
+        binding.buttonCancelTurn.setOnClickListener {
             onBackPressed()
         }
-        
+
         // Button Save
-        
+
+        binding.buttonSaveTurn.enable(false)
         binding.buttonSaveTurn.setOnClickListener {
+
+            val alertOk = getString(viewModel.alertOk)
+            val alertIncomplete = getString(viewModel.alertIncomplete)
+            val alertOutOfTime = getString(viewModel.alertOutOfTime)
 
             // Save DataBase
 
             val date = binding.etHorarioTurnoLibre.text.toString()
             val curt = binding.etCanchaTurnoLibre.text.toString()
 
-            val sdf = SimpleDateFormat(TURN_DATE_FORMAT)
-            val date1 = sdf.parse(date)
+            if (date.isNotEmpty() && curt.isNotEmpty()) {
 
-            val turn = Turn(curt = curt, date = date1)
-            viewModel.save(turn)
+                val sdf = SimpleDateFormat(TURN_DATE_FORMAT)
+                val date1 = sdf.parse(date)
 
-            // Limpio campos
+                val turn = Turn(curt = curt, date = date1)
+                viewModel.save(turn)
 
-            binding.etHorarioTurnoLibre.text = null
-            binding.etCanchaTurnoLibre.text = null
+                clearEditText()
+                showAlert(alertOk)
+                disableSave()
+
+            } else {
+                showAlert(alertIncomplete)
+
+            }
         }
     }
+
+    private fun clearEditText() {
+        binding.etHorarioTurnoLibre.text = null
+        binding.etCanchaTurnoLibre.text = null
+    }
+
+    private fun showAlert(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         this.onBackPressed()

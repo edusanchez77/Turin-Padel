@@ -54,12 +54,18 @@ object Util {
         )
     }
 
+
+
     fun urlEncode(url: String): String? {
         return try {
             URLEncoder.encode(url, "UTF-8")
         } catch (e: UnsupportedEncodingException) {
             return null
         }
+    }
+
+    fun hourToMilliseconds(time: Int): Int {
+        return time * 60 * 60 * 1000
     }
 
     /*fun easteregg(context: Context, user: String) {

@@ -22,7 +22,7 @@ fun Date.toJSON(): String {
 }
 
 fun Date.calendarDate() : String{
-    val formatter = SimpleDateFormat("'dd/MM/yyyy HH:mm'", Locale.getDefault())
+    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return formatter.format(this)
 }
 

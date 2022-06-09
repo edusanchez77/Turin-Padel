@@ -19,9 +19,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import com.google.firebase.firestore.Query.Direction.DESCENDING
-import com.itdev.nosfaltauno.util.extension.removeFirebaseInvalidCharacters
-import com.itdev.nosfaltauno.util.extension.toDate
-import com.itdev.nosfaltauno.util.extension.uppercaseFirst
+import com.itdev.nosfaltauno.util.extension.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -204,10 +202,8 @@ object FirebaseDBService {
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
 
-        scheduleRef.whereEqualTo(
-            "${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}",
-            user.email
-        )
+        scheduleRef
+            .whereEqualTo("${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}", user.email)
             .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Schedule>()
@@ -218,9 +214,12 @@ object FirebaseDBService {
                     val curt = document.getString(DatabaseField.TURN_CURT.key)
                     val date = document.getDate(DatabaseField.TURN_DATE.key)
 
-                    val schedule = Schedule(id, turn!!, curt!!, date!!, user)
+                    if(date?.calendarDate()!! >= Date().calendarDate()){
 
-                    listData.add(schedule)
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user)
+                        listData.add(schedule)
+                    }
+
                 }
                 mutableData.value = listData
             }

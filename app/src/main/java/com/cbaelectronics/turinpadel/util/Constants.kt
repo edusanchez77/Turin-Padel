@@ -7,7 +7,7 @@ object Constants {
 
 
     // Generic
-    const val MAX_STREAMERS = 20
+    const val TIME_GAME = 90
     const val ADMIN_LOGIN = "eduardosanchez77@gmail.com"
 
     // Login

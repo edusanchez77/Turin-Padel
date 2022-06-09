@@ -99,6 +99,8 @@
     <string name="schedule.button">Cancelar Turno</string>
     <string name="schedule.dialog.cancel">¿Estás seguro en cancelar el turno?</string>
     <string name="schedule.countDown.live">EN JUEGO</string>
+    <string name="schedule.countDown.finish">Partido Finalizado</string>
+    <string name="schedule.chronometer.info">Finaliza en: </string>
 
     <!-- Settings -->
     <string name="settings.info.personal">Mis datos personales</string>

@@ -26,6 +26,7 @@ class TurnViewModel : ViewModel() {
     val alertInfo = R.string.turn_reserve_alert_2
     val alertOk = R.string.turn_reserve_alert_3
     val button = R.string.turn_button_addTurn
+    val buttonAlertOk = R.string.turn_reserve_button_ok
 
     // Public
     fun loadTurn(curt: String, mDate: String): LiveData<MutableList<Turn>> {

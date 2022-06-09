@@ -98,6 +98,7 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
 
         val alertInfo = getString(viewModel.alertInfo)
         val alertOk = getString(viewModel.alertOk)
+        val button = getString(viewModel.buttonAlertOk)
 
         val mDialog = Dialog(binding.root.context)
         val mWindows = mDialog.window!!
@@ -111,6 +112,7 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialog)
         mIcon.setAnimation(R.raw.turnos)
         mText.text = alertInfo
+        mBtnOK.text = button
 
         mBtnOK.setOnClickListener {
             mDialog.cancel()

@@ -60,8 +60,9 @@
     <string name="turn.button.reserve.available.not">Reservado</string>
     <string name="turn.button.addTurn">Cargar Turno</string>
     <string name="turn.reserve.alert.1">¿Querés reservar este turno?</string>
-    <string name="turn.reserve.alert.2">Podés cancelar el turno hasta 2 horas antes</string>
+    <string name="turn.reserve.alert.2">Podés cancelar el turno hasta 1 hora antes</string>
     <string name="turn.reserve.alert.3">Turno Reservado</string>
+    <string name="turn.reserve.button.ok">OK</string>
 
     <!-- Add Turn -->
     <string name="addTurn.info">Cargar turno disponible</string>

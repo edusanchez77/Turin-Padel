@@ -30,6 +30,7 @@ object Constants {
     const val STATUS_DEFAULT = 0
     const val STATUS_RESERVED = 1
     const val STATUS_OUTOFTIME = 2
+    const val TIME_UNTIL_CANCEL = 1
     const val STATUS_AVAILABLE_YES = "Disponible"
     const val STATUS_AVAILABLE_NO = "Reservado"
 

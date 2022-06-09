@@ -64,6 +64,10 @@ object Util {
         }
     }
 
+    fun hourToMilliseconds(time: Int): Int {
+        return time * 60 * 60 * 1000
+    }
+
     /*fun easteregg(context: Context, user: String) {
         if (user == Constants.ADMIN_LOGIN) {
             val sounds = arrayListOf(R.raw.easteregg1, R.raw.easteregg2, R.raw.easteregg3)

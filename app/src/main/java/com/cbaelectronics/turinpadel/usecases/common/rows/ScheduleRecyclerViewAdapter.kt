@@ -19,6 +19,7 @@ import com.cbaelectronics.turinpadel.databinding.ContentItemScheduleBinding
 import com.cbaelectronics.turinpadel.model.domain.Schedule
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.util.Constants.TIME_GAME
+import com.cbaelectronics.turinpadel.util.Constants.TIME_UNTIL_CANCEL
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.cbaelectronics.turinpadel.util.Util
@@ -27,6 +28,7 @@ import com.itdev.nosfaltauno.util.extension.enable
 import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.longFormat
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class ScheduleRecyclerViewAdapter(private val context: Context, private val itemClickListener: ScheduleRecyclerViewAdapter.onClickScheduleClickListener): RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
 
@@ -102,6 +104,12 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
                 override fun onTick(millisUntilFinished: Long) {
 
                     binding.countDown.text = Util.countdown(context, millisUntilFinished)
+
+                    if(millisUntilFinished < Util.hourToMilliseconds(TIME_UNTIL_CANCEL)){
+                        binding.buttonScheduleCancel.visibility = View.GONE
+                        binding.buttonScheduleCancel.enable(false)
+                    }
+
                 }
 
                 override fun onFinish() {
@@ -111,6 +119,7 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
                     binding.imageViewScheduleCountdown.setColorFilter(ContextCompat.getColor(context, R.color.live))
                     binding.buttonScheduleCancel.visibility = View.GONE
                     binding.buttonScheduleCancel.enable(false)
+
                     timer?.cancel()
 
                     chronometer(context, schedule)
@@ -139,6 +148,7 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
                 override fun onTick(millisUntilFinished: Long) {
 
                     binding.chronometerItemSchedule.text = Util.countdown(context, millisUntilFinished)
+
                 }
 
                 override fun onFinish() {

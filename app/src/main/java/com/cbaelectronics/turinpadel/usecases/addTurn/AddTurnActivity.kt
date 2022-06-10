@@ -23,10 +23,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityAddTurnBinding
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.TURN_DATE_FORMAT
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.UIUtil
+import com.cbaelectronics.turinpadel.util.UIUtil.pushNotification
+import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_TURN
 import com.itdev.nosfaltauno.util.extension.*
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -226,6 +231,7 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 val turn = Turn(curt = curt, date = date1)
                 viewModel.save(turn)
 
+                createNotification()
                 clearEditText()
                 showAlert(alertOk)
                 disableSave()
@@ -235,6 +241,15 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
             }
         }
+    }
+
+    private fun createNotification() {
+        val title = getString(viewModel.notificationTitle)
+        val body = getString(viewModel.notificationBody)
+        val type = TYPE_TURN
+        val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
+
+        pushNotification(title, body, type, user)
     }
 
     private fun clearEditText() {

@@ -30,6 +30,8 @@ class AddTurnViewModel: ViewModel() {
     val alertError = R.string.addTurn_alert_error
     val alertOk = R.string.addTurn_alert_ok
     val alertOutOfTime = R.string.addTurn_alert_outoftime
+    val notificationTitle = R.string.notification_topic_newturn_title
+    val notificationBody = R.string.notification_topic_newturn_body
 
 
     // Public

@@ -24,6 +24,8 @@ class GrandtableViewModel : ViewModel() {
     val alertOk = R.string.grandtable_alert_ok
     val alertError = R.string.grandtable_alert_error
     val alertIncomplete = R.string.grandtable_alert_incomplete
+    val notificationTitle = R.string.notification_topic_newpost_title
+    val notificationBody = R.string.notification_topic_newpost_body
 
     // Public
 

@@ -10,8 +10,14 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.cbaelectronics.turinpadel.R
+import com.cbaelectronics.turinpadel.model.domain.DatabaseNotifications
+import com.cbaelectronics.turinpadel.model.domain.PushNotification
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
+import com.cbaelectronics.turinpadel.util.notifications.SendNotification
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import retrofit2.http.Body
 import java.util.concurrent.TimeUnit
 
 
@@ -45,6 +51,17 @@ object UIUtil {
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.dark))
     }
 
+    // Push Notification
+
+    fun pushNotification(title: String, body: String, type: String, user: String) {
+        PushNotification(
+            DatabaseNotifications(title, body, type, user),
+            Constants.NEW_POST
+        ).also {
+            val notification = SendNotification()
+            notification.sendNotification(it)
+        }
+    }
 
 
     // Private

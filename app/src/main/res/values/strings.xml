@@ -18,6 +18,8 @@
     <string name="notification.channel.description">My notification</string>
     <string name="notification.topic.newmatch.title">Nuevo partido</string>
     <string name="notification.topic.newmatch.body">Apurate a postularte, no te quedes sin jugar</string>
+    <string name="notification.topic.newturn.title">Nuevo turno disponible</string>
+    <string name="notification.topic.newturn.body">Apurate a reservarlo, no te quedes sin jugar</string>
     <string name="notification.topic.newpost.title">La tribuna está hablando</string>
     <string name="notification.topic.newpost.body">No te pierdas los últimos mensajes</string>
     <string name="notification.topic.comment.title">Tenés un nuevo mensaje</string>

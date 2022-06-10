@@ -15,6 +15,9 @@ import com.cbaelectronics.turinpadel.databinding.ActivityLoginBinding
 import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.usecases.home.HomeRouter
+import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.NEW_POST
+import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
 import com.cbaelectronics.turinpadel.util.Constants.TYPE_ADMIN
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
@@ -193,6 +196,7 @@ class LoginActivity : AppCompatActivity() {
 
         if(viewModel.user.email == null){
             saveDatabase()
+            subscribeToTopics()
         }else{
             data()
             showHome()
@@ -221,6 +225,14 @@ class LoginActivity : AppCompatActivity() {
         data()
         showHome()
 
+    }
+
+    private fun subscribeToTopics() {
+        // Topic notifications
+        FirebaseMessaging.getInstance().apply {
+            subscribeToTopic("${Constants.NEW_TURN}")
+            subscribeToTopic("${Constants.NEW_POST}")
+        }
     }
 
     private fun data() {

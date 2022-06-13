@@ -196,7 +196,6 @@ class LoginActivity : AppCompatActivity() {
 
         if(viewModel.user.email == null){
             saveDatabase()
-            subscribeToTopics()
         }else{
             data()
             showHome()
@@ -225,14 +224,6 @@ class LoginActivity : AppCompatActivity() {
         data()
         showHome()
 
-    }
-
-    private fun subscribeToTopics() {
-        // Topic notifications
-        FirebaseMessaging.getInstance().apply {
-            subscribeToTopic("${Constants.NEW_TURN}")
-            subscribeToTopic("${Constants.NEW_POST}")
-        }
     }
 
     private fun data() {

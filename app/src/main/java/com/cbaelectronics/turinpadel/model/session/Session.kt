@@ -6,6 +6,7 @@
 package com.cbaelectronics.turinpadel.model.session
 
 import android.content.Context
+import android.util.Log
 import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
@@ -84,15 +85,7 @@ class Session {
         }
     }
 
-    // Private
-
-    fun save(context: Context, user: User) {
-
-        PreferencesProvider.set(context, PreferencesKey.AUTH_USER, User.toJson(user))
-
-    }
-
-    private fun setupNotification(add: Boolean, topic: String){
+    fun setupNotification(add: Boolean, topic: String){
 
         FirebaseMessaging.getInstance().apply {
             if (add){
@@ -101,6 +94,14 @@ class Session {
                 unsubscribeFromTopic(topic)
             }
         }
+
+    }
+
+    // Private
+
+    fun save(context: Context, user: User) {
+
+        PreferencesProvider.set(context, PreferencesKey.AUTH_USER, User.toJson(user))
 
     }
 

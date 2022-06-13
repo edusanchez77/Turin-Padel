@@ -14,6 +14,7 @@ import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -228,10 +229,11 @@ object FirebaseDBService {
     }
 
 
-    fun savePost(post: Post) {
+    suspend fun savePost(post: Post) : DocumentReference{
 
-        post.message.let {
-            postRef.document().set(post.toJSON())
+        return withContext(Dispatchers.IO){
+            postRef.add(post.toJSON())
+                .await()
         }
 
     }

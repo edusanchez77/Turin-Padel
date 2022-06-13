@@ -44,6 +44,7 @@ object Constants {
 
     // Remote notifications
     const val TOPIC_PATH = "/topics/"
+    const val NEW_COMMENT = "/topics/"
     const val NEW_MATCH = "/topics/newMatch"
     const val NEW_TURN = "/topics/newTurn"
     const val NEW_POST = "/topics/newPost"

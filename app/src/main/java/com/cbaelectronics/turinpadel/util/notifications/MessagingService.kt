@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.cbaelectronics.turinpadel.R
+import com.cbaelectronics.turinpadel.model.session.Session
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.usecases.home.HomeActivity
@@ -36,7 +37,7 @@ class MessagingService : FirebaseMessagingService() {
 
         Log.i("FCM token:", token)
 
-        //Session.instance.setupNotification()
+        Session.instance.setupNotification()
     }
 
 

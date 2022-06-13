@@ -11,6 +11,8 @@ import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.util.Constants
+import com.google.firebase.messaging.FirebaseMessaging
 
 class Session {
 
@@ -49,6 +51,8 @@ class Session {
             user?.let { user ->
                 save(context, user)
                 FirebaseDBService.saveSettings(user)
+                setupNotification(settings.notificationTurn, Constants.NEW_TURN)
+                setupNotification(settings.notificationPost, Constants.NEW_POST)
             }
         }
 
@@ -64,11 +68,39 @@ class Session {
 
     }
 
+    fun setupNotification(){
+        FirebaseMessaging.getInstance().apply {
+            if (user?.settings?.notificationTurn == true){
+                subscribeToTopic(Constants.NEW_TURN)
+            }else{
+                unsubscribeFromTopic(Constants.NEW_TURN)
+            }
+
+            if (user?.settings?.notificationPost == true){
+                subscribeToTopic(Constants.NEW_POST)
+            }else{
+                unsubscribeFromTopic(Constants.NEW_POST)
+            }
+        }
+    }
+
     // Private
 
     fun save(context: Context, user: User) {
 
         PreferencesProvider.set(context, PreferencesKey.AUTH_USER, User.toJson(user))
+
+    }
+
+    private fun setupNotification(add: Boolean, topic: String){
+
+        FirebaseMessaging.getInstance().apply {
+            if (add){
+                subscribeToTopic(topic)
+            }else{
+                unsubscribeFromTopic(topic)
+            }
+        }
 
     }
 

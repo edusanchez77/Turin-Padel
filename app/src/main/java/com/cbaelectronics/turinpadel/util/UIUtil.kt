@@ -14,6 +14,10 @@ import com.cbaelectronics.turinpadel.model.domain.DatabaseNotifications
 import com.cbaelectronics.turinpadel.model.domain.PushNotification
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
+import com.cbaelectronics.turinpadel.util.Constants.NEW_POST
+import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
+import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_POST
+import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_TURN
 import com.cbaelectronics.turinpadel.util.notifications.SendNotification
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -54,9 +58,15 @@ object UIUtil {
     // Push Notification
 
     fun pushNotification(title: String, body: String, type: String, user: String) {
+        val to = when(type){
+            TYPE_TURN -> NEW_TURN
+            TYPE_POST -> NEW_POST
+            else -> NEW_TURN
+        }
+
         PushNotification(
             DatabaseNotifications(title, body, type, user),
-            Constants.NEW_POST
+            to
         ).also {
             val notification = SendNotification()
             notification.sendNotification(it)

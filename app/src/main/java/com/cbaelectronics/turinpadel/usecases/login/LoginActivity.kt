@@ -18,7 +18,9 @@ import com.cbaelectronics.turinpadel.usecases.home.HomeRouter
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.NEW_POST
 import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
-import com.cbaelectronics.turinpadel.util.Constants.TYPE_ADMIN
+import com.cbaelectronics.turinpadel.util.Constants.ADMIN
+import com.cbaelectronics.turinpadel.util.Constants.ADMIN_LOGIN
+import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -188,15 +190,15 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun loadUser(email: String) = runBlocking{
+    private fun loadUser(email: String) = runBlocking {
 
         withContext(Dispatchers.Default) {
             viewModel.load(email)
         }
 
-        if(viewModel.user.email == null){
+        if (viewModel.user.email == null) {
             saveDatabase()
-        }else{
+        } else {
             data()
             showHome()
         }
@@ -206,12 +208,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveDatabase() {
 
+        val type = if (auth.currentUser?.email == ADMIN_LOGIN) {
+            ADMIN
+        } else {
+            USER
+        }
+
         val user = User(
             auth.currentUser?.displayName,
             auth.currentUser?.email,
             auth.currentUser?.photoUrl.toString(),
             mToken,
-            TYPE_ADMIN
+            type
         )
 
         val settings = UserSettings()

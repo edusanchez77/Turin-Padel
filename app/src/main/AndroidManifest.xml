@@ -17,6 +17,15 @@
         android:theme="@style/Theme.TurinPadel"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.onboarding.OnboardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.makeAdmin.MakeAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.reserve.ReserveActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.comments.CommentsActivity"
             android:exported="false" />
         <activity
@@ -49,10 +58,10 @@
 
         <service
             android:name=".util.notifications.MessagingService"
-            android:permission="com.google.android.c2dm.permission.SEND"
-            android:exported="false">
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
@@ -63,11 +72,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary" />
-
         <meta-data
-        android:name="preloaded_fonts"
-        android:resource="@array/preloaded_fonts" />
-
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -31,6 +31,16 @@
     <string name="notification.topic.match.request.deny.title">Malas noticias!!</string>
     <string name="notification.topic.match.request.deny.body">Rechazaron tu solicitud y no vas a ser parte del partido</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding.page0.title">Bienvenido a Turín Padel</string>
+    <string name="onboarding.page0.body">Esta app llegó para hacer más fácil la reserva de turnos.</string>
+    <string name="onboarding.page1.title"></string>
+    <string name="onboarding.page1.body">Seleccioná el día que quieras jugar y fijate los turnos disponibles. Reservalos con un solo click.</string>
+    <string name="onboarding.page2.title"></string>
+    <string name="onboarding.page2.body">Podes cancelar tu reserva hasta una hora antes.</string>
+    <string name="onboarding.page3.title"></string>
+    <string name="onboarding.page3.body">Compartí tus fotos y mensajes con la tribuna.</string>
+
     <!-- Login -->
     <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
     <string name="login.body">Necesitas iniciar sesión para poder reservar los turnos.</string>
@@ -44,9 +54,11 @@
     <string name="menu.title.account">Agenda</string>
     <string name="menu.title.grandtable">Tribuna</string>
     <string name="menu.by">por</string>
-    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de Turín Padel.\n\nEsta App se ha desarrollado para ayudar a que nadie se quede sin jugar.\nPodes sumarte a partidos ya organizados o buscar jugadores si ya tenes un turno.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app. Mientras más jugadores la conozcan, más fácil será armar un partido.\nPueden encontrarme en redes sociales como @itdev.\n\n¡Muchas gracias!</string>
-    <string name="menu.site">Visita www.nosfaltauno.com.ar para consultar toda la información oficial</string>
+    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de Turín Padel.\n\nEsta App se ha desarrollado para ayudar en el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app.\nPueden encontrarme en redes sociales como @cbaelectronics.\n\n¡Muchas gracias!</string>
+    <string name="menu.site">Visita www.turinpadel.com.ar para consultar toda la información oficial</string>
     <string name="menu.onboarding">Visualiza de nuevo el tutorial de bienvenida</string>
+    <string name="menu.reserve">Reservas</string>
+    <string name="menu.admin">Has administrador a otro usuario</string>
     <string name="menu.version">Versión %s. </string>
     <string name="menu.context.turn.edit">Modificar turno</string>
     <string name="menu.context.turn.delete">Eliminar turno</string>

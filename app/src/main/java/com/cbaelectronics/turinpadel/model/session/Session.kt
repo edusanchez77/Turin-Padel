@@ -102,6 +102,7 @@ class Session {
     fun save(context: Context, user: User) {
 
         PreferencesProvider.set(context, PreferencesKey.AUTH_USER, User.toJson(user))
+        PreferencesProvider.set(context, PreferencesKey.ONBOARDING, true)
 
     }
 

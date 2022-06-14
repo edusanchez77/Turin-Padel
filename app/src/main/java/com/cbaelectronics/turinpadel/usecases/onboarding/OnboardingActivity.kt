@@ -78,11 +78,8 @@ class OnboardingActivity : AppCompatActivity() {
                 if (onboardingKey == false){
                     PreferencesProvider.set(this, PreferencesKey.ONBOARDING, true)
                     LoginRouter().launch(this)
-                    //startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }else{
-                    finish()
                 }
+                finish()
             } else {
                 selection += 1
                 binding.viewPagerOnboarding.setCurrentItem(selection, true)

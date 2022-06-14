@@ -17,6 +17,7 @@ import com.cbaelectronics.turinpadel.usecases.home.HomeActivity
 import com.cbaelectronics.turinpadel.usecases.home.HomeRouter
 import com.cbaelectronics.turinpadel.usecases.login.LoginActivity
 import com.cbaelectronics.turinpadel.usecases.login.LoginRouter
+import com.cbaelectronics.turinpadel.usecases.onboarding.OnboardingActivity
 
 /**
  * Created by CbaElectronics by Eduardo Sanchez on 10/05/2022.
@@ -65,7 +66,7 @@ class LaunchActivity : AppCompatActivity() {
     private fun validateSession() {
 
         val session = PreferencesProvider.string(this, PreferencesKey.AUTH_USER)
-        var nextActivity = if (session.isNullOrEmpty()) Intent(this, LoginActivity::class.java).also { it } else Intent(this, HomeActivity::class.java).also { it }
+        var nextActivity = if (session.isNullOrEmpty()) Intent(this, OnboardingActivity::class.java).also { it } else Intent(this, HomeActivity::class.java).also { it }
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(nextActivity)

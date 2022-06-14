@@ -7,6 +7,7 @@ package com.cbaelectronics.turinpadel.usecases.menu
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
@@ -15,6 +16,8 @@ import com.cbaelectronics.turinpadel.usecases.makeAdmin.MakeAdminRouter
 import com.cbaelectronics.turinpadel.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.turinpadel.usecases.reserve.ReserveRouter
 import com.cbaelectronics.turinpadel.util.Constants.ADMIN
+import com.cbaelectronics.turinpadel.util.Constants.CREATOR
+import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.itdev.nosfaltauno.util.extension.addClose
@@ -65,15 +68,30 @@ class MenuActivity : AppCompatActivity() {
         binding.buttonOnboarding.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
         binding.textViewVersion.font(FontSize.CAPTION, FontType.LIGHT, getColor(R.color.text))
 
-        if(viewModel.user.type == ADMIN){
-            binding.buttonAdmin.visibility = View.VISIBLE
-            binding.buttonSchedule.visibility = View.VISIBLE
-            binding.line1.visibility = View.VISIBLE
-            binding.line2.visibility = View.VISIBLE
+        when(viewModel.user.type){
+            ADMIN -> {
+                binding.buttonSchedule.visibility = View.VISIBLE
+                binding.buttonAdmin.visibility = View.VISIBLE
+                binding.line1.visibility = View.VISIBLE
+                binding.line2.visibility = View.VISIBLE
+            }
+            CREATOR -> {
+                binding.buttonSchedule.visibility = View.VISIBLE
+                binding.buttonAdmin.visibility = View.GONE
+                binding.line1.visibility = View.VISIBLE
+                binding.line2.visibility = View.GONE
+            }
+            USER -> {
+                binding.buttonSchedule.visibility = View.GONE
+                binding.buttonAdmin.visibility = View.GONE
+                binding.line1.visibility = View.GONE
+                binding.line2.visibility = View.GONE
+            }
         }
 
         // Buttons
         buttons()
+
     }
 
     private fun buttons() {
@@ -119,9 +137,6 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        binding.buttonAdmin.visibility = View.GONE
-        binding.buttonSchedule.visibility = View.GONE
-        binding.line1.visibility = View.GONE
-        binding.line2.visibility = View.GONE
+
     }
 }

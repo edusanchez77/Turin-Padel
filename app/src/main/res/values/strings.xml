@@ -133,4 +133,7 @@
     <string name="settings.notification.turn">Cuando hay un turno disponible</string>
     <string name="settings.notification.post">Cuando alguien escribe en la tribuna</string>
 
+    <!-- Reserve -->
+    <string name="reserve.info">Reservas</string>
+
 </resources>

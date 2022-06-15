@@ -198,13 +198,55 @@ object FirebaseDBService {
         }
     }
 
+    fun loadSchedule(): LiveData<MutableList<Schedule>> {
+
+        val mutableData = MutableLiveData<MutableList<Schedule>>()
+
+        scheduleRef
+            .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<Schedule>()
+                for (document in value!!) {
+
+                    val datosUser =
+                        document.data.get(DatabaseField.TURN_RESERVE.key) as Map<String, Any>
+
+                    val id = document.id
+                    val turn = document.getString(DatabaseField.TURN_ID.key)
+                    val curt = document.getString(DatabaseField.TURN_CURT.key)
+                    val date = document.getDate(DatabaseField.TURN_DATE.key)
+
+                    val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val email = datosUser.get(DatabaseField.EMAIL.key).toString()
+                    val avatar = datosUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val register =
+                        document.getDate("${DatabaseField.POST_WRITER.key}.${DatabaseField.REGISTER_DATE.key}")
+                    val token = datosUser.get(DatabaseField.TOKEN.key).toString()
+                    val type = datosUser.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user = User(name, email, avatar, token, type, register)
+
+
+                    if(date?.calendarDate()!! >= Date().calendarDate()){
+
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
+                        listData.add(schedule)
+                    }
+
+                }
+                mutableData.value = listData
+            }
+
+        return mutableData
+    }
+
 
     fun loadSchedule(user: User): LiveData<MutableList<Schedule>> {
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
 
         scheduleRef
-            .whereEqualTo("${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}", user.email)
+            .whereEqualTo("${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}", user?.email)
             .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Schedule>()
@@ -217,7 +259,7 @@ object FirebaseDBService {
 
                     if(date?.calendarDate()!! >= Date().calendarDate()){
 
-                        val schedule = Schedule(id, turn!!, curt!!, date!!, user)
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
                         listData.add(schedule)
                     }
 
@@ -325,5 +367,6 @@ object FirebaseDBService {
         return mutableData
 
     }
+
 
 }

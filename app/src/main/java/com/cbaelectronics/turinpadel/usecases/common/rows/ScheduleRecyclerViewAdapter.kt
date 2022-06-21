@@ -49,7 +49,7 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
         // UI
         val binding = viewHolder.binding
 
-        binding.textViewScheduleDate.font(FontSize.HEAD, FontType.BOLD, ContextCompat.getColor(context, R.color.text))
+        binding.textViewScheduleDate.font(FontSize.SUBHEAD, FontType.BOLD, ContextCompat.getColor(context, R.color.text))
         binding.textViewScheduleCurt.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.countDown.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.chronometerItemSchedule.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))

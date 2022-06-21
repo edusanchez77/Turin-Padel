@@ -5,8 +5,7 @@
             <solid
                 android:color="@color/light"/>
             <corners
-                android:topRightRadius="32dp"
-                android:bottomRightRadius="32dp"/>
+                android:radius="32dp"/>
         </shape>
     </item>
 </selector>

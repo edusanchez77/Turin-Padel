@@ -35,10 +35,12 @@ object UIUtil {
 
     // Alert
 
-    fun showAlert(context: Context, title: String, message: String, positive: String, positiveAction: (() -> Unit)? = null, negative: String? = null) {
+    fun showAlert(context: Context, title: String? = null, message: String, positive: String, positiveAction: (() -> Unit)? = null, negative: String? = null) {
 
         val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
-        builder.setTitle(title)
+        title.let {
+            builder.setTitle(it)
+        }
         builder.setMessage(message)
         builder.setPositiveButton(positive) { _, _ ->
             positiveAction?.let {

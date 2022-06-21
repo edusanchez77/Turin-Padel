@@ -1,22 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Created by ITDev by Eduardo Sanchez on 14/3/2022.
   ~  www.itdev.com
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="4dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayoutComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewCommentItemUserAvatar"
+                android:id="@+id/imageViewItemUserAvatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/user" />
@@ -32,43 +44,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_vertical"
+                android:orientation="vertical"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textViewItemUsername"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textViewCommentUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UserName"
-                        android:layout_marginEnd="8dp"/>
-
-                    <TextView
-                        android:id="@+id/textViewCommentDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fecha"
-                        android:layout_marginStart="8dp"/>
-
-                </LinearLayout>
+                    android:layout_marginEnd="8dp"
+                    tools:text="UserName" />
 
                 <TextView
-                    android:id="@+id/textViewCommentMessage"
+                    android:id="@+id/textViewItemUsermail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comment message"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    tools:text="Email" />
 
             </LinearLayout>
 
         </LinearLayout>
 
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

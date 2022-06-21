@@ -136,4 +136,16 @@
     <!-- Reserve -->
     <string name="reserve.info">Reservas</string>
 
+    <!-- Make Admin -->
+    <string name="makeAdmin.info">Hacé click en el usuario al que querés hacer administrador</string>
+    <string name="makeAdmin.search">Buscar usuario</string>
+    <string name="makeAdmin.button.save">Hacer administrador</string>
+    <string name="makeAdmin.button.cancel">Cancelar</string>
+    <string name="makeAdmin.alert.title">Listo</string>
+    <string name="makeAdmin.alert.message.1">¿Queres hacer administrador a %s?</string>
+    <string name="makeAdmin.alert.message.2">Recordale que tiene que cerrar sesión e iniciar nuevamente para que se actualize el cambio</string>
+    <string name="makeAdmin.alert.button.positive">SI</string>
+    <string name="makeAdmin.alert.button.negative">NO</string>
+    <string name="makeAdmin.alert.button.ok">OK</string>
+
 </resources>

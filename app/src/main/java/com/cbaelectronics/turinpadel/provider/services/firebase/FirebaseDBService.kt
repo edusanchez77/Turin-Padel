@@ -118,6 +118,15 @@ object FirebaseDBService {
         }
     }
 
+    fun updateUser(user: User, type: Int){
+
+        user.email?.let { id ->
+            usersRef.document(id)
+                .update(DatabaseField.TYPE.key, type)
+        }
+
+    }
+
     fun saveTurn(turn: Turn) {
 
         turn.date.let {
@@ -365,6 +374,32 @@ object FirebaseDBService {
         }
 
         return mutableData
+
+    }
+
+    fun searchUser(): LiveData<MutableList<User>> {
+
+        val mutableList = MutableLiveData<MutableList<User>>()
+
+        usersRef.addSnapshotListener { value, error ->
+            val listData = mutableListOf<User>()
+            for (document in value!!) {
+                val name = document.get(DatabaseField.DISPLAY_NAME.key).toString()
+                val email = document.get(DatabaseField.EMAIL.key).toString()
+                val avatar = document.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                val register =
+                    document.getDate(DatabaseField.REGISTER_DATE.key)
+                val token = document.get(DatabaseField.TOKEN.key).toString()
+                val type = document.get(DatabaseField.TYPE.key).toString().toInt()
+
+                val user = User(name, email, avatar, token, type, register)
+
+                listData.add(user)
+            }
+            mutableList.value = listData
+        }
+
+        return mutableList
 
     }
 

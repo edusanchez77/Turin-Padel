@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
@@ -23,11 +24,15 @@ import com.airbnb.lottie.LottieAnimationView
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.FragmentCurt1Binding
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.usecases.addTurn.AddTurnRouter
 import com.cbaelectronics.turinpadel.usecases.common.rows.TurnsRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.usecases.turn.TurnViewModel
 import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.font
 import java.sql.Timestamp
 import java.util.*
@@ -157,21 +162,44 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            1 -> {
-                adapter.deleteTurn(item.groupId)
-                true
-            }
-            2 -> {
-                adapter.deleteTurn(item.groupId)
-                true
-            }
-            else -> {
-                super.onContextItemSelected(item)
-            }
+    override fun onItemLongClick(turn: Turn) {
+        if(viewModel.user.type == USER){
+            Toast.makeText(binding.root.context, "No tenes permisos para modificar el turno", Toast.LENGTH_SHORT).show()
+        }else{
+            UIUtil.showOptions(binding.root.context, {editTurn(turn)}, { question(turn) })
         }
     }
+
+    private fun editTurn(turn: Turn){
+        AddTurnRouter().launch(binding.root.context, turn)
+    }
+
+    private fun question(turn: Turn){
+
+        UIUtil.showAlert(
+            context = binding.root.context,
+            message = binding.root.context.getString(R.string.turn_delete_question),
+            positive = binding.root.context.getString(R.string.turn_delete_button_positive),
+            positiveAction = { delete(turn.id.toString()) },
+            negative = binding.root.context.getString(R.string.turn_delete_button_negative)
+        )
+
+    }
+
+    private fun delete(id: String){
+
+        // Delete Database
+        FirebaseDBService.deleteTurn(id)
+
+        // Alert
+        UIUtil.showAlert(
+            context = binding.root.context,
+            message = binding.root.context.getString(R.string.turn_delete_info_message),
+            positive = binding.root.context.getString(R.string.turn_delete_button_ok)
+        )
+    }
+
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -77,6 +77,12 @@
     <string name="turn.reserve.alert.2">Podés cancelar el turno hasta 1 hora antes</string>
     <string name="turn.reserve.alert.3">Turno Reservado</string>
     <string name="turn.reserve.button.ok">OK</string>
+    <string name="turn.delete.question">¿Estás seguro que querés eliminar este turno?</string>
+    <string name="turn.delete.info.title">Listo</string>
+    <string name="turn.delete.info.message">El turno se ha eliminado correctamente.</string>
+    <string name="turn.delete.button.positive">SI</string>
+    <string name="turn.delete.button.negative">NO</string>
+    <string name="turn.delete.button.ok">OK</string>
 
     <!-- Add Turn -->
     <string name="addTurn.info">Cargar turno disponible</string>

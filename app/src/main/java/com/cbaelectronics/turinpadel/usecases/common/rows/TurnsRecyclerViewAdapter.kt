@@ -6,6 +6,7 @@
 package com.cbaelectronics.turinpadel.usecases.common.rows
 
 import android.content.Context
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -13,12 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemTurnBinding
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.usecases.addTurn.AddTurnRouter
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DELETED
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.enable
 import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.shortFormat
@@ -28,6 +33,7 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
 
     interface onClickTurnClickListener{
         fun onItemButtonClick(turn: Turn)
+        fun onItemLongClick(turn: Turn)
     }
 
     private var dataList = mutableListOf<Turn>()
@@ -100,7 +106,12 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
                 itemClickListener.onItemButtonClick(turn)
             }
 
-            binding.cardViewTurn.setOnCreateContextMenuListener(this)
+            binding.cardViewTurn.setOnLongClickListener {
+                itemClickListener.onItemLongClick(turn)
+                return@setOnLongClickListener true
+            }
+
+            //binding.cardViewTurn.setOnCreateContextMenuListener(this)
 
         }
 
@@ -120,8 +131,6 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
 
     }
 
-    fun deleteTurn(position: Int){
-        Toast.makeText(context, dataList[position].id, Toast.LENGTH_SHORT).show()
-    }
+
 
 }

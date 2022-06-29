@@ -10,6 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
 import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DELETED
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.google.firebase.database.FirebaseDatabase
@@ -192,6 +194,23 @@ object FirebaseDBService {
         }
 
     }
+
+    fun updateTurn(turn: Turn){
+
+        turn.id.let {
+            turnRef.document(it!!).update(DatabaseField.TURN_DATE.key, turn.date, DatabaseField.TURN_CURT.key, turn.curt)
+        }
+
+    }
+
+    fun deleteTurn(id: String){
+
+        id.let {
+            turnRef.document(it).delete()
+        }
+
+    }
+
 
     fun saveSchedule(turn: Turn, user: User) {
 

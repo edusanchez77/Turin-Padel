@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
@@ -23,6 +24,7 @@ import com.cbaelectronics.turinpadel.databinding.ActivityAddTurnBinding
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
+import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
 import com.cbaelectronics.turinpadel.util.Constants.TURN_DATE_FORMAT
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
@@ -35,11 +37,19 @@ import java.util.*
 class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
 
+    enum class SaveType(val key: String) {
+        NEW("new"),
+        EDIT("edit")
+    }
+
     private lateinit var binding: ActivityAddTurnBinding
     private lateinit var viewModel: AddTurnViewModel
 
+    private var idTurn: String? = null
     private var dateEditText: String? = null
     private var curtEditText: String? = null
+    private var bundle: Bundle? = null
+
 
     var day = 0
     var month = 0
@@ -63,6 +73,9 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         // ViewModel
         viewModel = ViewModelProvider(this).get(AddTurnViewModel::class.java)
 
+        // Bundle
+        bundle = intent.extras
+
         // Setup
         localize()
         setup()
@@ -74,6 +87,16 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         binding.textViewAddTurn.text = getString(viewModel.info)
         binding.buttonSaveTurn.text = getString(viewModel.save)
         binding.buttonCancelTurn.text = getString(viewModel.back)
+
+        if (bundle != null) {
+
+            idTurn = bundle?.getString(DatabaseField.TURN_ID.key)
+            dateEditText = bundle?.get(DatabaseField.TURN_DATE.key).toString().parseFirebase().customShortFormat()
+            curtEditText = bundle?.getString(DatabaseField.TURN_CURT.key)
+
+            binding.etHorarioTurnoLibre.setText(dateEditText)
+            binding.etCanchaTurnoLibre.setText(curtEditText)
+        }
     }
 
     private fun setup() {
@@ -126,7 +149,7 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         binding.etHorarioTurnoLibre.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 dateEditText = binding.etHorarioTurnoLibre.text.toString()
-                checkEnableSave()
+                checkEnable()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -143,21 +166,41 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         binding.etCanchaTurnoLibre.setOnItemClickListener { adapterView, view, i, l ->
             hideSoftInput()
             curtEditText = binding.etCanchaTurnoLibre.text.toString()
-            checkEnableSave()
+            checkEnable()
         }
 
     }
 
-    private fun checkEnableSave() {
-        if (!dateEditText.isNullOrEmpty() && !curtEditText.isNullOrEmpty()) {
-            binding.buttonSaveTurn.enable(true)
-            binding.buttonCancelTurn.text = getString(viewModel.cancel)
+    private fun checkEnable() {
+        if(bundle?.isEmpty == false){
+
+            val dateTurn = bundle?.get(DatabaseField.TURN_DATE.key).toString().parseFirebase().customShortFormat()
+            val curtTurn = bundle?.getString(DatabaseField.TURN_CURT.key).toString()
+
+            if(curtTurn != curtEditText || dateTurn != dateEditText){
+                enableSave()
+            }else{
+                disableSave()
+            }
+
+        }else{
+
+            if (!dateEditText.isNullOrEmpty() && !curtEditText.isNullOrEmpty()) {
+                enableSave()
+            }
+
         }
+
     }
 
     private fun disableSave() {
         binding.buttonSaveTurn.enable(false)
         binding.buttonCancelTurn.text = getString(viewModel.back)
+    }
+
+    private fun enableSave() {
+        binding.buttonSaveTurn.enable(true)
+        binding.buttonCancelTurn.text = getString(viewModel.cancel)
     }
 
     private fun getDateTimeCalendar() {
@@ -215,20 +258,22 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
             // Save DataBase
 
-            val date = binding.etHorarioTurnoLibre.text.toString()
-            val curt = binding.etCanchaTurnoLibre.text.toString()
+            var date = if(binding.etHorarioTurnoLibre.text.isNullOrEmpty()) bundle?.getString(DatabaseField.TURN_DATE.key) else binding.etHorarioTurnoLibre.text.toString()
+            var curt = if(binding.etCanchaTurnoLibre.text.isNullOrEmpty()) bundle?.getString(DatabaseField.TURN_CURT.key) else binding.etCanchaTurnoLibre.text.toString()
 
-            if (date.isNotEmpty() && curt.isNotEmpty()) {
+
+            if (date!!.isNotEmpty() && curt!!.isNotEmpty()) {
 
                 val sdf = SimpleDateFormat(TURN_DATE_FORMAT)
                 val date1 = sdf.parse(date)
 
-                val turn = Turn(curt = curt, date = date1)
+                val turn = Turn(id = idTurn, curt = curt, date = date1)
                 viewModel.save(turn)
 
                 createNotification()
                 clearEditText()
                 showAlert(alertOk)
+                bundle?.clear()
                 disableSave()
 
             } else {
@@ -242,7 +287,8 @@ class AddTurnActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val title = getString(viewModel.notificationTitle)
         val body = getString(viewModel.notificationBody)
         val type = TYPE_TURN
-        val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
+        val user =
+            PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
 
         pushNotification(title, body, type, user)
     }

@@ -23,6 +23,11 @@ fun String.toDate(): Date? {
     return date
 }
 
+fun String.parseFirebase(): Date {
+    val sdf3 = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
+    return sdf3.parse(this.toString())
+}
+
 fun String.toRFC3339Date(): Date? {
     val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Constants.DEFAULT_LOCALE)

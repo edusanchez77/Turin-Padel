@@ -1,13 +1,18 @@
 package com.cbaelectronics.turinpadel.util
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.BlurMaskFilter.Blur
 import android.graphics.Matrix.ScaleToFit
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.model.domain.DatabaseNotifications
@@ -21,12 +26,11 @@ import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_POST
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_TURN
 import com.cbaelectronics.turinpadel.util.notifications.SendNotification
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import retrofit2.http.Body
 import java.util.concurrent.TimeUnit
-
-
 /**
  * Created by MoureDev by Brais Moure on 5/30/21.
  * www.mouredev.com
@@ -58,6 +62,27 @@ object UIUtil {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.light))
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.dark))
     }
+
+    // Show Options
+
+    fun showOptions(context: Context, optionOne: (() -> Unit), optionTwo: (() -> Unit)){
+        var mAlert = MaterialAlertDialogBuilder(context)
+            .setItems(R.array.strOptionsContextMenuTurn, DialogInterface.OnClickListener { dialogInterface, i ->
+                when(i){
+                    0 -> {
+                        optionOne()
+                    }
+
+                    1 -> {
+                        optionTwo()
+                    }
+                }
+            })
+
+        mAlert.show()
+    }
+
+
 
     // Push Notification
 
@@ -110,3 +135,5 @@ object UIUtil {
     }
 
 }
+
+

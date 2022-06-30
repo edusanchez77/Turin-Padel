@@ -39,7 +39,7 @@
                 android:layout_weight="0"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/logo_full" />
+                app:srcCompat="@drawable/logo_padel_full" />
 
             <TextView
                 android:id="@+id/textViewBy"
@@ -63,7 +63,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/itdev_nombre_simple" />
+                    app:srcCompat="@drawable/cba_rojo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

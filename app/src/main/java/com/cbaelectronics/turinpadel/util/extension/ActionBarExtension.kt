@@ -24,7 +24,7 @@ fun ActionBar.titleLogo(context: Context) {
     setHomeButtonEnabled(false)
     setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.primary)))
 
-    val drawable = ContextCompat.getDrawable(context, R.drawable.logo_full)
+    val drawable = ContextCompat.getDrawable(context, R.drawable.logo_padel_full)
     val bitmap = (drawable as BitmapDrawable).bitmap
     val height = Util.dpToPixel(context, UIConstants.LOGO_HEIGHT).toInt()
     val width = (height * bitmap.width) / bitmap.height

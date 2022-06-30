@@ -37,7 +37,7 @@
     <string name="onboarding.page1.title"></string>
     <string name="onboarding.page1.body">Seleccioná el día que quieras jugar y fijate los turnos disponibles. Reservalos con un solo click.</string>
     <string name="onboarding.page2.title"></string>
-    <string name="onboarding.page2.body">Podes cancelar tu reserva hasta una hora antes.</string>
+    <string name="onboarding.page2.body">Podés cancelar tu reserva hasta una hora antes.</string>
     <string name="onboarding.page3.title"></string>
     <string name="onboarding.page3.body">Compartí tus fotos y mensajes con la tribuna.</string>
 
@@ -54,11 +54,11 @@
     <string name="menu.title.account">Agenda</string>
     <string name="menu.title.grandtable">Tribuna</string>
     <string name="menu.by">por</string>
-    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de Turín Padel.\n\nEsta App se ha desarrollado para ayudar en el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app.\nPueden encontrarme en redes sociales como @cbaelectronics.\n\n¡Muchas gracias!</string>
-    <string name="menu.site">Visita www.turinpadel.com.ar para consultar toda la información oficial</string>
-    <string name="menu.onboarding">Visualiza de nuevo el tutorial de bienvenida</string>
+    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Turín Padel.\n\nEsta app se ha desarrollado para hacer más fácil y rápido el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app.\nPueden encontrarme en redes sociales como @cbaelectronics.\n\n¡Muchas gracias!</string>
+    <string name="menu.site">Visitá www.turinpadel.com.ar para consultar toda la información oficial</string>
+    <string name="menu.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
     <string name="menu.reserve">Reservas</string>
-    <string name="menu.admin">Has administrador a otro usuario</string>
+    <string name="menu.admin">Hacé administrador a otro usuario</string>
     <string name="menu.version">Versión %s. </string>
     <string name="menu.context.turn.edit">Modificar turno</string>
     <string name="menu.context.turn.delete">Eliminar turno</string>
@@ -83,6 +83,7 @@
     <string name="turn.delete.button.positive">SI</string>
     <string name="turn.delete.button.negative">NO</string>
     <string name="turn.delete.button.ok">OK</string>
+    <string name="turn.permission.denied">No tenés permisos para modificar el turno</string>
 
     <!-- Add Turn -->
     <string name="addTurn.info">Cargar turno disponible</string>

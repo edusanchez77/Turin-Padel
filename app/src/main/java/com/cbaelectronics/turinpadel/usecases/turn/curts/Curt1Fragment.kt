@@ -147,7 +147,7 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         if (turn.date > mToday){
             mDialog.show()
         }else{
-            Toast.makeText(binding.root.context, "Turno vencido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(binding.root.context, getString(viewModel.alertOutOfTime), Toast.LENGTH_SHORT).show()
         }
 
         mBtnOK.setOnClickListener {
@@ -164,7 +164,7 @@ class Curt1Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
 
     override fun onItemLongClick(turn: Turn) {
         if(viewModel.user.type == USER){
-            Toast.makeText(binding.root.context, "No tenes permisos para modificar el turno", Toast.LENGTH_SHORT).show()
+            Toast.makeText(binding.root.context, getString(viewModel.permissionDenied), Toast.LENGTH_SHORT).show()
         }else{
             UIUtil.showOptions(binding.root.context, {editTurn(turn)}, { question(turn) })
         }

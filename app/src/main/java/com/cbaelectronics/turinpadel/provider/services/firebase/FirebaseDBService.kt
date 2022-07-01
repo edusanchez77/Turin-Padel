@@ -255,7 +255,7 @@ object FirebaseDBService {
                     val user = User(name, email, avatar, token, type, register)
 
 
-                    if(date?.calendarDate()!! >= Date().calendarDate()){
+                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
 
                         val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
                         listData.add(schedule)
@@ -285,7 +285,7 @@ object FirebaseDBService {
                     val curt = document.getString(DatabaseField.TURN_CURT.key)
                     val date = document.getDate(DatabaseField.TURN_DATE.key)
 
-                    if(date?.calendarDate()!! >= Date().calendarDate()){
+                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
 
                         val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
                         listData.add(schedule)

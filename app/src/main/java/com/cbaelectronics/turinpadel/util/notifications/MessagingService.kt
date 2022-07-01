@@ -47,7 +47,7 @@ class MessagingService : FirebaseMessagingService() {
         val user = PreferencesProvider.string(this, PreferencesKey.AUTH_USER)
 
         // Valido el user que creo la notificación. Si el usuario que la genera no es el mismo que el CurrenId
-        if (message.data[Constants.USER] == user){
+        if (message.data[Constants.USER] != user){
             val channelId = getString(R.string.notification_channel_id)
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 

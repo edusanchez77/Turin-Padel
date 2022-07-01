@@ -12,11 +12,11 @@ import java.util.*
  */
 
 fun String.toDate(): Date? {
-    var formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ", Locale.getDefault())
+    var formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     formatter.timeZone = TimeZone.getTimeZone("UTC")
     var date = formatter.parse(this)
     if (date == null) {
-        formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ", Constants.DEFAULT_LOCALE)
+        formatter = SimpleDateFormat("dd/MM/yyyy", Constants.DEFAULT_LOCALE)
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         date = formatter.parse(this)
     }

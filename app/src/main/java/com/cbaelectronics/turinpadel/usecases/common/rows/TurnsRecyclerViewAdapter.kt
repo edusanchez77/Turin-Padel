@@ -88,6 +88,7 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
                     binding.btnReservarTurno.visibility = View.VISIBLE
                     binding.txtTurnoStatus.text = context.getString(R.string.turn_available_yes)
                     binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_yes)
+                    binding.btnReservarTurno.setBackgroundResource(R.drawable.primary_button_round)
                 }
                 STATUS_RESERVED -> {
                     binding.btnReservarTurno.visibility = View.VISIBLE
@@ -95,6 +96,7 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
                     binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_not)
                     binding.btnReservarTurno.enable(false)
                     binding.btnReservarTurno.setBackgroundResource(R.drawable.secondary_button_round)
+                    binding.btnReservarTurno.setTextColor(context.getColor(R.color.text))
                 }
                 STATUS_OUTOFTIME -> {
                     binding.btnReservarTurno.visibility = View.GONE

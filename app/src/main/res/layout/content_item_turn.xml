@@ -51,7 +51,6 @@
                 android:id="@+id/btnReservarTurno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_shadow"
                 android:text="Reservar"
                 app:layout_constraintHorizontal_bias=".75"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -10,22 +10,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
 import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DELETED
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import com.google.firebase.firestore.Query.Direction.DESCENDING
-import com.itdev.nosfaltauno.util.extension.removeFirebaseInvalidCharacters
-import com.itdev.nosfaltauno.util.extension.toDate
-import com.itdev.nosfaltauno.util.extension.uppercaseFirst
+import com.itdev.nosfaltauno.util.extension.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.HashMap
+import java.util.*
 
 enum class DatabaseField(val key: String) {
 
@@ -117,6 +120,15 @@ object FirebaseDBService {
         }
     }
 
+    fun updateUser(user: User, type: Int){
+
+        user.email?.let { id ->
+            usersRef.document(id)
+                .update(DatabaseField.TYPE.key, type)
+        }
+
+    }
+
     fun saveTurn(turn: Turn) {
 
         turn.date.let {
@@ -130,8 +142,10 @@ object FirebaseDBService {
         val mutableData = MutableLiveData<MutableList<Turn>>()
 
         turnRef.whereEqualTo(DatabaseField.TURN_CURT.key, curt)
+            .whereGreaterThan(DatabaseField.TURN_DATE.key, Timestamp(Date().time))
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Turn>()
+
                 for (document in value!!) {
 
                     val sfd = SimpleDateFormat("dd/MM/yyyy")
@@ -171,7 +185,7 @@ object FirebaseDBService {
             turnRef.document(id!!)
                 .update(
                     DatabaseField.TURN_STATUS.key,
-                    Constants.DEFAULT_STATUS,
+                    Constants.STATUS_DEFAULT,
                     DatabaseField.TURN_RESERVE.key,
                     FieldValue.delete()
                 )
@@ -180,6 +194,23 @@ object FirebaseDBService {
         }
 
     }
+
+    fun updateTurn(turn: Turn){
+
+        turn.id.let {
+            turnRef.document(it!!).update(DatabaseField.TURN_DATE.key, turn.date, DatabaseField.TURN_CURT.key, turn.curt)
+        }
+
+    }
+
+    fun deleteTurn(id: String){
+
+        id.let {
+            turnRef.document(it).delete()
+        }
+
+    }
+
 
     fun saveSchedule(turn: Turn, user: User) {
 
@@ -195,15 +226,55 @@ object FirebaseDBService {
         }
     }
 
+    fun loadSchedule(): LiveData<MutableList<Schedule>> {
+
+        val mutableData = MutableLiveData<MutableList<Schedule>>()
+
+        scheduleRef
+            .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<Schedule>()
+                for (document in value!!) {
+
+                    val datosUser =
+                        document.data.get(DatabaseField.TURN_RESERVE.key) as Map<String, Any>
+
+                    val id = document.id
+                    val turn = document.getString(DatabaseField.TURN_ID.key)
+                    val curt = document.getString(DatabaseField.TURN_CURT.key)
+                    val date = document.getDate(DatabaseField.TURN_DATE.key)
+
+                    val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val email = datosUser.get(DatabaseField.EMAIL.key).toString()
+                    val avatar = datosUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val register =
+                        document.getDate("${DatabaseField.POST_WRITER.key}.${DatabaseField.REGISTER_DATE.key}")
+                    val token = datosUser.get(DatabaseField.TOKEN.key).toString()
+                    val type = datosUser.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user = User(name, email, avatar, token, type, register)
+
+
+                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
+
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
+                        listData.add(schedule)
+                    }
+
+                }
+                mutableData.value = listData
+            }
+
+        return mutableData
+    }
+
 
     fun loadSchedule(user: User): LiveData<MutableList<Schedule>> {
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
 
-        scheduleRef.whereEqualTo(
-            "${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}",
-            user.email
-        )
+        scheduleRef
+            .whereEqualTo("${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}", user?.email)
             .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Schedule>()
@@ -214,9 +285,12 @@ object FirebaseDBService {
                     val curt = document.getString(DatabaseField.TURN_CURT.key)
                     val date = document.getDate(DatabaseField.TURN_DATE.key)
 
-                    val schedule = Schedule(id, turn!!, curt!!, date!!, user)
+                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
 
-                    listData.add(schedule)
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
+                        listData.add(schedule)
+                    }
+
                 }
                 mutableData.value = listData
             }
@@ -225,10 +299,11 @@ object FirebaseDBService {
     }
 
 
-    fun savePost(post: Post) {
+    suspend fun savePost(post: Post) : DocumentReference{
 
-        post.message.let {
-            postRef.document().set(post.toJSON())
+        return withContext(Dispatchers.IO){
+            postRef.add(post.toJSON())
+                .await()
         }
 
     }
@@ -320,5 +395,32 @@ object FirebaseDBService {
         return mutableData
 
     }
+
+    fun searchUser(): LiveData<MutableList<User>> {
+
+        val mutableList = MutableLiveData<MutableList<User>>()
+
+        usersRef.addSnapshotListener { value, error ->
+            val listData = mutableListOf<User>()
+            for (document in value!!) {
+                val name = document.get(DatabaseField.DISPLAY_NAME.key).toString()
+                val email = document.get(DatabaseField.EMAIL.key).toString()
+                val avatar = document.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                val register =
+                    document.getDate(DatabaseField.REGISTER_DATE.key)
+                val token = document.get(DatabaseField.TOKEN.key).toString()
+                val type = document.get(DatabaseField.TYPE.key).toString().toInt()
+
+                val user = User(name, email, avatar, token, type, register)
+
+                listData.add(user)
+            }
+            mutableList.value = listData
+        }
+
+        return mutableList
+
+    }
+
 
 }

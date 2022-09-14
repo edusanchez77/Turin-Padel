@@ -22,7 +22,8 @@ import com.cbaelectronics.turinpadel.usecases.common.rows.RecyclerCalendarConfig
 import com.cbaelectronics.turinpadel.usecases.common.tabs.tabCurtsAdapter
 import com.cbaelectronics.turinpadel.util.CalendarUtils
 import com.cbaelectronics.turinpadel.util.Constants
-import com.cbaelectronics.turinpadel.util.Constants.TYPE_ADMIN
+import com.cbaelectronics.turinpadel.util.Constants.ADMIN
+import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
@@ -139,10 +140,10 @@ class TurnFragment : Fragment() {
 
     private fun footer(){
 
-        if(viewModel.user.type!!.toInt() == TYPE_ADMIN){
-            binding.layoutButtons.visibility = View.VISIBLE
-        }else{
+        if(viewModel.user.type!!.toInt() == USER){
             binding.layoutButtons.visibility = View.GONE
+        }else{
+            binding.layoutButtons.visibility = View.VISIBLE
         }
 
         binding.buttonUpdate.setOnClickListener {

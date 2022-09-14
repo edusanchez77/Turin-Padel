@@ -10,8 +10,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -24,10 +26,14 @@ import com.airbnb.lottie.LottieAnimationView
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.FragmentCurt2Binding
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.usecases.addTurn.AddTurnRouter
 import com.cbaelectronics.turinpadel.usecases.common.rows.TurnsRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.usecases.turn.TurnViewModel
+import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.font
 import kotlinx.coroutines.runBlocking
 import java.sql.Timestamp
@@ -93,12 +99,32 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
             })
     }
 
-    override fun onItemClick(turn: Turn) {
-        Toast.makeText(binding.root.context, "Eliminar turno", Toast.LENGTH_SHORT).show()
-    }
+    private fun showMessageOk() {
 
-    override fun onItemLongClick(turn: Turn) {
-        //TODO("Not yet implemented")
+        val alertInfo = getString(viewModel.alertInfo)
+        val alertOk = getString(viewModel.alertOk)
+        val button = getString(viewModel.buttonAlertOk)
+
+        val mDialog = Dialog(binding.root.context)
+        val mWindows = mDialog.window!!
+
+        mWindows.attributes.windowAnimations = R.style.DialogAnimation
+        mDialog.setContentView(R.layout.custom_dialog_error)
+        mDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mDialog.setCancelable(false)
+        val mIcon = mDialog.findViewById<LottieAnimationView>(R.id.lottieDialogError)
+        val mText = mDialog.findViewById<TextView>(R.id.txtDialog)
+        val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialog)
+        mIcon.setAnimation(R.raw.turnos)
+        mText.text = alertInfo
+        mBtnOK.text = button
+
+        mBtnOK.setOnClickListener {
+            mDialog.cancel()
+            Toast.makeText(binding.root.context, alertOk, Toast.LENGTH_SHORT).show()
+        }
+
+        mDialog.show()
     }
 
     override fun onItemButtonClick(turn: Turn) {
@@ -122,12 +148,13 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
         if (turn.date > mToday){
             mDialog.show()
         }else{
-            Toast.makeText(binding.root.context, "Turno vencido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(binding.root.context, getString(viewModel.alertOutOfTime), Toast.LENGTH_SHORT).show()
         }
 
         mBtnOK.setOnClickListener {
             mDialog.cancel()
             viewModel.reserveTurn(turn)
+            showMessageOk()
         }
 
         mBtnCancel.setOnClickListener {
@@ -136,8 +163,41 @@ class Curt2Fragment(pDate: String) : Fragment(), TurnsRecyclerViewAdapter.onClic
 
     }
 
-    fun reserveTurn(turn: Turn) = runBlocking {
-        //TODO: Save DataBase
+    override fun onItemLongClick(turn: Turn) {
+        if(viewModel.user.type == Constants.USER){
+            Toast.makeText(binding.root.context, getString(viewModel.permissionDenied), Toast.LENGTH_SHORT).show()
+        }else{
+            UIUtil.showOptions(binding.root.context, {editTurn(turn)}, { question(turn) })
+        }
+    }
+
+    private fun editTurn(turn: Turn){
+        AddTurnRouter().launch(binding.root.context, turn)
+    }
+
+    private fun question(turn: Turn){
+
+        UIUtil.showAlert(
+            context = binding.root.context,
+            message = binding.root.context.getString(R.string.turn_delete_question),
+            positive = binding.root.context.getString(R.string.turn_delete_button_positive),
+            positiveAction = { delete(turn.id.toString()) },
+            negative = binding.root.context.getString(R.string.turn_delete_button_negative)
+        )
+
+    }
+
+    private fun delete(id: String){
+
+        // Delete Database
+        FirebaseDBService.deleteTurn(id)
+
+        // Alert
+        UIUtil.showAlert(
+            context = binding.root.context,
+            message = binding.root.context.getString(R.string.turn_delete_info_message),
+            positive = binding.root.context.getString(R.string.turn_delete_button_ok)
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

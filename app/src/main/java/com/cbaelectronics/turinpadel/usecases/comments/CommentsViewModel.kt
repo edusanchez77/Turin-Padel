@@ -15,6 +15,7 @@ import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.model.session.Session
 import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.util.Constants
 
 class CommentsViewModel: ViewModel() {
 
@@ -39,6 +40,9 @@ class CommentsViewModel: ViewModel() {
     fun save(post: String, message: String){
         val comment = Comment(post = post, message = message, user = user)
         FirebaseDBService.saveComment(comment)
+        val topic = "${Constants.TOPIC_PATH}${post}"
+
+        Session.instance.setupNotification(true, topic)
     }
 
     fun load(post: Post): LiveData<MutableList<Comment>>{

@@ -82,8 +82,8 @@ class SettingsActivity : AppCompatActivity() {
             ContextCompat.getColor(this, R.color.text)
         )
 
-        setupFooter()
         setupInfo()
+        setupFooter()
 
     }
 

@@ -3,6 +3,7 @@ package com.cbaelectronics.turinpadel.usecases.turn.curts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
@@ -17,6 +18,7 @@ class Curt1ViewModel : ViewModel() {
     val settings = Session.instance.user?.settings ?: UserSettings()
 
     // Localization
+
 
     // Public
     fun loadTurn(curt: String, mDate: String): LiveData<MutableList<Turn>>{

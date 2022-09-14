@@ -1,14 +1,7 @@
 package com.itdev.nosfaltauno.util.extension
 
-import com.cbaelectronics.turinpadel.util.Constants
 import java.text.DateFormat
-import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.TemporalAdjusters
 import java.util.*
 
 /**
@@ -18,6 +11,11 @@ import java.util.*
 
 fun Date.toJSON(): String {
     val formatter = SimpleDateFormat("EEEE, dd 'de' MMMM, HH:mm", Locale.getDefault())
+    return formatter.format(this)
+}
+
+fun Date.calendarDate() : String{
+    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return formatter.format(this)
 }
 
@@ -34,9 +32,12 @@ fun Date.shortFormat(): String {
 }
 
 fun Date.customShortFormat(): String {
-    val formatter = SimpleDateFormat("'HH:mm'hs'", Locale.getDefault())
+
+    val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     return formatter.format(this)
 }
+
+
 
 
 

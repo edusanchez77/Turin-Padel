@@ -6,6 +6,7 @@
 package com.cbaelectronics.turinpadel.usecases.common.rows
 
 import android.content.Context
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -13,12 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemTurnBinding
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.usecases.addTurn.AddTurnRouter
 import com.cbaelectronics.turinpadel.util.Constants
-import com.cbaelectronics.turinpadel.util.Constants.DEFAULT_STATUS
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_AVAILABLE_NO
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_AVAILABLE_YES
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_DELETED
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
+import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.enable
 import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.shortFormat
@@ -27,7 +32,6 @@ import com.itdev.nosfaltauno.util.extension.shortFormat
 class TurnsRecyclerViewAdapter(private val context: Context, private val itemClickListener: onClickTurnClickListener): RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
 
     interface onClickTurnClickListener{
-        fun onItemClick(turn: Turn)
         fun onItemButtonClick(turn: Turn)
         fun onItemLongClick(turn: Turn)
     }
@@ -76,30 +80,40 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
         fun bindView(turn: Turn){
 
             binding.txtHoraTurno.text = turn.date.shortFormat()
-            binding.txtTurnoStatus.text = if (turn.status == DEFAULT_STATUS) STATUS_AVAILABLE_YES else STATUS_AVAILABLE_NO
-            binding.btnReservarTurno.text = if (turn.status == DEFAULT_STATUS) context.getString(R.string.turn_button_reserve) else STATUS_AVAILABLE_NO
 
             // Buttons
 
-            if(turn.status == Constants.STATUS_RESERVED){
-                binding.btnReservarTurno.enable(false)
-                binding.btnReservarTurno.setBackgroundResource(R.drawable.secondary_button_round)
+            when(turn.status){
+                STATUS_DEFAULT -> {
+                    binding.btnReservarTurno.visibility = View.VISIBLE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_available_yes)
+                    binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_yes)
+                    binding.btnReservarTurno.setBackgroundResource(R.drawable.primary_button_round)
+                }
+                STATUS_RESERVED -> {
+                    binding.btnReservarTurno.visibility = View.VISIBLE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_available_not)
+                    binding.btnReservarTurno.text = context.getString(R.string.turn_button_reserve_available_not)
+                    binding.btnReservarTurno.enable(false)
+                    binding.btnReservarTurno.setBackgroundResource(R.drawable.secondary_button_round)
+                    binding.btnReservarTurno.setTextColor(context.getColor(R.color.text))
+                }
+                STATUS_OUTOFTIME -> {
+                    binding.btnReservarTurno.visibility = View.GONE
+                    binding.txtTurnoStatus.text = context.getString(R.string.turn_outOfTime)
+                }
             }
 
             binding.btnReservarTurno.setOnClickListener {
                 itemClickListener.onItemButtonClick(turn)
             }
 
-            binding.cardViewTurn.setOnCreateContextMenuListener(this)
-
-            /*itemView.setOnClickListener {
-                itemClickListener.onItemClick(turn)
-            }*/
-
-            /*itemView.setOnLongClickListener {
+            binding.cardViewTurn.setOnLongClickListener {
                 itemClickListener.onItemLongClick(turn)
-                true
-            }*/
+                return@setOnLongClickListener true
+            }
+
+            //binding.cardViewTurn.setOnCreateContextMenuListener(this)
 
         }
 
@@ -108,17 +122,17 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val itemCli
             v: View,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            //MenuInflater(context).inflate(R.menu.turn_menu_context, menu)
-            menu.add(adapterPosition, 1, 0, "Edit")
-            menu.add(adapterPosition, 2, 1, "Delete")
+            val edit = R.string.menu_context_turn_edit
+            val delete = R.string.menu_context_turn_delete
+
+            menu.add(adapterPosition, 1, 0, edit)
+            menu.add(adapterPosition, 2, 1, delete)
         }
 
 
 
     }
 
-    fun deleteTurn(position: Int){
-        Toast.makeText(context, dataList[position].id, Toast.LENGTH_SHORT).show()
-    }
+
 
 }

@@ -18,6 +18,8 @@
     <string name="notification.channel.description">My notification</string>
     <string name="notification.topic.newmatch.title">Nuevo partido</string>
     <string name="notification.topic.newmatch.body">Apurate a postularte, no te quedes sin jugar</string>
+    <string name="notification.topic.newturn.title">Nuevo turno disponible</string>
+    <string name="notification.topic.newturn.body">Apurate a reservarlo, no te quedes sin jugar</string>
     <string name="notification.topic.newpost.title">La tribuna está hablando</string>
     <string name="notification.topic.newpost.body">No te pierdas los últimos mensajes</string>
     <string name="notification.topic.comment.title">Tenés un nuevo mensaje</string>
@@ -28,6 +30,16 @@
     <string name="notification.topic.match.request.acept.body">Aceptaron tu solicitud y sos uno de los jugadores</string>
     <string name="notification.topic.match.request.deny.title">Malas noticias!!</string>
     <string name="notification.topic.match.request.deny.body">Rechazaron tu solicitud y no vas a ser parte del partido</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding.page0.title">Bienvenido a Turín Padel</string>
+    <string name="onboarding.page0.body">Esta app llegó para hacer más fácil la reserva de turnos.</string>
+    <string name="onboarding.page1.title"></string>
+    <string name="onboarding.page1.body">Seleccioná el día que quieras jugar y fijate los turnos disponibles. Reservalos con un solo click.</string>
+    <string name="onboarding.page2.title"></string>
+    <string name="onboarding.page2.body">Podés cancelar tu reserva hasta una hora antes.</string>
+    <string name="onboarding.page3.title"></string>
+    <string name="onboarding.page3.body">Compartí tus fotos y mensajes con la tribuna.</string>
 
     <!-- Login -->
     <string name="login.title">Iniciá sesión de forma segura con tu cuenta de Google</string>
@@ -42,9 +54,11 @@
     <string name="menu.title.account">Agenda</string>
     <string name="menu.title.grandtable">Tribuna</string>
     <string name="menu.by">por</string>
-    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de Turín Padel.\n\nEsta App se ha desarrollado para ayudar a que nadie se quede sin jugar.\nPodes sumarte a partidos ya organizados o buscar jugadores si ya tenes un turno.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app. Mientras más jugadores la conozcan, más fácil será armar un partido.\nPueden encontrarme en redes sociales como @itdev.\n\n¡Muchas gracias!</string>
-    <string name="menu.site">Visita www.nosfaltauno.com.ar para consultar toda la información oficial</string>
-    <string name="menu.onboarding">Visualiza de nuevo el tutorial de bienvenida</string>
+    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Turín Padel.\n\nEsta app se ha desarrollado para hacer más fácil y rápido el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app.\nPueden encontrarme en redes sociales como @cbaelectronics.\n\n¡Muchas gracias!</string>
+    <string name="menu.site">Visitá www.turinpadel.com.ar para consultar toda la información oficial</string>
+    <string name="menu.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
+    <string name="menu.reserve">Reservas</string>
+    <string name="menu.admin">Hacé administrador a otro usuario</string>
     <string name="menu.version">Versión %s. </string>
     <string name="menu.context.turn.edit">Modificar turno</string>
     <string name="menu.context.turn.delete">Eliminar turno</string>
@@ -55,14 +69,31 @@
     <string name="turn.info">No hay horarios cargados</string>
     <string name="turn.available.yes">Disponible</string>
     <string name="turn.available.not">Reservado</string>
-    <string name="turn.button.reserve">Reservar</string>
+    <string name="turn.outOfTime">Turno vencido</string>
+    <string name="turn.button.reserve.available.yes">Reservar</string>
+    <string name="turn.button.reserve.available.not">Reservado</string>
     <string name="turn.button.addTurn">Cargar Turno</string>
     <string name="turn.reserve.alert.1">¿Querés reservar este turno?</string>
+    <string name="turn.reserve.alert.2">Podés cancelar el turno hasta 1 hora antes</string>
+    <string name="turn.reserve.alert.3">Turno Reservado</string>
+    <string name="turn.reserve.button.ok">OK</string>
+    <string name="turn.delete.question">¿Estás seguro que querés eliminar este turno?</string>
+    <string name="turn.delete.info.title">Listo</string>
+    <string name="turn.delete.info.message">El turno se ha eliminado correctamente.</string>
+    <string name="turn.delete.button.positive">SI</string>
+    <string name="turn.delete.button.negative">NO</string>
+    <string name="turn.delete.button.ok">OK</string>
+    <string name="turn.permission.denied">No tenés permisos para modificar el turno</string>
 
     <!-- Add Turn -->
     <string name="addTurn.info">Cargar turno disponible</string>
     <string name="addTurn.button.save">Guardar</string>
     <string name="addTurn.button.cancel">Cancelar</string>
+    <string name="addTurn.button.back">Volver</string>
+    <string name="addTurn.alert.incomplete">Debes completar todos los campos para cargar el turno</string>
+    <string name="addTurn.alert.error">No se pudo cargar el turno</string>
+    <string name="addTurn.alert.ok">Turno cargado correctamente</string>
+    <string name="addTurn.alert.outoftime">No se puede cargar un turno ya vencido</string>
 
     <!-- Grandtable -->
     <string name="grandtable.info">La tribuna dice:</string>
@@ -90,6 +121,8 @@
     <string name="schedule.button">Cancelar Turno</string>
     <string name="schedule.dialog.cancel">¿Estás seguro en cancelar el turno?</string>
     <string name="schedule.countDown.live">EN JUEGO</string>
+    <string name="schedule.countDown.finish">Partido Finalizado</string>
+    <string name="schedule.chronometer.info">Finaliza en: </string>
 
     <!-- Settings -->
     <string name="settings.info.personal">Mis datos personales</string>
@@ -106,5 +139,20 @@
     <string name="settings.message.update.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
     <string name="settings.notification.turn">Cuando hay un turno disponible</string>
     <string name="settings.notification.post">Cuando alguien escribe en la tribuna</string>
+
+    <!-- Reserve -->
+    <string name="reserve.info">Reservas</string>
+
+    <!-- Make Admin -->
+    <string name="makeAdmin.info">Hacé click en el usuario al que querés hacer administrador</string>
+    <string name="makeAdmin.search">Buscar usuario</string>
+    <string name="makeAdmin.button.save">Hacer administrador</string>
+    <string name="makeAdmin.button.cancel">Cancelar</string>
+    <string name="makeAdmin.alert.title">Listo</string>
+    <string name="makeAdmin.alert.message.1">¿Queres hacer administrador a %s?</string>
+    <string name="makeAdmin.alert.message.2">Recordale que tiene que cerrar sesión e iniciar nuevamente para que se actualize el cambio</string>
+    <string name="makeAdmin.alert.button.positive">SI</string>
+    <string name="makeAdmin.alert.button.negative">NO</string>
+    <string name="makeAdmin.alert.button.ok">OK</string>
 
 </resources>

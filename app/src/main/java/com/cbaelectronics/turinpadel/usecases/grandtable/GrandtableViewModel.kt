@@ -1,5 +1,6 @@
 package com.cbaelectronics.turinpadel.usecases.grandtable
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.turinpadel.R
@@ -8,6 +9,10 @@ import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.model.session.Session
 import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
+import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TOPIC_PATH
+import kotlinx.coroutines.runBlocking
+import org.xmlpull.v1.XmlPullParser.COMMENT
 
 class GrandtableViewModel : ViewModel() {
 
@@ -24,12 +29,17 @@ class GrandtableViewModel : ViewModel() {
     val alertOk = R.string.grandtable_alert_ok
     val alertError = R.string.grandtable_alert_error
     val alertIncomplete = R.string.grandtable_alert_incomplete
+    val notificationTitle = R.string.notification_topic_newpost_title
+    val notificationBody = R.string.notification_topic_newpost_body
 
     // Public
 
-    fun save(message: String){
+    fun save(message: String) = runBlocking{
         val post = Post(message = message, user = user)
-        FirebaseDBService.savePost(post)
+        val documentReference = FirebaseDBService.savePost(post)
+        val topic = "${TOPIC_PATH}${documentReference.id}"
+
+        Session.instance.setupNotification(true, topic)
     }
 
 

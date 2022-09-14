@@ -11,4 +11,9 @@
         <item>Cancha 2</item>
     </string-array>
 
+    <string-array name="strOptionsContextMenuTurn">
+        <item>@string/menu.context.turn.edit</item>
+        <item>@string/menu.context.turn.delete</item>
+    </string-array>
+
 </resources>

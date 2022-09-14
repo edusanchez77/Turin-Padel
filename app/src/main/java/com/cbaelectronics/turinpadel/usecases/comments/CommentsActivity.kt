@@ -5,30 +5,27 @@
 
 package com.cbaelectronics.turinpadel.usecases.comments
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityCommentsBinding
 import com.cbaelectronics.turinpadel.model.domain.Post
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
 import com.cbaelectronics.turinpadel.usecases.common.rows.CommentsRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
-import com.itdev.nosfaltauno.util.extension.addClose
+import com.cbaelectronics.turinpadel.util.UIUtil.pushNotification
+import com.cbaelectronics.turinpadel.util.notifications.Constants
 import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.hideSoftInput
 import com.itdev.nosfaltauno.util.extension.mediumFormat
@@ -158,12 +155,23 @@ class CommentsActivity : AppCompatActivity() {
                 Toast.makeText(this, alertIncomplete, Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.save(post.id!!, message)
+                createNotification()
+
                 hideSoftInput()
                 binding.editTextCommentWriteComment.text = null
 
                 Toast.makeText(this, alertOk, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun createNotification() {
+        val title = getString(viewModel.notificationTitle)
+        val body = getString(viewModel.notificationBody)
+        val type = Constants.TYPE_COMMENT
+        val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
+
+        pushNotification(title, body, type, user, post.id)
     }
 
     override fun onSupportNavigateUp(): Boolean {

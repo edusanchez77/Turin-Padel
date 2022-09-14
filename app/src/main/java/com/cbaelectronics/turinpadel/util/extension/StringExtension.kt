@@ -12,15 +12,20 @@ import java.util.*
  */
 
 fun String.toDate(): Date? {
-    var formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ", Locale.getDefault())
+    var formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     formatter.timeZone = TimeZone.getTimeZone("UTC")
     var date = formatter.parse(this)
     if (date == null) {
-        formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ", Constants.DEFAULT_LOCALE)
+        formatter = SimpleDateFormat("dd/MM/yyyy", Constants.DEFAULT_LOCALE)
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         date = formatter.parse(this)
     }
     return date
+}
+
+fun String.parseFirebase(): Date {
+    val sdf3 = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
+    return sdf3.parse(this.toString())
 }
 
 fun String.toRFC3339Date(): Date? {

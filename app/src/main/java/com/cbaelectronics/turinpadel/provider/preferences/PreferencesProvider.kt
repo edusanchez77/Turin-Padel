@@ -9,7 +9,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.cbaelectronics.turinpadel.util.Constants
-import com.cbaelectronics.turinpadel.util.Constants.TYPE_USER
+import com.cbaelectronics.turinpadel.util.Constants.USER
 
 enum class PreferencesKey(val value: String){
     TOKEN("token"),
@@ -42,7 +42,7 @@ object PreferencesProvider {
     }
 
     fun int(context: Context, key: PreferencesKey): Int{
-        return prefs(context).getInt(key.value, TYPE_USER)
+        return prefs(context).getInt(key.value, USER)
     }
 
     fun bool(context: Context, key: PreferencesKey): Boolean? {

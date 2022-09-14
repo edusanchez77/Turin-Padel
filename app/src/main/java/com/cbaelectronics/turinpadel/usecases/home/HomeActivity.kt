@@ -24,6 +24,7 @@ import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.usecases.menu.MenuRouter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.itdev.nosfaltauno.util.extension.titleLogo
 
 class HomeActivity : AppCompatActivity() {
@@ -44,7 +45,13 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         // Setup
+        initCrashlytics()
         setup()
+
+    }
+
+    private fun initCrashlytics() {
+        FirebaseCrashlytics.getInstance().setUserId(viewModel.user.email.toString())
     }
 
 

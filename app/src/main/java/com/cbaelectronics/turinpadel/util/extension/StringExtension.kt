@@ -25,7 +25,12 @@ fun String.toDate(): Date? {
 
 fun String.parseFirebase(): Date {
     val sdf3 = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
-    return sdf3.parse(this.toString())
+    return sdf3.parse(this)
+}
+
+fun String.converteToDate() : Date {
+    val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return formatter.parse(this)
 }
 
 fun String.toRFC3339Date(): Date? {
@@ -43,6 +48,7 @@ fun String.uppercaseFirst(): String {
         it.uppercase()
     }
 }
+
 
 fun String.removeFirebaseInvalidCharacters(): String {
     return replace(".", "")

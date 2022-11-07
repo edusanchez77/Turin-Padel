@@ -12,6 +12,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityMenuBinding
+import com.cbaelectronics.turinpadel.usecases.fixedTurns.FixedTurnRouter
 import com.cbaelectronics.turinpadel.usecases.makeAdmin.MakeAdminRouter
 import com.cbaelectronics.turinpadel.usecases.onboarding.OnboardingRouter
 import com.cbaelectronics.turinpadel.usecases.reserve.ReserveRouter
@@ -48,6 +49,7 @@ class MenuActivity : AppCompatActivity() {
 
         binding.buttonAdmin.text = getString(viewModel.admin)
         binding.buttonSchedule.text = getString(viewModel.schedule)
+        binding.buttonFixedTurn.text = getString(viewModel.fixedTurn)
         binding.textViewBy.text = getString(viewModel.byText)
         binding.textViewInfo.text = getString(viewModel.infoText)
         binding.buttonSite.text = getString(viewModel.siteText)
@@ -64,6 +66,7 @@ class MenuActivity : AppCompatActivity() {
         binding.textViewInfo.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.light))
         binding.buttonAdmin.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
         binding.buttonSchedule.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
+        binding.buttonFixedTurn.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
         binding.buttonSite.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
         binding.buttonOnboarding.font(FontSize.BODY, FontType.LIGHT, getColor(R.color.text))
         binding.textViewVersion.font(FontSize.CAPTION, FontType.LIGHT, getColor(R.color.text))
@@ -71,19 +74,25 @@ class MenuActivity : AppCompatActivity() {
         when(viewModel.user.type){
             ADMIN -> {
                 binding.buttonSchedule.visibility = View.VISIBLE
+                binding.buttonFixedTurn.visibility = View.VISIBLE
                 binding.buttonAdmin.visibility = View.VISIBLE
+                binding.line0.visibility = View.VISIBLE
                 binding.line1.visibility = View.VISIBLE
                 binding.line2.visibility = View.VISIBLE
             }
             CREATOR -> {
                 binding.buttonSchedule.visibility = View.VISIBLE
+                binding.buttonFixedTurn.visibility = View.VISIBLE
                 binding.buttonAdmin.visibility = View.GONE
+                binding.line0.visibility = View.VISIBLE
                 binding.line1.visibility = View.VISIBLE
                 binding.line2.visibility = View.GONE
             }
             USER -> {
                 binding.buttonSchedule.visibility = View.GONE
+                binding.buttonFixedTurn.visibility = View.GONE
                 binding.buttonAdmin.visibility = View.GONE
+                binding.line0.visibility = View.GONE
                 binding.line1.visibility = View.GONE
                 binding.line2.visibility = View.GONE
             }
@@ -110,6 +119,10 @@ class MenuActivity : AppCompatActivity() {
 
         binding.buttonSchedule.setOnClickListener {
             ReserveRouter().launch(this)
+        }
+
+        binding.buttonFixedTurn.setOnClickListener {
+            FixedTurnRouter().launch(this)
         }
 
         binding.buttonAdmin.setOnClickListener {

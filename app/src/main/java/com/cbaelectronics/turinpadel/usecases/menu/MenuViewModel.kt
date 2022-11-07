@@ -44,6 +44,7 @@ class MenuViewModel: ViewModel() {
     val onboardingText = R.string.menu_onboarding
     val admin = R.string.menu_admin
     val schedule = R.string.menu_reserve
+    val fixedTurn = R.string.menu_fixedTurn
 
     // Public
 

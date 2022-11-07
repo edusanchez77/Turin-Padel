@@ -9,6 +9,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/textViewFechaFueraCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,46 +30,84 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textViewFechaFueraCard">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/textViewReserveDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Lunes, 19 de julio de 2021, 15:00hs" />
-
-            <TextView
-                android:id="@+id/textViewReserveCurt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Cancha 1"/>
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageViewReserveUser"
-                    android:layout_width="18dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/user" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/textViewReserveUser"
+                    android:id="@+id/textViewReserveDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    tools:text="Eduardo Sanchez"/>
+                    tools:text="Lunes, 19 de julio de 2021, 15:00hs" />
+
+                <TextView
+                    android:id="@+id/textViewReserveCurt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Cancha 1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewReserveUser"
+                        android:layout_width="18dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/user" />
+
+                    <TextView
+                        android:id="@+id/textViewReserveUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        tools:text="Eduardo Sanchez"/>
+
+                </LinearLayout>
 
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imageViewClipReserve"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/clip"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textViewReserveClip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Turno\nFijo"
+                    android:gravity="center"
+                    app:layout_constraintHorizontal_bias=".6"
+                    app:layout_constraintVertical_bias=".6"
+                    app:layout_constraintTop_toTopOf="@id/imageViewClipReserve"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewClipReserve"
+                    app:layout_constraintStart_toStartOf="@id/imageViewClipReserve"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewClipReserve"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

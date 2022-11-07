@@ -1,0 +1,8 @@
+<!--~
+  ~ Created by CbaElectronics by Eduardo Sanchez on 14/9/22 10:25.
+  ~  www.cbaelectronics.com.ar
+  -->
+
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

@@ -18,8 +18,12 @@ import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemScheduleBinding
 import com.cbaelectronics.turinpadel.model.domain.Schedule
 import com.cbaelectronics.turinpadel.model.domain.Turn
+import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
 import com.cbaelectronics.turinpadel.util.Constants.TIME_GAME
 import com.cbaelectronics.turinpadel.util.Constants.TIME_UNTIL_CANCEL
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_TURN
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.cbaelectronics.turinpadel.util.Util
@@ -33,7 +37,9 @@ import kotlin.time.Duration.Companion.milliseconds
 class ScheduleRecyclerViewAdapter(private val context: Context, private val itemClickListener: ScheduleRecyclerViewAdapter.onClickScheduleClickListener): RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
 
     interface onClickScheduleClickListener{
-        fun onItemButtonClick(schedule: Schedule)
+        fun onItemButtonCancelClick(schedule: Schedule)
+        fun onItemButtonDeleteClick(schedule: Schedule)
+        fun onItemButtonConfirmClick(schedule: Schedule)
     }
 
     private var dataList = mutableListOf<Schedule>()
@@ -51,6 +57,7 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
 
         binding.textViewScheduleDate.font(FontSize.SUBHEAD, FontType.BOLD, ContextCompat.getColor(context, R.color.text))
         binding.textViewScheduleCurt.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
+        binding.textViewScheduleClip.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.countDown.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.chronometerItemSchedule.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.chronometerItemInfo.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
@@ -77,17 +84,39 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
             // Localize
             binding.textViewScheduleDate.text = schedule.date.longFormat()
             binding.textViewScheduleCurt.text = schedule.curt
-            binding.buttonScheduleCancel.text = context.getString(R.string.schedule_button)
+            binding.buttonScheduleCancel.text = context.getString(R.string.schedule_button_cancel)
             binding.chronometerItemInfo.text = context.getString(R.string.schedule_chronometer_info)
+            binding.buttonDeleteFixedTurn.text = context.getString(R.string.schedule_button_fixedTurn_delete)
+            binding.buttonCancelFixedTurn.text = context.getString(R.string.schedule_button_fixedTurn_cancel)
+            binding.buttonSaveFixedTurn.text = context.getString(R.string.schedule_button_fixedTurn_confirm)
+            binding.textViewScheduleClip.text = context.getString(R.string.schedule_clip_fixedTurn)
 
             // Setup
             binding.chronometerItemSchedule.visibility = View.GONE
             binding.chronometerItemInfo.visibility = View.GONE
+            binding.buttonScheduleCancel.visibility = if(schedule.turnType == TYPE_TURN) View.VISIBLE else View.GONE
+            binding.imageViewClipFixedTurn.visibility = if(schedule.turnType == TYPE_FIXED_TURN) View.VISIBLE else View.GONE
+            binding.textViewScheduleClip.visibility = if(schedule.turnType == TYPE_FIXED_TURN) View.VISIBLE else View.GONE
+            binding.layoutConfirmFixedTurnButtons.visibility = if(schedule.turnType == TYPE_FIXED_TURN && schedule.status == FIXEDTURN_STATUS_PENDING) View.VISIBLE else View.GONE
 
             // Buttons
             binding.buttonScheduleCancel.setOnClickListener {
-                itemClickListener.onItemButtonClick(schedule)
+                itemClickListener.onItemButtonCancelClick(schedule)
             }
+
+            binding.buttonCancelFixedTurn.setOnClickListener {
+                itemClickListener.onItemButtonCancelClick(schedule)
+            }
+
+            binding.buttonSaveFixedTurn.setOnClickListener {
+                itemClickListener.onItemButtonConfirmClick(schedule)
+            }
+
+            binding.buttonDeleteFixedTurn.setOnClickListener {
+                itemClickListener.onItemButtonDeleteClick(schedule)
+            }
+
+
 
             // Timer
             timer(context, schedule)

@@ -15,7 +15,10 @@ data class Schedule(
     val turn: String,
     val curt: String,
     val date: Date,
-    val user: User
+    val user: User,
+    val turnType: String,
+    val status: String?,
+    val day: String?
 ) {
     fun toJSON(): Map<String, Any> {
 
@@ -24,6 +27,9 @@ data class Schedule(
             DatabaseField.TURN_ID.key to (turn ?: ""),
             DatabaseField.TURN_CURT.key to (curt ?: ""),
             DatabaseField.TURN_DATE.key to (date ?: ""),
+            DatabaseField.FIXED_TURN_STATUS.key to (status ?: ""),
+            DatabaseField.SCHEDULE_DAY.key to (day ?: ""),
+
             DatabaseField.DISPLAY_NAME.key to (user.displayName ?: ""),
             DatabaseField.EMAIL.key to (user.email ?: ""),
             DatabaseField.PROFILE_IMAGE_URL.key to (user.photoProfile ?: ""),

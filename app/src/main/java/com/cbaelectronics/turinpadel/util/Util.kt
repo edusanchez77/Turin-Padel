@@ -6,6 +6,8 @@ import android.net.Uri
 import android.util.DisplayMetrics
 import com.cbaelectronics.turinpadel.BuildConfig
 import com.cbaelectronics.turinpadel.R
+import com.cbaelectronics.turinpadel.model.domain.WeekdayType
+import com.itdev.nosfaltauno.util.extension.uppercaseFirst
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
@@ -28,6 +30,19 @@ object Util {
 
     fun version(): String {
         return "${BuildConfig.VERSION_NAME}"
+    }
+
+    fun getOrder(context: Context, day: String): Int{
+        return when(day.uppercaseFirst()){
+            context.getString(WeekdayType.MONDAY.nameKey).uppercaseFirst() -> WeekdayType.MONDAY.index
+            context.getString(WeekdayType.TUESDAY.nameKey).uppercaseFirst() -> WeekdayType.TUESDAY.index
+            context.getString(WeekdayType.WEDNESDAY.nameKey).uppercaseFirst() -> WeekdayType.WEDNESDAY.index
+            context.getString(WeekdayType.THURSDAY.nameKey).uppercaseFirst() -> WeekdayType.THURSDAY.index
+            context.getString(WeekdayType.FRIDAY.nameKey).uppercaseFirst() -> WeekdayType.FRIDAY.index
+            context.getString(WeekdayType.SATURDAY.nameKey).uppercaseFirst() -> WeekdayType.SATURDAY.index
+            context.getString(WeekdayType.SUNDAY.nameKey).uppercaseFirst() -> WeekdayType.SUNDAY.index
+            else -> WeekdayType.CUSTOM.index
+        }
     }
 
     fun countdown(context: Context, millis: Long): String? {
@@ -67,6 +82,8 @@ object Util {
     fun hourToMilliseconds(time: Int): Int {
         return time * 60 * 60 * 1000
     }
+
+
 
     /*fun easteregg(context: Context, user: String) {
         if (user == Constants.ADMIN_LOGIN) {

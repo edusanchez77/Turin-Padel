@@ -30,6 +30,9 @@ import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.model.session.Session
 import com.cbaelectronics.turinpadel.usecases.common.rows.ScheduleRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.usecases.settings.SettingsRouter
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.itdev.nosfaltauno.util.extension.font
@@ -104,7 +107,7 @@ class AccountFragment : Fragment(), ScheduleRecyclerViewAdapter.onClickScheduleC
     }
 
     private fun observeData() {
-        viewModel.loadSchedule().observe(viewLifecycleOwner, Observer {
+        viewModel.loadSchedule(binding.root.context).observe(viewLifecycleOwner, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
         })
@@ -118,12 +121,9 @@ class AccountFragment : Fragment(), ScheduleRecyclerViewAdapter.onClickScheduleC
 
     }
 
-    override fun onItemButtonClick(schedule: Schedule) {
-
+    private fun createAlertDialog(schedule: Schedule, status: String){
         val mDialog = Dialog(binding.root.context)
         val mWindows = mDialog.window!!
-
-        val mToday = Timestamp(Date().time)
 
         mWindows.attributes.windowAnimations = R.style.DialogAnimation
         mDialog.setContentView(R.layout.custom_dialog_opciones)
@@ -134,25 +134,46 @@ class AccountFragment : Fragment(), ScheduleRecyclerViewAdapter.onClickScheduleC
         val mBtnOK = mDialog.findViewById<Button>(R.id.btnDialogAcept)
         val mBtnCancel = mDialog.findViewById<Button>(R.id.btnDialogCancel)
         mIcon.setAnimation(R.raw.agenda)
-        mText.text = getString(viewModel.cancel)
+        mText.text = when(status){
+            FIXEDTURN_STATUS_CANCEL -> getString(viewModel.cancel)
+            FIXEDTURN_STATUS_DELETED -> getString(viewModel.deleted)
+            FIXEDTURN_STATUS_CONFIRM -> getString(viewModel.confirm)
+            else -> getString(viewModel.cancel)
+        }
 
         mDialog.show()
 
         mBtnOK.setOnClickListener {
             mDialog.cancel()
-            viewModel.cancel(schedule)
+            when(status){
+                FIXEDTURN_STATUS_CANCEL -> viewModel.cancel(schedule)
+                FIXEDTURN_STATUS_DELETED -> viewModel.delete(schedule)
+                FIXEDTURN_STATUS_CONFIRM -> viewModel.confirm(schedule)
+            }
+
         }
 
         mBtnCancel.setOnClickListener {
             mDialog.cancel()
         }
-
     }
+
+
+    override fun onItemButtonCancelClick(schedule: Schedule) {
+        createAlertDialog(schedule, FIXEDTURN_STATUS_CANCEL)
+    }
+
+    override fun onItemButtonDeleteClick(schedule: Schedule) {
+        createAlertDialog(schedule, FIXEDTURN_STATUS_DELETED)
+    }
+
+    override fun onItemButtonConfirmClick(schedule: Schedule) {
+        createAlertDialog(schedule, FIXEDTURN_STATUS_CONFIRM)
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        // TODO: Use the ViewModel
     }
 
 }

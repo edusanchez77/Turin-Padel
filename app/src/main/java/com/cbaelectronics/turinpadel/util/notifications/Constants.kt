@@ -19,6 +19,7 @@ class Constants {
 
         const val TYPE_MATCH = "match"
         const val TYPE_TURN = "turn"
+        const val TYPE_FIXED_TURN = "fixedTurn"
         const val TYPE_POST = "post"
         const val TYPE_COMMENT = "comment"
         const val TYPE_REQUEST = "request"

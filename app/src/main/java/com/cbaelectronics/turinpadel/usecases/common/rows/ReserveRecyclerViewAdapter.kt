@@ -15,10 +15,11 @@ import com.bumptech.glide.Glide
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemReserveBinding
 import com.cbaelectronics.turinpadel.model.domain.Schedule
+import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
-import com.itdev.nosfaltauno.util.extension.font
-import com.itdev.nosfaltauno.util.extension.mediumFormat
+import com.itdev.nosfaltauno.util.extension.*
+import java.util.*
 
 class ReserveRecyclerViewAdapter(private val context: Context): RecyclerView.Adapter<ReserveRecyclerViewAdapter.ViewHolder>() {
 
@@ -35,9 +36,11 @@ class ReserveRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
         // UI
         val binding = viewHolder.binding
 
+        binding.textViewFechaFueraCard.font(FontSize.SUBHEAD, FontType.BOLD, ContextCompat.getColor(context, R.color.primary_shadow))
         binding.textViewReserveDate.font(FontSize.SUBHEAD, FontType.BOLD, ContextCompat.getColor(context, R.color.text))
         binding.textViewReserveCurt.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
         binding.textViewReserveUser.font(FontSize.BUTTON, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
+        binding.textViewReserveClip.font(FontSize.CAPTION, FontType.REGULAR, ContextCompat.getColor(context, R.color.text))
 
         return viewHolder
     }
@@ -56,10 +59,25 @@ class ReserveRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
         val binding = ContentItemReserveBinding.bind(itemView)
 
         fun bindView(reserve: Schedule){
-            binding.textViewReserveDate.text = reserve.date.mediumFormat()
+
+            // Localize
+
+            binding.textViewFechaFueraCard.text = when(reserve.day){
+                Date().calendarDate() -> context.getString(R.string.days_today)
+                Date().addDays(Date(), 1)?.calendarDate() -> context.getString(R.string.days_tomorrow)
+                else -> reserve.day
+            }
+            binding.textViewReserveDate.text = reserve.date.longFormat()
             binding.textViewReserveCurt.text = reserve.curt
             binding.textViewReserveUser.text = reserve.user.displayName
+            binding.textViewReserveClip.text = context.getString(R.string.schedule_clip_fixedTurn)
             Glide.with(context).load(reserve.user.photoProfile).into(binding.imageViewReserveUser)
+
+            // Setup
+
+            binding.imageViewClipReserve.visibility = if(reserve.turnType == Constants.TYPE_FIXED_TURN) View.VISIBLE else View.GONE
+            binding.textViewReserveClip.visibility = if(reserve.turnType == Constants.TYPE_FIXED_TURN) View.VISIBLE else View.GONE
+            binding.textViewFechaFueraCard.visibility = if(reserve.day.isNullOrBlank()) View.GONE else View.VISIBLE
         }
 
     }

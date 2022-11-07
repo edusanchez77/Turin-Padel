@@ -20,13 +20,13 @@ class SendNotification {
 
                 val response = RetrofitInstance.api.postNotification(notification)
                 if (response.isSuccessful) {
-                    Log.d("NOTIFICACION 2", "OK")
+                    Log.d("NotificationFixedTurn NOTIFICACION 2", "OK")
                 } else {
-                    Log.d("ERROR: ", response.message())
+                    Log.d("NotificationFixedTurn ERROR: ", response.message())
                 }
 
             } catch (e: Exception) {
-                Log.d("ERROR CATCH: ", e.toString())
+                Log.d("NotificationFixedTurn ERROR CATCH: ", e.toString())
             }
         }
 

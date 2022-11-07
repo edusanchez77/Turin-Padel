@@ -13,7 +13,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintWidth_percent=".9"
@@ -22,93 +21,184 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewScheduleDate"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/textViewScheduleDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Lunes, 19 de julio de 2021, 15:00hs"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0" />
+
+                <TextView
+                    android:id="@+id/textViewScheduleCurt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Cancha 1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintVertical_bias="0.1"
+                    app:layout_constraintStart_toStartOf="@+id/textViewScheduleDate"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewScheduleDate" />
+
+                <ImageView
+                    android:id="@+id/imageViewScheduleCountdown"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/time_clock_circle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/textViewScheduleCurt"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewScheduleCurt"
+                    app:layout_constraintVertical_bias="1" />
+
+                <TextView
+                    android:id="@+id/countDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="00:00"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageViewScheduleCountdown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias=".03"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewScheduleCountdown"
+                    app:layout_constraintTop_toTopOf="@+id/imageViewScheduleCountdown" />
+
+                <TextView
+                    android:id="@+id/chronometerItemSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="00:00"
+                    app:layout_constraintHorizontal_bias=".98"
+                    app:layout_constraintStart_toEndOf="@id/countDown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/countDown"
+                    app:layout_constraintBottom_toBottomOf="@id/countDown"/>
+
+                <TextView
+                    android:id="@+id/chronometerItemInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Finaliza en: "
+                    app:layout_constraintHorizontal_bias=".98"
+                    app:layout_constraintEnd_toStartOf="@id/chronometerItemSchedule"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/chronometerItemSchedule"/>
+
+                <Button
+                    android:id="@+id/buttonScheduleCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_shadow"
+                    app:layout_constraintBottom_toBottomOf="@+id/countDown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintVertical_bias="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Cancelar Turno" />
+
+                <ImageView
+                    android:id="@+id/imageViewClipFixedTurn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/clip"
+                    app:layout_constraintTop_toTopOf="@id/textViewScheduleDate"
+                    app:layout_constraintEnd_toEndOf="@id/buttonScheduleCancel"/>
+
+                <TextView
+                    android:id="@+id/textViewScheduleClip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Turno\nFijo"
+                    android:gravity="center"
+                    app:layout_constraintHorizontal_bias=".6"
+                    app:layout_constraintVertical_bias=".6"
+                    app:layout_constraintTop_toTopOf="@id/imageViewClipFixedTurn"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewClipFixedTurn"
+                    app:layout_constraintStart_toStartOf="@id/imageViewClipFixedTurn"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewClipFixedTurn"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutConfirmFixedTurnButtons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Lunes, 19 de julio de 2021, 15:00hs"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+                app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/textViewScheduleCurt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Cancha 1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintVertical_bias="0.1"
-                app:layout_constraintStart_toStartOf="@+id/textViewScheduleDate"
-                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleDate" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonDeleteFixedTurn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/secondary_button_round"
+                    android:text="Action button"
+                    android:textAllCaps="false"
+                    app:cornerRadius="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonCancelFixedTurn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                     />
 
-            <ImageView
-                android:id="@+id/imageViewScheduleCountdown"
-                android:layout_width="20dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/time_clock_circle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/textViewScheduleCurt"
-                app:layout_constraintTop_toBottomOf="@+id/textViewScheduleCurt"
-                app:layout_constraintVertical_bias="1" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCancelFixedTurn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/secondary_button_round"
+                    android:text="Action button"
+                    android:textAllCaps="false"
+                    app:cornerRadius="24dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/buttonDeleteFixedTurn"
+                    app:layout_constraintEnd_toStartOf="@id/buttonSaveFixedTurn"
+                     />
 
-            <TextView
-                android:id="@+id/countDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="00:00"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewScheduleCountdown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias=".03"
-                app:layout_constraintStart_toEndOf="@+id/imageViewScheduleCountdown"
-                app:layout_constraintTop_toTopOf="@+id/imageViewScheduleCountdown" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonSaveFixedTurn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/primary_button_round"
+                    android:text="Action button"
+                    android:textAllCaps="false"
+                    app:cornerRadius="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/buttonCancelFixedTurn"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/chronometerItemSchedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="00:00"
-                app:layout_constraintHorizontal_bias=".98"
-                app:layout_constraintStart_toEndOf="@id/countDown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/countDown"
-                app:layout_constraintBottom_toBottomOf="@id/countDown"/>
 
-            <TextView
-                android:id="@+id/chronometerItemInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Finaliza en: "
-                app:layout_constraintHorizontal_bias=".98"
-                app:layout_constraintEnd_toStartOf="@id/chronometerItemSchedule"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/chronometerItemSchedule"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/buttonScheduleCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_shadow"
-                app:layout_constraintBottom_toBottomOf="@+id/countDown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintVertical_bias="1"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="Cancelar Turno" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

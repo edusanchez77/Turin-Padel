@@ -9,6 +9,14 @@ object Constants {
     // Generic
     const val TIME_GAME = 90
     const val ADMIN_LOGIN = "eduardosanchez77@gmail.com"
+    const val LUNES = "Lunes"
+    const val MARTES = "Martes"
+    const val MIERCOLES = "Miércoles"
+    const val JUEVES = "Jueves"
+    const val VIERNES = "Viernes"
+    const val SABADO = "Sábado"
+    const val DOMINGO = "Domingo"
+    const val WEEK = 7
 
     // Login
     const val LOGIN_GOOGLE = 100
@@ -29,6 +37,10 @@ object Constants {
     const val REQUEST_CODE_ADDRESS_OK = 0
     const val REQUEST_CODE_ADDRESS_CANCEL = 1
 
+    // Turns Types
+    const val TYPE_TURN = "turn"
+    const val TYPE_FIXED_TURN = "fixedTurn"
+
     // Turns
     const val STATUS_DEFAULT = 0
     const val STATUS_RESERVED = 1
@@ -37,6 +49,12 @@ object Constants {
     const val TIME_UNTIL_CANCEL = 1
     const val STATUS_AVAILABLE_YES = "Disponible"
     const val STATUS_AVAILABLE_NO = "Reservado"
+
+    // Fixed Turns
+    const val FIXEDTURN_STATUS_PENDING = "P"
+    const val FIXEDTURN_STATUS_CANCEL = "R"
+    const val FIXEDTURN_STATUS_CONFIRM = "C"
+    const val FIXEDTURN_STATUS_DELETED = "D"
 
     // Grandtable
     const val DEFAULT_COUNT_COMMENTS = 0
@@ -52,6 +70,7 @@ object Constants {
     const val NEW_MATCH = "/topics/newMatch"
     const val NEW_TURN = "/topics/newTurn"
     const val NEW_POST = "/topics/newPost"
+    const val NEW_FIXED_TURN = "/topics/newFixedTurn"
 
     // Retrofit
 
@@ -60,6 +79,7 @@ object Constants {
     val DEFAULT_LOCALE = Locale( "en_US_POSIX")
     const val JSON_DATE_FORMAT = "MMM d, yyyy HH:mm:ss"
     const val TURN_DATE_FORMAT = "dd/MM/yyyy HH:mm"
+    const val FIXED_TURN_FORMAT = "HH:mm"
 
     // Networks
     const val TURINPADEL_URI = "https://turinpadel.com.ar"

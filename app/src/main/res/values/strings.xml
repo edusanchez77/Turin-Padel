@@ -11,6 +11,15 @@
     <string name="previous">Anterior</string>
     <string name="countdown.day">día,</string>
     <string name="countdown.days">días,</string>
+    <string name="days.monday">Lunes</string>
+    <string name="days.tuesday">Martes</string>
+    <string name="days.wednesday">Miércoles</string>
+    <string name="days.thursday">Jueves</string>
+    <string name="days.friday">Viernes</string>
+    <string name="days.saturday">Sábado</string>
+    <string name="days.sunday">Domingo</string>
+    <string name="days.today">HOY</string>
+    <string name="days.tomorrow">MAÑANA</string>
 
     <!-- Push Notifications -->
     <string name="notification.channel.id">Nos Falta Uno</string>
@@ -20,6 +29,8 @@
     <string name="notification.topic.newmatch.body">Apurate a postularte, no te quedes sin jugar</string>
     <string name="notification.topic.newturn.title">Nuevo turno disponible</string>
     <string name="notification.topic.newturn.body">Apurate a reservarlo, no te quedes sin jugar</string>
+    <string name="notification.topic.newFixedTurn.title">Tenés un turno fijo a tu nombre</string>
+    <string name="notification.topic.newFixedTurn.body">No te olvides de confirmarlo antes del horario establecido</string>
     <string name="notification.topic.newpost.title">La tribuna está hablando</string>
     <string name="notification.topic.newpost.body">No te pierdas los últimos mensajes</string>
     <string name="notification.topic.comment.title">Tenés un nuevo mensaje</string>
@@ -54,10 +65,11 @@
     <string name="menu.title.account">Agenda</string>
     <string name="menu.title.grandtable">Tribuna</string>
     <string name="menu.by">por</string>
-    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Turín Padel.\n\nEsta app se ha desarrollado para hacer más fácil y rápido el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te parece una buena idea y queres que la app crezca, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app.\nPueden encontrarme en redes sociales como @cbaelectronics.\n\n¡Muchas gracias!</string>
+    <string name="menu.info">¡Hola! Mi nombre es Eduardo Sanchez, soy el creador de la aplicación de Turín Padel.\nEsta app se ha desarrollado para hacer más fácil y rápido el manejo de los turnos y reservas.\n\nPronto se vienen más novedades.\n\nSi te gusta, podes dejarme algún tipo de sugerencia para mejorar, o compartir la app para que crezca.\nPueden encontrarme en redes sociales como @cbaelectronics.</string>
     <string name="menu.site">Visitá www.turinpadel.com.ar para consultar toda la información oficial</string>
     <string name="menu.onboarding">Visualizá de nuevo el tutorial de bienvenida</string>
     <string name="menu.reserve">Reservas</string>
+    <string name="menu.fixedTurn">Turnos fijos</string>
     <string name="menu.admin">Hacé administrador a otro usuario</string>
     <string name="menu.version">Versión %s. </string>
     <string name="menu.context.turn.edit">Modificar turno</string>
@@ -95,6 +107,29 @@
     <string name="addTurn.alert.ok">Turno cargado correctamente</string>
     <string name="addTurn.alert.outoftime">No se puede cargar un turno ya vencido</string>
 
+    <!-- Add Fixed Turn -->
+    <string name="addFixedTurn.info">Cargar turno fijo</string>
+    <string name="addFixedTurn.data.day">Día</string>
+    <string name="addFixedTurn.data.hour">Hora</string>
+    <string name="addFixedTurn.data.curt">Cancha</string>
+    <string name="addFixedTurn.data.reservedBy">Reservado por</string>
+
+    <!-- Fixed Turn -->
+    <string name="fixedTurn.status.pending">PENDIENTE DE CONFIRMACIÓN</string>
+    <string name="fixedTurn.status.confirm">TURNO CONFIRMADO</string>
+    <string name="fixedTurn.status.cancel">TURNO CANCELADO</string>
+    <string name="fixedTurn.status.deleted">TURNO DADO DE BAJA</string>
+
+    <!-- Search User -->
+    <string name="searchUser.info">Hacé click en el usuario que tiene reservado el turno fijo</string>
+    <string name="searchUser.search">Buscar usuario</string>
+    <string name="searchUser.button.save">Guardar</string>
+    <string name="searchUser.button.cancel">Cancelar</string>
+    <string name="searchUser.alert.message.1">¿Estás seguro que %s tiene el turno fijo?</string>
+    <string name="searchUser.alert.button.positive">SI</string>
+    <string name="searchUser.alert.button.negative">NO</string>
+    <string name="searchUser.alert.button.ok">OK</string>
+
     <!-- Grandtable -->
     <string name="grandtable.info">La tribuna dice:</string>
     <string name="grandtable.comment">No existen posteos. Sé el primero en escribir.</string>
@@ -118,8 +153,14 @@
     <string name="account.user.schedule">Mi agenda</string>
 
     <!-- Schedule -->
-    <string name="schedule.button">Cancelar Turno</string>
+    <string name="schedule.button.cancel">Cancelar Turno</string>
+    <string name="schedule.button.fixedTurn.cancel">Cancelar</string>
+    <string name="schedule.button.fixedTurn.confirm">Confirmar</string>
+    <string name="schedule.button.fixedTurn.delete">Dar de baja</string>
     <string name="schedule.dialog.cancel">¿Estás seguro en cancelar el turno?</string>
+    <string name="schedule.dialog.confirm">¿Estás seguro en confirmar el turno?</string>
+    <string name="schedule.dialog.deleted">¿Estás seguro en dar de baja el turno?</string>
+    <string name="schedule.clip.fixedTurn">Turno\nFijo</string>
     <string name="schedule.countDown.live">EN JUEGO</string>
     <string name="schedule.countDown.finish">Partido Finalizado</string>
     <string name="schedule.chronometer.info">Finaliza en: </string>
@@ -143,6 +184,10 @@
     <!-- Reserve -->
     <string name="reserve.info">Reservas</string>
 
+    <!-- Fixed Turns -->
+    <string name="fixedTurn.info">Turnos Fijos</string>
+    <string name="fixedTurn.button">Cargar Turno Fijo</string>
+
     <!-- Make Admin -->
     <string name="makeAdmin.info">Hacé click en el usuario al que querés hacer administrador</string>
     <string name="makeAdmin.search">Buscar usuario</string>
@@ -154,5 +199,7 @@
     <string name="makeAdmin.alert.button.positive">SI</string>
     <string name="makeAdmin.alert.button.negative">NO</string>
     <string name="makeAdmin.alert.button.ok">OK</string>
+    <string name="title_activity_fixed_turn">FixedTurnActivity</string>
+
 
 </resources>

@@ -44,12 +44,6 @@ class AddTurnViewModel: ViewModel() {
             FirebaseDBService.updateTurn(turn)
         }
 
-
-
-
-
-
     }
-
 
 }

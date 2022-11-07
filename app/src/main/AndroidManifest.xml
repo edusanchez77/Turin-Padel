@@ -17,6 +17,17 @@
         android:theme="@style/Theme.TurinPadel"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.SearchUser.SearchUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.addFixedTurn.AddFixedTurnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecases.fixedTurns.FixedTurnActivity"
+            android:exported="false"
+            android:label="@string/title_activity_fixed_turn"
+            android:theme="@style/Theme.TurinPadel" />
+        <activity
             android:name=".usecases.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity

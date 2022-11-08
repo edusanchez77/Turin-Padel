@@ -12,4 +12,7 @@
     <color name="text">#FF000000</color>
     <color name="live">#FFFA2828</color>
     <color name="semi_transparent">#22000000</color>
+    <color name="confirm">#4CAF50</color>
+    <color name="pending">#3F51B5</color>
+    <color name="cancel">#851b1f</color>
 </resources>

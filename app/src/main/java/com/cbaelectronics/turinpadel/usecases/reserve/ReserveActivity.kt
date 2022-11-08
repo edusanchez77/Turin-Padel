@@ -68,7 +68,7 @@ class ReserveActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.loadReserve().observe(this, Observer {
+        viewModel.loadReserve(binding.root.context).observe(this, Observer {
             adapter.setDataList(it)
             adapter.notifyDataSetChanged()
         })

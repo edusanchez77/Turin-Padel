@@ -5,21 +5,22 @@
 
 package com.cbaelectronics.turinpadel.provider.services.firebase
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
-import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
+import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_DELETED
-import com.cbaelectronics.turinpadel.util.Constants.STATUS_OUTOFTIME
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_TURN
+import com.cbaelectronics.turinpadel.util.Util
+import com.cbaelectronics.turinpadel.util.Util.getOrder
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import com.google.firebase.firestore.Query.Direction.DESCENDING
 import com.itdev.nosfaltauno.util.extension.*
@@ -35,6 +36,7 @@ enum class DatabaseField(val key: String) {
     // Schemes
     USERS("users"),
     TURNS("turns"),
+    FIXED_TURNS("fixedTurns"),
     POST("posts"),
     COMMENTS("comments"),
     SCHEDULE("schedule"),
@@ -61,6 +63,15 @@ enum class DatabaseField(val key: String) {
     TURN_STATUS("turnStatus"),
     TURN_RESERVE("turnReserve"),
 
+    // Fixed Turn
+    FIXED_TURN_ID("fixedTurnId"),
+    FIXED_TURN_DAY("fixedTurnDay"),
+    FIXED_TURN_HOUR("fixedTurnHour"),
+    FIXED_TURN_DATE("fixedTurnDate"),
+    FIXED_TURN_STATUS("fixedTurnStatus"),
+    FIXED_TURN_ORDER("fixedTurnOrder"),
+    FIXED_TURN_RESERVED_BY("fixedTurnRevervedBy"),
+
     // Post
     POST_MESSAGE("postMessage"),
     POST_ADD_DATE("postAddDate"),
@@ -74,7 +85,9 @@ enum class DatabaseField(val key: String) {
     COMMENT_WRITER("postWriter"),
 
     // Schedule
-    SCHEDULE_ID("schId")
+    SCHEDULE_ID("schId"),
+    SCHEDULE_TURN_TYPE("turnType"),
+    SCHEDULE_DAY("schDay")
 
 }
 
@@ -83,6 +96,7 @@ object FirebaseDBService {
     // Properties
     val usersRef = FirebaseFirestore.getInstance().collection(DatabaseField.USERS.key)
     val turnRef = FirebaseFirestore.getInstance().collection(DatabaseField.TURNS.key)
+    val fixedTurnRef = FirebaseFirestore.getInstance().collection(DatabaseField.FIXED_TURNS.key)
     val scheduleRef = FirebaseFirestore.getInstance().collection(DatabaseField.SCHEDULE.key)
     val postRef = FirebaseFirestore.getInstance().collection(DatabaseField.POST.key)
     val commentsRef = FirebaseFirestore.getInstance().collection(DatabaseField.COMMENTS.key)
@@ -112,7 +126,7 @@ object FirebaseDBService {
 
     suspend fun load(email: String): DocumentSnapshot? {
 
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             usersRef.document(email)
                 .get()
                 .await()
@@ -120,7 +134,7 @@ object FirebaseDBService {
         }
     }
 
-    fun updateUser(user: User, type: Int){
+    fun updateUser(user: User, type: Int) {
 
         user.email?.let { id ->
             usersRef.document(id)
@@ -136,6 +150,21 @@ object FirebaseDBService {
         }
 
     }
+
+    fun saveTurn(fixedTurn: FixedTurn){
+        fixedTurn.date.let {
+            fixedTurnRef.document().set(fixedTurn.toJSON())
+        }
+    }
+
+    suspend fun saveFixedTurn(fixedTurn: FixedTurn): DocumentReference {
+
+        return withContext(Dispatchers.IO) {
+            fixedTurnRef.add(fixedTurn.toJSON())
+                .await()
+        }
+    }
+
 
     fun loadTurn(curt: String, mDate: String): LiveData<MutableList<Turn>> {
 
@@ -165,6 +194,107 @@ object FirebaseDBService {
         return mutableData
     }
 
+    fun loadFixedTurn(order: Int): LiveData<MutableList<FixedTurn>> {
+
+        val mutableData = MutableLiveData<MutableList<FixedTurn>>()
+
+        fixedTurnRef
+            .orderBy(DatabaseField.FIXED_TURN_DATE.key, ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<FixedTurn>()
+
+                val startDate = Date().addOrRemoveDays(order, true)
+                val endDate = Date().addOrRemoveDays(order, false)
+                var currentDay: String? = null
+
+                for (document in value!!) {
+
+                    //val sfd = SimpleDateFormat("EEEE")
+                    val id = document.id
+                    var day = document.getString(DatabaseField.FIXED_TURN_DAY.key)
+                    val hour = document.getString(DatabaseField.FIXED_TURN_HOUR.key)
+                    val curt = document.getString(DatabaseField.TURN_CURT.key)
+                    val status = document.getString(DatabaseField.FIXED_TURN_STATUS.key)
+                    val order = document.getLong(DatabaseField.FIXED_TURN_ORDER.key)?.toInt()
+                    val date = document.getDate(DatabaseField.FIXED_TURN_DATE.key)
+
+                    val datosUser =
+                        document.data.get(DatabaseField.FIXED_TURN_RESERVED_BY.key) as Map<String, Any>
+                    val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val email = datosUser.get(DatabaseField.EMAIL.key).toString()
+                    val avatar = datosUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val register =
+                        document.getDate("${DatabaseField.POST_WRITER.key}.${DatabaseField.REGISTER_DATE.key}")
+                    val token = datosUser.get(DatabaseField.TOKEN.key).toString()
+                    val type = datosUser.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user = User(name, email, avatar, token, type, register)
+
+                    if(currentDay == null){
+                        currentDay = day
+                    } else {
+                        if (currentDay == day){
+                            day = null
+                        }else{
+                            currentDay = day
+                        }
+                    }
+
+                    if (date?.calendarDate()?.toDate()!! >= startDate && date.calendarDate()
+                            .toDate()!! <= endDate
+                    ) {
+                        val fixedTurn =
+                            FixedTurn(id, curt!!, day, hour!!, status!!, order!!, date, user)
+                        listData.add(fixedTurn)
+                    }
+
+                }
+                mutableData.value = listData
+            }
+        return mutableData
+    }
+
+    /*
+    fun loadFixedTurnSchedule(user: User): LiveData<MutableList<FixedTurn>>{
+        val mutableData = MutableLiveData<MutableList<FixedTurn>>()
+
+        fixedTurnRef
+            .whereEqualTo("${DatabaseField.FIXED_TURN_RESERVED_BY.key}.${DatabaseField.EMAIL.key}", user?.email)
+            .orderBy(DatabaseField.FIXED_TURN_DATE.key, ASCENDING)
+            .addSnapshotListener { value, error ->
+                val listData = mutableListOf<FixedTurn>()
+
+                for (document in value!!) {
+
+                    //val sfd = SimpleDateFormat("EEEE")
+                    val id = document.id
+                    val day = document.getString(DatabaseField.FIXED_TURN_DAY.key)
+                    val hour = document.getString(DatabaseField.FIXED_TURN_HOUR.key)
+                    val curt = document.getString(DatabaseField.TURN_CURT.key)
+                    val status = document.getString(DatabaseField.FIXED_TURN_STATUS.key)
+                    val order = document.getLong(DatabaseField.FIXED_TURN_ORDER.key)?.toInt()
+                    val date = document.getDate(DatabaseField.FIXED_TURN_DATE.key)
+
+                    val datosUser = document.data.get(DatabaseField.FIXED_TURN_RESERVED_BY.key) as Map<String, Any>
+                    val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val email = datosUser.get(DatabaseField.EMAIL.key).toString()
+                    val avatar = datosUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val register =
+                        document.getDate("${DatabaseField.POST_WRITER.key}.${DatabaseField.REGISTER_DATE.key}")
+                    val token = datosUser.get(DatabaseField.TOKEN.key).toString()
+                    val type = datosUser.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val user = User(name, email, avatar, token, type, register)
+
+                    val fixedTurn = FixedTurn(id, curt!!, day!!, hour!!, status!!, order!!, date!!, user)
+                    listData.add(fixedTurn)
+                }
+                mutableData.value = listData
+            }
+
+        return mutableData
+    }
+*/
 
     fun updateTurn(turn: Turn, user: User) {
 
@@ -185,25 +315,58 @@ object FirebaseDBService {
             turnRef.document(id!!)
                 .update(
                     DatabaseField.TURN_STATUS.key,
-                    Constants.STATUS_DEFAULT,
+                    STATUS_DEFAULT,
                     DatabaseField.TURN_RESERVE.key,
                     FieldValue.delete()
                 )
-            scheduleRef.document(schedule.id)
-                .delete()
+
+            deleteSchedule(schedule.id)
         }
 
     }
 
-    fun updateTurn(turn: Turn){
+
+    fun updateFixedTurn(fixedTurn: FixedTurn, status: String){
+        fixedTurn.id.let { id ->
+            fixedTurnRef.document(id!!)
+                .update(DatabaseField.FIXED_TURN_STATUS.key, status)
+        }
+    }
+
+    fun updateFixedTurn(schedule: Schedule, status: String) {
+
+        schedule.turn.let { id ->
+            val curt = schedule.curt
+            val date = schedule.date
+            val turn = Turn(curt = curt, date = date)
+
+            //TODO: Hacer función en Util.kt para obtener el Order del día
+
+            fixedTurnRef.document(id)
+                .update(
+                    DatabaseField.FIXED_TURN_STATUS.key, status
+                )
+
+            updateSchedule(schedule.id, status)
+
+        }
+
+    }
+
+    fun updateTurn(turn: Turn) {
 
         turn.id.let {
-            turnRef.document(it!!).update(DatabaseField.TURN_DATE.key, turn.date, DatabaseField.TURN_CURT.key, turn.curt)
+            turnRef.document(it!!).update(
+                DatabaseField.TURN_DATE.key,
+                turn.date,
+                DatabaseField.TURN_CURT.key,
+                turn.curt
+            )
         }
 
     }
 
-    fun deleteTurn(id: String){
+    fun deleteTurn(id: String) {
 
         id.let {
             turnRef.document(it).delete()
@@ -211,6 +374,22 @@ object FirebaseDBService {
 
     }
 
+    fun deleteFixedTurn(id: String) {
+
+        id.let {
+            fixedTurnRef.document(it).delete()
+        }
+
+    }
+
+    suspend fun searchScheduleId(fixedTurnId: String): QuerySnapshot? {
+        return withContext(Dispatchers.IO) {
+            scheduleRef.whereEqualTo(DatabaseField.TURN_ID.key, fixedTurnId)
+                .limit(1)
+                .get()
+                .await()
+        }
+    }
 
     fun saveSchedule(turn: Turn, user: User) {
 
@@ -218,6 +397,8 @@ object FirebaseDBService {
             DatabaseField.TURN_ID.key to turn.id,
             DatabaseField.TURN_CURT.key to turn.curt,
             DatabaseField.TURN_DATE.key to turn.date,
+            DatabaseField.SCHEDULE_TURN_TYPE.key to TYPE_TURN,
+            DatabaseField.SCHEDULE_DAY.key to turn.date.calendarDate(),
             DatabaseField.TURN_RESERVE.key to user
         )
 
@@ -226,14 +407,35 @@ object FirebaseDBService {
         }
     }
 
-    fun loadSchedule(): LiveData<MutableList<Schedule>> {
+    fun saveSchedule(turn: FixedTurn, user: User, id: String) {
+
+        val schedule = hashMapOf(
+            DatabaseField.TURN_ID.key to id,
+            DatabaseField.TURN_CURT.key to turn.curt,
+            DatabaseField.TURN_DATE.key to turn.date,
+            DatabaseField.SCHEDULE_DAY.key to turn.date?.calendarDate(),
+            DatabaseField.SCHEDULE_TURN_TYPE.key to TYPE_FIXED_TURN,
+            DatabaseField.TURN_RESERVE.key to user,
+            DatabaseField.FIXED_TURN_STATUS.key to turn.status
+        )
+
+        user.email.let {
+            scheduleRef.document().set(schedule)
+        }
+    }
+
+    fun loadSchedule(context: Context): LiveData<MutableList<Schedule>> {
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
+        val order = getOrder(context, Date().dayOfWeek())
+        val startDate = Date().addOrRemoveDays(order, true)
+        val endDate = Date().addOrRemoveDays(order, false)
 
         scheduleRef
             .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Schedule>()
+                var currentDay: String? = null
                 for (document in value!!) {
 
                     val datosUser =
@@ -243,6 +445,9 @@ object FirebaseDBService {
                     val turn = document.getString(DatabaseField.TURN_ID.key)
                     val curt = document.getString(DatabaseField.TURN_CURT.key)
                     val date = document.getDate(DatabaseField.TURN_DATE.key)
+                    val turnType = document.getString(DatabaseField.SCHEDULE_TURN_TYPE.key)
+                    val status = document.getString(DatabaseField.FIXED_TURN_STATUS.key)
+                    var day: String? = document.getString(DatabaseField.SCHEDULE_DAY.key)
 
                     val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
                     val email = datosUser.get(DatabaseField.EMAIL.key).toString()
@@ -254,10 +459,21 @@ object FirebaseDBService {
 
                     val user = User(name, email, avatar, token, type, register)
 
+                    if(currentDay == null){
+                        currentDay = day
+                    } else {
+                        if (currentDay == day){
+                            day = null
+                        }else{
+                            currentDay = day
+                        }
+                    }
 
-                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
+                    if (date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate() && date?.calendarDate()
+                            ?.toDate()!! <= endDate
+                    ) {
 
-                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!, turnType!!, status, day)
                         listData.add(schedule)
                     }
 
@@ -269,12 +485,18 @@ object FirebaseDBService {
     }
 
 
-    fun loadSchedule(user: User): LiveData<MutableList<Schedule>> {
+    fun loadSchedule(context: Context, user: User): LiveData<MutableList<Schedule>> {
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
+        val order = getOrder(context, Date().dayOfWeek())
+        val startDate = Date().addOrRemoveDays(order, true)
+        val endDate = Date().addOrRemoveDays(order, false)
 
         scheduleRef
-            .whereEqualTo("${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}", user?.email)
+            .whereEqualTo(
+                "${DatabaseField.TURN_RESERVE.key}.${DatabaseField.EMAIL.key}",
+                user?.email
+            )
             .orderBy(DatabaseField.TURN_DATE.key, ASCENDING)
             .addSnapshotListener { value, error ->
                 val listData = mutableListOf<Schedule>()
@@ -284,10 +506,13 @@ object FirebaseDBService {
                     val turn = document.getString(DatabaseField.TURN_ID.key)
                     val curt = document.getString(DatabaseField.TURN_CURT.key)
                     val date = document.getDate(DatabaseField.TURN_DATE.key)
+                    val type = document.getString(DatabaseField.SCHEDULE_TURN_TYPE.key)
+                    val status = document.getString(DatabaseField.FIXED_TURN_STATUS.key)
 
-                    if(date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate()){
-
-                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!)
+                    if (date?.calendarDate()?.toDate()!! >= startDate && date?.calendarDate()
+                            ?.toDate()!! <= endDate
+                    ){
+                        val schedule = Schedule(id, turn!!, curt!!, date!!, user!!, type!!, status, date.calendarDate())
                         listData.add(schedule)
                     }
 
@@ -298,10 +523,17 @@ object FirebaseDBService {
         return mutableData
     }
 
+    fun deleteSchedule(id: String) {
 
-    suspend fun savePost(post: Post) : DocumentReference{
+        id.let { id ->
+            scheduleRef.document(id)
+                .delete()
+        }
+    }
 
-        return withContext(Dispatchers.IO){
+    suspend fun savePost(post: Post): DocumentReference {
+
+        return withContext(Dispatchers.IO) {
             postRef.add(post.toJSON())
                 .await()
         }
@@ -420,6 +652,13 @@ object FirebaseDBService {
 
         return mutableList
 
+    }
+
+    fun updateSchedule(id: String, status: String){
+        id.let { id ->
+            scheduleRef.document(id)
+                .update(DatabaseField.FIXED_TURN_STATUS.key, status)
+        }
     }
 
 

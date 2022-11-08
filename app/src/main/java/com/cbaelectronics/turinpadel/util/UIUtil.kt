@@ -11,6 +11,7 @@ import android.graphics.Matrix.ScaleToFit
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -20,8 +21,11 @@ import com.cbaelectronics.turinpadel.model.domain.PushNotification
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.util.Constants.NEW_COMMENT
+import com.cbaelectronics.turinpadel.util.Constants.NEW_FIXED_TURN
 import com.cbaelectronics.turinpadel.util.Constants.NEW_POST
 import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.notifications.Constants
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_COMMENT
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_POST
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_TURN
@@ -91,6 +95,7 @@ object UIUtil {
             TYPE_TURN -> NEW_TURN
             TYPE_POST -> NEW_POST
             TYPE_COMMENT -> "${NEW_COMMENT}${id}"
+            TYPE_FIXED_TURN -> NEW_FIXED_TURN
             else -> NEW_TURN
         }
 
@@ -98,6 +103,7 @@ object UIUtil {
             DatabaseNotifications(title, body, type, user),
             to
         ).also {
+            Log.d("NotificationFixedTurn SendNotification", user)
             val notification = SendNotification()
             notification.sendNotification(it)
         }

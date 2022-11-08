@@ -5,6 +5,7 @@
 
 package com.cbaelectronics.turinpadel.usecases.reserve
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,11 +30,11 @@ class ReserveViewModel: ViewModel() {
 
     // Public
 
-    fun loadReserve(): LiveData<MutableList<Schedule>>{
+    fun loadReserve(context: Context): LiveData<MutableList<Schedule>>{
 
         val mutableData = MutableLiveData<MutableList<Schedule>>()
 
-        FirebaseDBService.loadSchedule().observeForever {
+        FirebaseDBService.loadSchedule(context).observeForever {
             mutableData.value = it
         }
 

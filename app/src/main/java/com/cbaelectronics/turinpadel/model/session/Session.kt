@@ -54,6 +54,7 @@ class Session {
                 FirebaseDBService.saveSettings(user)
                 setupNotification(settings.notificationTurn, Constants.NEW_TURN)
                 setupNotification(settings.notificationPost, Constants.NEW_POST)
+                setupNotification(true, Constants.NEW_FIXED_TURN)
             }
         }
 
@@ -96,6 +97,11 @@ class Session {
         }
 
     }
+
+    fun subscriberTokenToTopic(token: String, topic: String){
+        FirebaseMessaging.getInstance()
+    }
+
 
     // Private
 

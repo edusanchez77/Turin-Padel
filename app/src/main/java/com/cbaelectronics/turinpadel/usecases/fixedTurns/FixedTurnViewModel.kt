@@ -18,6 +18,7 @@ import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
 import com.cbaelectronics.turinpadel.util.Constants.WEEK
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.addDays
 import com.itdev.nosfaltauno.util.extension.dayOfWeek
 import com.itdev.nosfaltauno.util.extension.hourFixedTurnFormat
@@ -74,6 +75,7 @@ class FixedTurnViewModel: ViewModel() {
         deleteSchedule(scheduleId)
         saveSchedule(newFixedTurn, fixedTurn.user!!, fixedTurnId) //TODO: DeleteSchedule
         saveTurn(fixedTurn)
+        createNotification()
     }
 
     fun delete(fixedTurn: FixedTurn){
@@ -81,6 +83,7 @@ class FixedTurnViewModel: ViewModel() {
         val scheduleId = searchScheduleId(fixedTurn.id!!)
         deleteSchedule(scheduleId)
         saveTurn(fixedTurn)
+        createNotification()
     }
 
     fun confirm(fixedTurn: FixedTurn){
@@ -141,6 +144,14 @@ class FixedTurnViewModel: ViewModel() {
 
     private fun updateSchedule(id: String, status: String){
         FirebaseDBService.updateSchedule(id, status)
+    }
+
+    private fun createNotification() {
+        val title = "Nuevo turno"
+        val body = "Apurate a reservarlo"
+        val type = Constants.TYPE_TURN
+
+        UIUtil.pushNotification(title, body, type, null)
     }
 
 }

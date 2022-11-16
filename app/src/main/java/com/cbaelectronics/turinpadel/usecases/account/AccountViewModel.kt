@@ -7,12 +7,16 @@ import androidx.lifecycle.ViewModel
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.model.domain.*
 import com.cbaelectronics.turinpadel.model.session.Session
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
 import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_TURN
 import com.cbaelectronics.turinpadel.util.Constants.WEEK
+import com.cbaelectronics.turinpadel.util.UIUtil
 import com.itdev.nosfaltauno.util.extension.addDays
 import com.itdev.nosfaltauno.util.extension.dayOfWeek
 import com.itdev.nosfaltauno.util.extension.hourFixedTurnFormat
@@ -60,6 +64,7 @@ class AccountViewModel : ViewModel() {
                 saveTurn(schedule)
             }
         }
+        createNotification()
 
     }
 
@@ -67,6 +72,7 @@ class AccountViewModel : ViewModel() {
         updateFixedTurn(schedule, FIXEDTURN_STATUS_DELETED)
         deleteSchedule(schedule.id)
         saveTurn(schedule)
+        createNotification()
     }
 
     fun confirm(schedule: Schedule) {
@@ -122,6 +128,14 @@ class AccountViewModel : ViewModel() {
 
     private fun deleteSchedule(id: String) {
         FirebaseDBService.deleteSchedule(id)
+    }
+
+    private fun createNotification() {
+        val title = "Nuevo turno"
+        val body = "Apurate a reservarlo"
+        val type = TYPE_TURN
+
+        UIUtil.pushNotification(title, body, type, null)
     }
 
 }

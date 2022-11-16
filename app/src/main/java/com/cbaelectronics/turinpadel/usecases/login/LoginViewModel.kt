@@ -87,4 +87,8 @@ class LoginViewModel : ViewModel() {
 
     }
 
+    fun subscribeTopics(topic: String){
+        Session.instance.setupNotification(true, topic)
+    }
+
 }

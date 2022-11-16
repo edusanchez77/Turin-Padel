@@ -9,5 +9,7 @@ data class DatabaseNotifications(
     val title: String,
     val body: String,
     val type: String,
-    val user: String
+    val user: String? = null,
+    val id: String? = null,
+    val flag: String? = null
 )

@@ -24,6 +24,7 @@ import com.cbaelectronics.turinpadel.usecases.SearchUser.SearchUserActivity
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
 import com.cbaelectronics.turinpadel.util.Constants.NEW_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.cbaelectronics.turinpadel.util.UIUtil
@@ -326,14 +327,14 @@ class AddFixedTurnActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
     private fun createNotification() {
         val title = getString(viewModel.notificationTitle)
         val body = getString(viewModel.notificationBody)
-        val type = com.cbaelectronics.turinpadel.util.notifications.Constants.TYPE_FIXED_TURN
-        val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
-        Log.d("NotificationFixedTurn", user)
-        UIUtil.pushNotification(title, body, type, user)
+        val type = TYPE_FIXED_TURN
+        val user = user
+            //PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
+        Log.d("NotificationFixedTurn Token", user?.token.toString())
+        UIUtil.pushNotification(title, body, user?.token.toString(), user?.toJSON().toString())
     }
 
-    //{"displayName":"Eduardo Sánchez","email":"eduardosanchez77@gmail.com","photoProfile":"https://lh3.googleusercontent.com/a-/AFdZucqqpCRT9W99DEjpg0vn0luSd4LWsii1O3tTnvAp3g\u003ds96-c","registerDate":"Jul 6, 2022 17:05:06","settings":{"category":"No definida","notificationPost":true,"notificationTurn":true,"position":"No definida"},"token":"cziF6OMrQ0iz6Yhtr61UJb:APA91bFdm4OSg0k-QA4cpEop-6SE1AK4oirbyYb3tyBflAy42kkyUa1y4gytEfFBWRAE8t-3UhirHUGUpTQjMCcSYUZyVVO3vs-o0v0ian7nweA2BZhM3sHMnLMVqXBPijd22JUVYs6B","type":2}
-    //{email=eduardosanchez77@gmail.com, displayName=Eduardo Sánchez, photoProfile=https://lh3.googleusercontent.com/a-/AFdZucqqpCRT9W99DEjpg0vn0luSd4LWsii1O3tTnvAp3g=s96-c, tokenDevice=cziF6OMrQ0iz6Yhtr61UJb:APA91bFdm4OSg0k-QA4cpEop-6SE1AK4oirbyYb3tyBflAy42kkyUa1y4gytEfFBWRAE8t-3UhirHUGUpTQjMCcSYUZyVVO3vs-o0v0ian7nweA2BZhM3sHMnLMVqXBPijd22JUVYs6B, type=2, registerDate=Wed Jul 06 17:05:06 GMT-03:00 2022, settings={}}
+
 
     private fun clearEditText() {
         binding.etHorarioTurnoLibre.text = null

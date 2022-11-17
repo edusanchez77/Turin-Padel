@@ -10,12 +10,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
+import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_DEFAULT
 import com.cbaelectronics.turinpadel.util.Constants.STATUS_RESERVED
+import com.cbaelectronics.turinpadel.util.Constants.TURN_DATE_FORMAT
 import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
 import com.cbaelectronics.turinpadel.util.Constants.TYPE_TURN
 import com.cbaelectronics.turinpadel.util.Util
@@ -470,7 +472,7 @@ object FirebaseDBService {
                     }
 
                     if (date?.calendarDate()?.toDate()!! >= Date().calendarDate().toDate() && date?.calendarDate()
-                            ?.toDate()!! <= endDate
+                            ?.toDate()!! <= endDate && (turnType == TYPE_TURN || (turnType == TYPE_FIXED_TURN && status == FIXEDTURN_STATUS_CONFIRM))
                     ) {
 
                         val schedule = Schedule(id, turn!!, curt!!, date!!, user!!, turnType!!, status, day)

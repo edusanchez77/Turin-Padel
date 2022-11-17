@@ -19,8 +19,10 @@ import com.cbaelectronics.turinpadel.databinding.ContentItemScheduleBinding
 import com.cbaelectronics.turinpadel.model.domain.Schedule
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
+import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
-import com.cbaelectronics.turinpadel.util.Constants.TIME_GAME
+import com.cbaelectronics.turinpadel.util.Constants.GAME_TIME
+import com.cbaelectronics.turinpadel.util.Constants.SECOND
 import com.cbaelectronics.turinpadel.util.Constants.TIME_UNTIL_CANCEL
 import com.cbaelectronics.turinpadel.util.Constants.TYPE_FIXED_TURN
 import com.cbaelectronics.turinpadel.util.Constants.TYPE_TURN
@@ -128,7 +130,7 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
 
             val endDate = schedule.date?.time!! - Date().time
 
-            timer = object : CountDownTimer(endDate, 1000) {
+            timer = object : CountDownTimer(endDate, SECOND.toLong()) {
 
                 override fun onTick(millisUntilFinished: Long) {
 
@@ -169,10 +171,10 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
 
             val endDate = Calendar.getInstance()
             endDate.time = schedule.date
-            endDate.add(Calendar.MINUTE, TIME_GAME)
+            endDate.add(Calendar.MINUTE, GAME_TIME)
             val turnDuration = endDate.time.time - Date().time
 
-            timer = object : CountDownTimer(turnDuration, 1000) {
+            timer = object : CountDownTimer(turnDuration, SECOND.toLong()) {
 
                 override fun onTick(millisUntilFinished: Long) {
 

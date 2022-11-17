@@ -3,7 +3,7 @@
  *  www.itdev.com
  */
 
-package com.itdev.nosfaltauno.provider.services.retrofit
+package com.cbaelectronics.turinpadel.provider.services.retrofit
 
 import com.cbaelectronics.turinpadel.model.domain.PushNotification
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.SERVER_KEY

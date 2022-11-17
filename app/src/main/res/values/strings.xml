@@ -22,7 +22,8 @@
     <string name="days.tomorrow">MAÑANA</string>
 
     <!-- Push Notifications -->
-    <string name="notification.channel.id">Nos Falta Uno</string>
+    <string name="msg_token_fmt">Prueba</string>
+    <string name="notification.channel.id">TurinPadelIndoor</string>
     <string name="notification.channel.name">ChannelFirebaseMessaging</string>
     <string name="notification.channel.description">My notification</string>
     <string name="notification.topic.newmatch.title">Nuevo partido</string>

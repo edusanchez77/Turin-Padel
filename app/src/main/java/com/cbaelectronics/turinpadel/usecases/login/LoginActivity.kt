@@ -1,5 +1,6 @@
 package com.cbaelectronics.turinpadel.usecases.login
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,8 @@ import com.cbaelectronics.turinpadel.util.Constants.NEW_POST
 import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
 import com.cbaelectronics.turinpadel.util.Constants.ADMIN
 import com.cbaelectronics.turinpadel.util.Constants.ADMIN_LOGIN
+import com.cbaelectronics.turinpadel.util.Constants.NEW_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.Constants.TOPIC_PATH
 import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
@@ -70,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Setup
         getToken()
+        subscribeTopics()
         instanceGoogle()
         instanceFirebaseAuth()
         localize()
@@ -128,6 +132,7 @@ class LoginActivity : AppCompatActivity() {
         responseActivity.launch(signInIntent)
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun getToken() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -137,8 +142,16 @@ class LoginActivity : AppCompatActivity() {
                 return@OnCompleteListener
             }
             mToken = task.result.toString()
+
         })
     }
+
+    private fun subscribeTopics(){
+        viewModel.subscribeTopics(NEW_TURN)
+        viewModel.subscribeTopics(NEW_FIXED_TURN)
+        viewModel.subscribeTopics(NEW_POST)
+    }
+
 
     private fun response(activityResult: ActivityResult) {
 
@@ -207,7 +220,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun saveDatabase() {
-
         val type = if (auth.currentUser?.email == ADMIN_LOGIN) {
             ADMIN
         } else {

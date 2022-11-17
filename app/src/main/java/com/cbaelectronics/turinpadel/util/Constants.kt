@@ -7,8 +7,9 @@ object Constants {
 
 
     // Generic
-    const val TIME_GAME = 90
-    const val ADMIN_LOGIN = "eduardosanchez77@gmail.com"
+    const val ADMIN_LOGIN = "andresmujica92@gmail.com"
+    const val GAME_TIME = 90
+    const val SECOND = 1000
     const val LUNES = "Lunes"
     const val MARTES = "Martes"
     const val MIERCOLES = "Miércoles"

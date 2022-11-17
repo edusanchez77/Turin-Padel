@@ -90,20 +90,19 @@ object UIUtil {
 
     // Push Notification
 
-    fun pushNotification(title: String, body: String, type: String, user: String, id: String? = null) {
+    fun pushNotification(title: String, body: String, type: String, user: String?, id: String? = null, flag: String? = null) {
         val to = when(type){
             TYPE_TURN -> NEW_TURN
             TYPE_POST -> NEW_POST
             TYPE_COMMENT -> "${NEW_COMMENT}${id}"
             TYPE_FIXED_TURN -> NEW_FIXED_TURN
-            else -> NEW_TURN
+            else -> type
         }
 
         PushNotification(
-            DatabaseNotifications(title, body, type, user),
+            DatabaseNotifications(title, body, type, user, id, flag),
             to
         ).also {
-            Log.d("NotificationFixedTurn SendNotification", user)
             val notification = SendNotification()
             notification.sendNotification(it)
         }

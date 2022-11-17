@@ -132,7 +132,7 @@ class GrandtableFragment : Fragment(), GrandtableRecyclerViewAdapter.onClickPost
         val type = TYPE_POST
         val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
 
-        pushNotification(title, body, type, user,)
+        pushNotification(title, body, type, user)
     }
 
 
@@ -140,7 +140,7 @@ class GrandtableFragment : Fragment(), GrandtableRecyclerViewAdapter.onClickPost
         CommentsRouter().launch(binding.root.context, post)
     }
 
-    fun hideSoftInput() {
+    private fun hideSoftInput() {
         val inputMethodManager =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
@@ -148,7 +148,7 @@ class GrandtableFragment : Fragment(), GrandtableRecyclerViewAdapter.onClickPost
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        startPostponedEnterTransition()
     }
 
 

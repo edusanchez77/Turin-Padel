@@ -7,6 +7,7 @@ package com.cbaelectronics.turinpadel.usecases.comments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -54,6 +55,7 @@ class CommentsActivity : AppCompatActivity() {
         // Data
         val bundle = intent.extras
         postJSON = bundle?.getString(DatabaseField.POST.key).toString()
+        Log.d("NotificationFixedTurn CommentPostJson", postJSON)
         post = Post.fromJson(postJSON)!!
 
         // Localize
@@ -171,7 +173,7 @@ class CommentsActivity : AppCompatActivity() {
         val type = Constants.TYPE_COMMENT
         val user = PreferencesProvider.string(binding.root.context, PreferencesKey.AUTH_USER).toString()
 
-        pushNotification(title, body, type, user, post.id)
+        pushNotification(title, body, type, user, post.id, Post.toJson(post))
     }
 
     override fun onSupportNavigateUp(): Boolean {

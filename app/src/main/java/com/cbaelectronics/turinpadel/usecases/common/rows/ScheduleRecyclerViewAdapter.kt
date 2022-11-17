@@ -19,6 +19,7 @@ import com.cbaelectronics.turinpadel.databinding.ContentItemScheduleBinding
 import com.cbaelectronics.turinpadel.model.domain.Schedule
 import com.cbaelectronics.turinpadel.model.domain.Turn
 import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_PENDING
 import com.cbaelectronics.turinpadel.util.Constants.GAME_TIME
@@ -139,6 +140,14 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
                     if(millisUntilFinished < Util.hourToMilliseconds(TIME_UNTIL_CANCEL)){
                         binding.buttonScheduleCancel.visibility = View.GONE
                         binding.buttonScheduleCancel.enable(false)
+                        binding.layoutConfirmFixedTurnButtons.visibility = View.GONE
+                        binding.buttonDeleteFixedTurn.enable(false)
+                        binding.buttonCancelFixedTurn.enable(false)
+                        binding.buttonSaveFixedTurn.enable(false)
+
+                        if(schedule.turnType == TYPE_FIXED_TURN){
+                            updateTurnStatus(schedule, Constants.FIXEDTURN_STATUS_CONFIRM) //Revisar el estado del turno cuando se acaba el tiempo para confirmar/cancelar
+                        }
                     }
 
                 }
@@ -150,6 +159,10 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
                     binding.imageViewScheduleCountdown.setColorFilter(ContextCompat.getColor(context, R.color.live))
                     binding.buttonScheduleCancel.visibility = View.GONE
                     binding.buttonScheduleCancel.enable(false)
+                    binding.layoutConfirmFixedTurnButtons.visibility = View.GONE
+                    binding.buttonDeleteFixedTurn.enable(false)
+                    binding.buttonCancelFixedTurn.enable(false)
+                    binding.buttonSaveFixedTurn.enable(false)
 
                     timer?.cancel()
 
@@ -199,6 +212,11 @@ class ScheduleRecyclerViewAdapter(private val context: Context, private val item
             timer?.start()
 
         }
+
+        private fun updateTurnStatus(schedule: Schedule, status: String) {
+            FirebaseDBService.updateFixedTurn(schedule, status)
+        }
     }
+
 
 }

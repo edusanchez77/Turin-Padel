@@ -19,9 +19,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityHomeBinding
+import com.cbaelectronics.turinpadel.model.domain.Post
 import com.cbaelectronics.turinpadel.model.session.Session
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
 import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
+import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
+import com.cbaelectronics.turinpadel.usecases.comments.CommentsRouter
 import com.cbaelectronics.turinpadel.usecases.menu.MenuRouter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -46,12 +49,22 @@ class HomeActivity : AppCompatActivity() {
 
         // Setup
         initCrashlytics()
+        //getData()
         setup()
 
     }
 
     private fun initCrashlytics() {
         FirebaseCrashlytics.getInstance().setUserId(viewModel.user.email.toString())
+    }
+
+    private fun getData(){
+        val bundle: Bundle? = intent.extras
+        if(bundle?.isEmpty == false){
+            val postJSON = bundle.getString(DatabaseField.POST.key).toString()
+            val post = Post.fromJson(postJSON)!!
+            CommentsRouter().launch(this, post)
+        }
     }
 
 

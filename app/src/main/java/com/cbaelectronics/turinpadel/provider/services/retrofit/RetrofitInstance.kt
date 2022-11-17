@@ -3,12 +3,11 @@
  *  www.itdev.com
  */
 
-package com.itdev.nosfaltauno.provider.services.retrofit
+package com.cbaelectronics.turinpadel.provider.services.retrofit
 
 import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class RetrofitInstance {
 
@@ -20,7 +19,7 @@ class RetrofitInstance {
                 .build()
         }
 
-        val api by lazy {
+        val api: NotificationApi by lazy {
             retrofit.create(NotificationApi::class.java)
         }
     }

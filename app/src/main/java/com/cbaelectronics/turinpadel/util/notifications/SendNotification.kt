@@ -7,7 +7,7 @@ package com.cbaelectronics.turinpadel.util.notifications
 
 import android.util.Log
 import com.cbaelectronics.turinpadel.model.domain.PushNotification
-import com.itdev.nosfaltauno.provider.services.retrofit.RetrofitInstance
+import com.cbaelectronics.turinpadel.provider.services.retrofit.RetrofitInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ class SendNotification {
 
                 val response = RetrofitInstance.api.postNotification(notification)
                 if (response.isSuccessful) {
-                    Log.d("NotificationFixedTurn NOTIFICACION 2", "OK")
+                    Log.d("NOTIFICACION 2", "OK")
                 } else {
                     Log.d("NotificationFixedTurn ERROR: ", response.message())
                 }

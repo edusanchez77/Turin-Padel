@@ -682,8 +682,10 @@ object FirebaseDBService {
         }
     }
 
-    fun save(){
-
+    fun save(match: Match){
+        match.date.let {
+            matchRef.add(match)
+        }
     }
 
 }

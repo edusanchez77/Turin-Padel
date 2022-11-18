@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityAddMatchBinding
+import com.cbaelectronics.turinpadel.model.domain.Match
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.itdev.nosfaltauno.util.extension.font
@@ -120,7 +121,40 @@ class AddMatchActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     private fun buttons() {
         binding.buttonAddMatches.setOnClickListener {
-            Toast.makeText(this, "Partido Guardado", Toast.LENGTH_SHORT).show()
+
+            // Obtengo datos de los EditText
+            val mDate = binding.editTextFecha.text.toString()!!
+            val mVacantes = binding.editTextVacantes.text.toString()
+            val mCategory = binding.spinnerCategory.text.toString()
+            val mGenre = binding.spinnerGenre.text.toString()
+
+            if (mDate.isNullOrEmpty() || mVacantes.isNullOrEmpty() || mCategory.isNullOrEmpty() || mGenre.isNullOrEmpty()) {
+                Toast.makeText(this, getString(viewModel.alertIncomplete), Toast.LENGTH_SHORT).show()
+            } else {
+                val date = SimpleDateFormat("dd/MM/yyyy HH:mm").parse(mDate)
+                val match = Match(date, mVacantes.toInt(), mCategory, mGenre, viewModel.user)
+
+                viewModel.save(match)
+                Toast.makeText(this, getString(viewModel.alertOk), Toast.LENGTH_SHORT).show()
+                createNotification()
+                finish()
+            }
+
+        }
+    }
+
+    private fun createNotification() {
+        val title = getString(viewModel.notificationTitle)
+        val body = getString(viewModel.notificationBody)
+        val type = TYPE_MATCH
+        val user = PreferencesProvider.string(binding.root.context, PreferencesKey.MAIL_USER).toString()
+
+        PushNotification(
+            DatabaseNotifications(title, body, type, user),
+            Constants.NEW_MATCH
+        ).also {
+            val notification = SendNotification()
+            notification.sendNotification(it)
         }
     }
 

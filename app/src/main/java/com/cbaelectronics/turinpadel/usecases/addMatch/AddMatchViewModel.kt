@@ -7,9 +7,11 @@ package com.cbaelectronics.turinpadel.usecases.addMatch
 
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.turinpadel.R
+import com.cbaelectronics.turinpadel.model.domain.Match
 import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.model.session.Session
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
 
 class AddMatchViewModel: ViewModel() {
 
@@ -33,5 +35,11 @@ class AddMatchViewModel: ViewModel() {
     val alertIncomplete = R.string.addMatches_alert_incomplete
     val notificationTitle = R.string.notification_topic_newmatch_title
     val notificationBody = R.string.notification_topic_newmatch_body
+
+    // Public
+
+    fun save(match: Match){
+        FirebaseDBService.save(match)
+    }
 
 }

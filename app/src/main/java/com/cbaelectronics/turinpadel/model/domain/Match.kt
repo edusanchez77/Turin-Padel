@@ -5,18 +5,45 @@
 
 package com.cbaelectronics.turinpadel.model.domain
 
+import com.cbaelectronics.turinpadel.provider.services.firebase.DatabaseField
+import com.cbaelectronics.turinpadel.util.Constants
+import com.google.gson.GsonBuilder
 import java.util.*
 
 data class Match(
-    val usrEmail: String,
-    val usrName: String,
-    val usrPhoto: String,
-    val usrToken: String,
-    val usrCategory: String,
-    val usrPosition: String,
-    val matchId: String,
-    val matchDate: Date,
-    val matchVacantes: Int,
-    val matchCategory: String?,
-    val matchGenre: String?,
-)
+    val date: Date,
+    val vacantes: Int,
+    val category: String?,
+    val genre: String?,
+    val user: User
+){
+    fun toJSON(): Map<String, Any> {
+
+        val JSON: MutableMap<String, Any> = mutableMapOf(
+            DatabaseField.MATCH_DATE.key to (date ?: ""),
+            DatabaseField.MATCH_VACANTES.key to (vacantes ?: ""),
+            DatabaseField.MATCH_CATEGORY.key to (category ?: ""),
+            DatabaseField.MATCH_GENRE.key to (genre ?: ""),
+            DatabaseField.DISPLAY_NAME.key to (user.displayName ?: ""),
+            DatabaseField.EMAIL.key to (user.email ?: ""),
+            DatabaseField.PROFILE_IMAGE_URL.key to (user.photoProfile ?: ""),
+            DatabaseField.TOKEN.key to (user.token ?: "")
+        )
+
+        return JSON
+
+    }
+
+    companion object {
+
+        fun toJson(match: Match): String {
+            return GsonBuilder().setDateFormat(Constants.JSON_DATE_FORMAT).create().toJson(match)
+        }
+
+        fun fromJson(json: String): Match? {
+            return GsonBuilder().setDateFormat(Constants.JSON_DATE_FORMAT).create()
+                .fromJson(json, Match::class.java)
+        }
+
+    }
+}

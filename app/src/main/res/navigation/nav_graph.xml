@@ -16,6 +16,10 @@
         android:name="com.cbaelectronics.turinpadel.usecases.turn.TurnFragment"
         tools:layout="@layout/fragment_turn" />
     <fragment
+        android:id="@+id/home_menu_matches"
+        android:name="com.cbaelectronics.turinpadel.usecases.matches.MatchesFragment"
+        tools:layout="@layout/fragment_matches"/>
+    <fragment
         android:id="@+id/home_menu_grandtable"
         android:name="com.cbaelectronics.turinpadel.usecases.grandtable.GrandtableFragment"
         tools:layout="@layout/fragment_grandtable" />

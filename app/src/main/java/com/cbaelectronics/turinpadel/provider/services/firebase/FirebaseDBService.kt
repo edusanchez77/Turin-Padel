@@ -42,6 +42,8 @@ enum class DatabaseField(val key: String) {
     POST("posts"),
     COMMENTS("comments"),
     SCHEDULE("schedule"),
+    MATCHES("matches"),
+    REQUEST("request"),
 
     // Generic Field
     SETTINGS("settings"),
@@ -89,19 +91,36 @@ enum class DatabaseField(val key: String) {
     // Schedule
     SCHEDULE_ID("schId"),
     SCHEDULE_TURN_TYPE("turnType"),
-    SCHEDULE_DAY("schDay")
+    SCHEDULE_DAY("schDay"),
+
+    // Matches
+    MATCH_ID("matchId"),
+    MATCH_DATE("matchDate"),
+    MATCH_VACANTES("matchVacantes"),
+    MATCH_CATEGORY("matchCategory"),
+    MATCH_GENRE("matchGenre"),
+    MATCH_SOLICITUDES("matchSolicitudes"),
+
+    // Request
+    REQUEST_ADD_DATE("requestAddDate"),
+    REQUEST_UPDATE_DATE("requestUpdateDate"),
+    REQUEST_STATUS("requestStatus"),
+    REQUEST_MATCH_CREATOR("requestMatchCreator"),
+    REQUEST_TOKEN_CREATOR("requestTokenCreator")
 
 }
 
 object FirebaseDBService {
 
     // Properties
-    val usersRef = FirebaseFirestore.getInstance().collection(DatabaseField.USERS.key)
-    val turnRef = FirebaseFirestore.getInstance().collection(DatabaseField.TURNS.key)
-    val fixedTurnRef = FirebaseFirestore.getInstance().collection(DatabaseField.FIXED_TURNS.key)
-    val scheduleRef = FirebaseFirestore.getInstance().collection(DatabaseField.SCHEDULE.key)
-    val postRef = FirebaseFirestore.getInstance().collection(DatabaseField.POST.key)
-    val commentsRef = FirebaseFirestore.getInstance().collection(DatabaseField.COMMENTS.key)
+    private val usersRef = FirebaseFirestore.getInstance().collection(DatabaseField.USERS.key)
+    private val turnRef = FirebaseFirestore.getInstance().collection(DatabaseField.TURNS.key)
+    private val fixedTurnRef = FirebaseFirestore.getInstance().collection(DatabaseField.FIXED_TURNS.key)
+    private val scheduleRef = FirebaseFirestore.getInstance().collection(DatabaseField.SCHEDULE.key)
+    private val postRef = FirebaseFirestore.getInstance().collection(DatabaseField.POST.key)
+    private val commentsRef = FirebaseFirestore.getInstance().collection(DatabaseField.COMMENTS.key)
+    private val matchRef = FirebaseFirestore.getInstance().collection(DatabaseField.MATCHES.key)
+    private val requestRef = FirebaseFirestore.getInstance().collection(DatabaseField.REQUEST.key)
 
     // Properties RealDataBase
     /*private val userRef = FirebaseDatabase.getInstance().getReference(DatabaseField.USERS.key)
@@ -663,5 +682,8 @@ object FirebaseDBService {
         }
     }
 
+    fun save(){
+
+    }
 
 }

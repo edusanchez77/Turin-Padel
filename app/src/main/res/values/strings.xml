@@ -131,6 +131,25 @@
     <string name="searchUser.alert.button.negative">NO</string>
     <string name="searchUser.alert.button.ok">OK</string>
 
+    <!-- Matches -->
+    <string name="matches.title">Partidos organizados</string>
+    <string name="matches.info">No hay partidos organizados.\nSé el primero en organizar uno.</string>
+    <string name="matches.footer.info">¿Ya tenés un turno?</string>
+    <string name="matches.footer.button">Solicitá jugadores</string>
+
+    <!-- Add Matches -->
+    <string name="addMatches.title">Armá tu partido</string>
+    <string name="addMatches.info">Cargá la información de tu turno</string>
+    <string name="addMatches.editText.fecha">Fecha del partido</string>
+    <string name="addMatches.editText.vacantes">Vacantes</string>
+    <string name="addMatches.editText.category">Categoría</string>
+    <string name="addMatches.editText.genre">Género</string>
+    <string name="addMatches.button">Crear partido</string>
+    <string name="addMatches.alert.warning">No puede haber más de 4 vacantes</string>
+    <string name="addMatches.alert.ok">Partido cargado exitósamente</string>
+    <string name="addMatches.alert.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
+    <string name="addMatches.alert.incomplete">Tenés que completar toda la información acerca de tu turno</string>
+
     <!-- Grandtable -->
     <string name="grandtable.info">La tribuna dice:</string>
     <string name="grandtable.comment">No existen posteos. Sé el primero en escribir.</string>

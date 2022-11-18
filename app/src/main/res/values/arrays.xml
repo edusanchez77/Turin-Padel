@@ -16,4 +16,26 @@
         <item>@string/menu.context.turn.delete</item>
     </string-array>
 
+    <string-array name="array.settings.category">
+        <item>8va</item>
+        <item>7ma</item>
+        <item>6ta</item>
+        <item>5ta</item>
+        <item>4ta</item>
+        <item>3ra</item>
+        <item>2da</item>
+        <item>1ra</item>
+    </string-array>
+
+    <string-array name="array.settings.position">
+        <item>Drive</item>
+        <item>Revés</item>
+    </string-array>
+
+    <string-array name="match.genre">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>Mixto</item>
+    </string-array>
+
 </resources>

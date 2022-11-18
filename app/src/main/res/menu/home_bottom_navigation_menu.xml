@@ -5,6 +5,10 @@
         android:icon="@drawable/calendar_clock"
         android:title="" />
     <item
+        android:id="@+id/home_menu_matches"
+        android:icon="@drawable/vs"
+        android:title=""/>
+    <item
         android:id="@+id/home_menu_grandtable"
         android:icon="@drawable/megaphone_icon"
         android:title="" />

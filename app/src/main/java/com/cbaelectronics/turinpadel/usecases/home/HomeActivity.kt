@@ -78,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.home_menu_turn,
+                R.id.home_menu_matches,
                 R.id.home_menu_grandtable,
                 R.id.home_menu_account
             )

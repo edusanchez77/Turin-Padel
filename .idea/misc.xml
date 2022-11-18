@@ -18,6 +18,7 @@
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable-xxhdpi/radio_button_unchecked.xml" value="0.19" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/background_gradient.xml" value="0.191" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/background_rounded_container.xml" value="0.191" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/channel_button_round_dark.xml" value="0.19" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/onboarding_calendar.xml" value="0.19" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/primary_button_round.xml" value="0.21" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/drawable/secondary_button_round.xml" value="0.21" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/font/cairo.xml" value="0.3537037037037037" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/font/oswald.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_add_fixed_turn.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_add_match.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_add_turn.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_comments.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/activity_fixed_turn.xml" value="0.34479166666666666" />
@@ -44,6 +46,7 @@
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_fixedTurn.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_fixed_turn.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_fixed_turn_schedule.xml" value="0.33" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_match.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_post.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_reserve.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/content_item_schedule.xml" value="0.20260416666666667" />
@@ -57,6 +60,7 @@
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_curt1.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_curt2.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_grandtable.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_matches.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/fragment_turn.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/item_calendar_horizontal.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/edu_s/AndroidStudioProjects/TurinPadel/app/src/main/res/layout/onboarding_page_fragment.xml" value="0.34479166666666666" />

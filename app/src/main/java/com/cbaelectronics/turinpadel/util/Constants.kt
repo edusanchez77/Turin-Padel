@@ -72,6 +72,8 @@ object Constants {
     const val NEW_TURN = "/topics/newTurn"
     const val NEW_POST = "/topics/newPost"
     const val NEW_FIXED_TURN = "/topics/newFixedTurn"
+    const val NEW_TOURNAMENT = "/topics/newTournament"
+    const val NEW_MARKETPLACE = "/topics/marketplace"
 
     // Retrofit
 

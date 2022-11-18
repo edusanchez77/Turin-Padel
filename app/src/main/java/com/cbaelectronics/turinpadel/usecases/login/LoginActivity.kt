@@ -22,6 +22,9 @@ import com.cbaelectronics.turinpadel.util.Constants.NEW_TURN
 import com.cbaelectronics.turinpadel.util.Constants.ADMIN
 import com.cbaelectronics.turinpadel.util.Constants.ADMIN_LOGIN
 import com.cbaelectronics.turinpadel.util.Constants.NEW_FIXED_TURN
+import com.cbaelectronics.turinpadel.util.Constants.NEW_MARKETPLACE
+import com.cbaelectronics.turinpadel.util.Constants.NEW_MATCH
+import com.cbaelectronics.turinpadel.util.Constants.NEW_TOURNAMENT
 import com.cbaelectronics.turinpadel.util.Constants.TOPIC_PATH
 import com.cbaelectronics.turinpadel.util.Constants.USER
 import com.cbaelectronics.turinpadel.util.FontSize
@@ -150,6 +153,9 @@ class LoginActivity : AppCompatActivity() {
         viewModel.subscribeTopics(NEW_TURN)
         viewModel.subscribeTopics(NEW_FIXED_TURN)
         viewModel.subscribeTopics(NEW_POST)
+        viewModel.subscribeTopics(NEW_MATCH)
+        viewModel.subscribeTopics(NEW_TOURNAMENT)
+        viewModel.subscribeTopics(NEW_MARKETPLACE)
     }
 
 

@@ -688,4 +688,15 @@ object FirebaseDBService {
         }
     }
 
+    fun load(): LiveData<MutableList<Match>>{
+        val mutableList = MutableLiveData<MutableList<Match>>()
+
+        matchRef
+            .addSnapshotListener { value, error ->
+                
+            }
+
+        return mutableList
+    }
+
 }

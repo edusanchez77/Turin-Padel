@@ -19,9 +19,16 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ActivityAddMatchBinding
+import com.cbaelectronics.turinpadel.model.domain.DatabaseNotifications
 import com.cbaelectronics.turinpadel.model.domain.Match
+import com.cbaelectronics.turinpadel.model.domain.PushNotification
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesKey
+import com.cbaelectronics.turinpadel.provider.preferences.PreferencesProvider
+import com.cbaelectronics.turinpadel.util.Constants.NEW_MATCH
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
+import com.cbaelectronics.turinpadel.util.notifications.Constants.Companion.TYPE_MATCH
+import com.cbaelectronics.turinpadel.util.notifications.SendNotification
 import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.titleCustom
 import java.text.SimpleDateFormat
@@ -151,7 +158,7 @@ class AddMatchActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
         PushNotification(
             DatabaseNotifications(title, body, type, user),
-            Constants.NEW_MATCH
+            NEW_MATCH
         ).also {
             val notification = SendNotification()
             notification.sendNotification(it)

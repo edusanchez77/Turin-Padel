@@ -12,9 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.FragmentMatchesBinding
 import com.cbaelectronics.turinpadel.usecases.addMatch.AddMatchRouter
+import com.cbaelectronics.turinpadel.usecases.common.rows.MatchesRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.usecases.grandtable.GrandtableViewModel
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
@@ -25,6 +28,7 @@ class MatchesFragment : Fragment() {
     private lateinit var _binding: FragmentMatchesBinding
     private val binding get() = _binding!!
     private lateinit var viewModel: MatchesViewModel
+    private lateinit var adapter: MatchesRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,9 @@ class MatchesFragment : Fragment() {
 
         // ViewModel
         viewModel = ViewModelProvider(this).get(MatchesViewModel::class.java)
+
+        // Adapter
+        adapter = MatchesRecyclerViewAdapter(binding.root.context)
 
         // Setup
         localize()
@@ -74,8 +81,28 @@ class MatchesFragment : Fragment() {
             ContextCompat.getColor(binding.root.context, R.color.text)
         )
 
+        // Data
+        binding.recyclerViewGrandtable.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerViewGrandtable.adapter = adapter
+        observeData()
         buttons()
 
+    }
+
+    private fun observeData() {
+        viewModel.load().observe(viewLifecycleOwner, Observer { match ->
+            adapter.setDataList(match)
+            adapter.notifyDataSetChanged()
+
+            if(match.isNotEmpty()){
+                binding.textViewMatchesInfo.visibility = View.GONE
+                binding.textViewMatchesTitle.visibility = View.VISIBLE
+            }else{
+                binding.textViewMatchesInfo.visibility = View.VISIBLE
+                binding.textViewMatchesTitle.visibility = View.GONE
+            }
+
+        })
     }
 
     private fun buttons() {

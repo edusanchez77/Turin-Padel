@@ -11,10 +11,11 @@ import com.google.gson.GsonBuilder
 import java.util.*
 
 data class Match(
+    val id: String? = null,
     val date: Date,
     val vacantes: Int,
-    val category: String?,
-    val genre: String?,
+    val category: String,
+    val genre: String,
     val user: User
 ){
     fun toJSON(): Map<String, Any> {
@@ -24,10 +25,7 @@ data class Match(
             DatabaseField.MATCH_VACANTES.key to (vacantes ?: ""),
             DatabaseField.MATCH_CATEGORY.key to (category ?: ""),
             DatabaseField.MATCH_GENRE.key to (genre ?: ""),
-            DatabaseField.DISPLAY_NAME.key to (user.displayName ?: ""),
-            DatabaseField.EMAIL.key to (user.email ?: ""),
-            DatabaseField.PROFILE_IMAGE_URL.key to (user.photoProfile ?: ""),
-            DatabaseField.TOKEN.key to (user.token ?: "")
+            DatabaseField.MATCH_USER.key to (user ?: "")
         )
 
         return JSON

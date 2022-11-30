@@ -5,11 +5,15 @@
 
 package com.cbaelectronics.turinpadel.usecases.matches
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cbaelectronics.turinpadel.R
+import com.cbaelectronics.turinpadel.model.domain.Match
 import com.cbaelectronics.turinpadel.model.domain.User
 import com.cbaelectronics.turinpadel.model.domain.UserSettings
 import com.cbaelectronics.turinpadel.model.session.Session
+import com.cbaelectronics.turinpadel.provider.services.firebase.FirebaseDBService
 
 class MatchesViewModel : ViewModel() {
 
@@ -24,5 +28,19 @@ class MatchesViewModel : ViewModel() {
     val info = R.string.matches_info
     val fotterInfo = R.string.matches_footer_info
     val button = R.string.matches_footer_button
+
+    // Public
+
+    fun load(): LiveData<MutableList<Match>> {
+
+        var mutableList = MutableLiveData<MutableList<Match>>()
+
+        FirebaseDBService.load().observeForever {
+            mutableList.value = it
+        }
+
+        return mutableList
+
+    }
 
 }

@@ -100,6 +100,7 @@ enum class DatabaseField(val key: String) {
     MATCH_CATEGORY("matchCategory"),
     MATCH_GENRE("matchGenre"),
     MATCH_SOLICITUDES("matchSolicitudes"),
+    MATCH_USER("matchUser"),
 
     // Request
     REQUEST_ADD_DATE("requestAddDate"),
@@ -684,7 +685,7 @@ object FirebaseDBService {
 
     fun save(match: Match){
         match.date.let {
-            matchRef.add(match)
+            matchRef.document().set(match.toJSON())
         }
     }
 
@@ -693,7 +694,33 @@ object FirebaseDBService {
 
         matchRef
             .addSnapshotListener { value, error ->
-                
+                val listData = mutableListOf<Match>()
+                for (document in value!!) {
+                    val datosUser =
+                        document.data.get(DatabaseField.MATCH_USER.key) as Map<String, Any>
+
+                    val id = document.id
+
+                    val name = datosUser.get(DatabaseField.DISPLAY_NAME.key).toString()
+                    val email = datosUser.get(DatabaseField.EMAIL.key).toString()
+                    val avatar = datosUser.get(DatabaseField.PROFILE_IMAGE_URL.key).toString()
+                    val register =
+                        document.getDate("${DatabaseField.COMMENT_WRITER.key}.${DatabaseField.REGISTER_DATE.key}")
+                    val token = datosUser.get(DatabaseField.TOKEN.key).toString()
+                    val type = datosUser.get(DatabaseField.TYPE.key).toString().toInt()
+
+                    val date = document.getDate(DatabaseField.MATCH_DATE.key)
+                    val category = document.getString(DatabaseField.MATCH_CATEGORY.key)
+                    val genre = document.getString(DatabaseField.MATCH_GENRE.key)
+                    val vacantes = document.getLong(DatabaseField.MATCH_VACANTES.key)?.toInt()
+
+                    val user = User(name, email, avatar, token, type, register)
+                    val match = Match(id, date!!, vacantes!!, category!!, genre!!, user)
+
+                    listData.add(match)
+                }
+
+                mutableList.value = listData
             }
 
         return mutableList

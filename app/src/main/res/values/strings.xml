@@ -135,7 +135,7 @@
     <string name="matches.title">Partidos organizados</string>
     <string name="matches.info">No hay partidos organizados.\nSé el primero en organizar uno.</string>
     <string name="matches.footer.info">¿Ya tenés un turno?</string>
-    <string name="matches.footer.button">Solicitá jugadores</string>
+    <string name="matches.footer.button">Buscá jugadores</string>
 
     <!-- Add Matches -->
     <string name="addMatches.title">Armá tu partido</string>
@@ -149,6 +149,23 @@
     <string name="addMatches.alert.ok">Partido cargado exitósamente</string>
     <string name="addMatches.alert.error">Ocurrió un error inesperado. Intentá nuevamente por favor</string>
     <string name="addMatches.alert.incomplete">Tenés que completar toda la información acerca de tu turno</string>
+
+    <!-- Match Details -->
+    <string name="matchDetails.team.1">Pareja 1</string>
+    <string name="matchDetails.team.2">Pareja 2</string>
+    <string name="matchDetails.player.available.no">Ocupado</string>
+    <string name="matchDetails.player.available.yes">Disponible</string>
+    <string name="matchDetails.vacantes.completed">Partido Completo</string>
+    <string name="matchDetails.vacantes.1">Falta 1 jugador</string>
+    <string name="matchDetails.vacantes.n">Faltan %s jugadores</string>
+    <string name="matchDetails.button">Quiero jugar este partido</string>
+    <string name="matchDetails.request.title"></string>
+    <string name="matchDetails.request.body">¿Querés jugar este partido?</string>
+    <string name="matchDetails.request.button.ok">SI</string>
+    <string name="matchDetails.request.button.cancel">NO</string>
+    <string name="matchDetails.request.alert.ok.title">Se envió la solicitud para ocupar el puesto vacante</string>
+    <string name="matchDetails.request.alert.ok.body">Recordá que es un compromiso asistir al partido</string>
+    <string name="matchDetails.request.alert.error">Ocurrió un error inesperado. Intentá nuevamente más tarde.</string>
 
     <!-- Grandtable -->
     <string name="grandtable.info">La tribuna dice:</string>

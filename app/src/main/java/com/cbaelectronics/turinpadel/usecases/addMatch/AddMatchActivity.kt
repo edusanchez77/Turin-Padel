@@ -139,7 +139,7 @@ class AddMatchActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 Toast.makeText(this, getString(viewModel.alertIncomplete), Toast.LENGTH_SHORT).show()
             } else {
                 val date = SimpleDateFormat("dd/MM/yyyy HH:mm").parse(mDate)
-                val match = Match(date, mVacantes.toInt(), mCategory, mGenre, viewModel.user)
+                val match = Match(date = date, vacantes = mVacantes.toInt(), category = mCategory, genre = mGenre, user = viewModel.user)
 
                 viewModel.save(match)
                 Toast.makeText(this, getString(viewModel.alertOk), Toast.LENGTH_SHORT).show()

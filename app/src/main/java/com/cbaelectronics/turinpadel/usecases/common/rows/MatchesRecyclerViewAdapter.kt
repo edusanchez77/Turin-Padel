@@ -16,6 +16,10 @@ import com.bumptech.glide.Glide
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.ContentItemMatchBinding
 import com.cbaelectronics.turinpadel.model.domain.Match
+import com.cbaelectronics.turinpadel.model.domain.Post
+import com.cbaelectronics.turinpadel.usecases.comments.CommentsRouter
+import com.cbaelectronics.turinpadel.usecases.matchDetails.MatchDetailsActivity
+import com.cbaelectronics.turinpadel.usecases.matchDetails.MatchDetailsRouter
 import com.cbaelectronics.turinpadel.util.Constants
 import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
@@ -25,11 +29,13 @@ import com.itdev.nosfaltauno.util.extension.font
 import com.itdev.nosfaltauno.util.extension.longFormat
 import java.util.*
 
-class MatchesRecyclerViewAdapter(private val context: Context): RecyclerView.Adapter<MatchesRecyclerViewAdapter.ViewHolder>() {
+class MatchesRecyclerViewAdapter(
+    private val context: Context
+) : RecyclerView.Adapter<MatchesRecyclerViewAdapter.ViewHolder>() {
 
     private var dataList = mutableListOf<Match>()
 
-    fun setDataList(data: MutableList<Match>){
+    fun setDataList(data: MutableList<Match>) {
         dataList = data
     }
 
@@ -91,12 +97,12 @@ class MatchesRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
         return dataList.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val binding = ContentItemMatchBinding.bind(itemView)
         private var timer: CountDownTimer? = null
 
-        fun bindView(match: Match){
+        fun bindView(match: Match) {
 
             var vacantesText = ""
 
@@ -110,7 +116,8 @@ class MatchesRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
                     binding.lottieMatchItemVacantes.visibility = View.VISIBLE
                 }
                 else -> {
-                    vacantesText = context.getString(R.string.matchDetails_vacantes_n, match.vacantes)
+                    vacantesText =
+                        context.getString(R.string.matchDetails_vacantes_n, match.vacantes)
                     binding.lottieMatchItemVacantes.visibility = View.GONE
                 }
             }
@@ -127,9 +134,14 @@ class MatchesRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
             // Timer
             timer(context, match)
 
+            // OnItemClick
+            itemView.setOnClickListener {
+                MatchDetailsRouter().launch(context, match)
+            }
+
         }
 
-        private fun timer(context: Context, match: Match){
+        private fun timer(context: Context, match: Match) {
 
             timer?.cancel()
             val endDate = match.date?.time!! - Date().time
@@ -154,7 +166,8 @@ class MatchesRecyclerViewAdapter(private val context: Context): RecyclerView.Ada
 
                 override fun onFinish() {
 
-                    binding.textViewTimer.text = context.getText(R.string.schedule_countDown_live).toString().uppercase()
+                    binding.textViewTimer.text =
+                        context.getText(R.string.schedule_countDown_live).toString().uppercase()
                     /*binding.imageViewScheduleCountdown.setImageResource(R.drawable.button_record)
                     binding.imageViewScheduleCountdown.setColorFilter(ContextCompat.getColor(context, R.color.live))
                     binding.buttonScheduleCancel.visibility = View.GONE

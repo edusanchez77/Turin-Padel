@@ -18,6 +18,9 @@
         android:theme="@style/Theme.TurinPadel"
         tools:targetApi="31">
         <activity
+            android:name=".usecases.matchDetails.MatchDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.addMatch.AddMatchActivity"
             android:exported="false" />
         <activity

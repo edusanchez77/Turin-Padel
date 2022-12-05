@@ -60,7 +60,12 @@ object Constants {
     // Grandtable
     const val DEFAULT_COUNT_COMMENTS = 0
 
+    // Matches
+    const val PLAYER_AVAILABLE_YES = "Disponible"
+    const val PLAYER_AVAILABLE_NO = "Ocupado"
+
     // Request
+    const val DEFAULT_COUNT_REQUEST = 0
     const val REQUEST_STATUS_PENDING = "P"
     const val REQUEST_STATUS_ACCEPTED = "A"
     const val REQUEST_STATUS_DENY = "N"

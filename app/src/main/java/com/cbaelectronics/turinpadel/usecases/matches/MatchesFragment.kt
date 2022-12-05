@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cbaelectronics.turinpadel.R
 import com.cbaelectronics.turinpadel.databinding.FragmentMatchesBinding
+import com.cbaelectronics.turinpadel.model.domain.Post
 import com.cbaelectronics.turinpadel.usecases.addMatch.AddMatchRouter
 import com.cbaelectronics.turinpadel.usecases.common.rows.MatchesRecyclerViewAdapter
 import com.cbaelectronics.turinpadel.usecases.grandtable.GrandtableViewModel
@@ -23,7 +24,7 @@ import com.cbaelectronics.turinpadel.util.FontSize
 import com.cbaelectronics.turinpadel.util.FontType
 import com.itdev.nosfaltauno.util.extension.font
 
-class MatchesFragment : Fragment() {
+class MatchesFragment : Fragment(){
 
     private lateinit var _binding: FragmentMatchesBinding
     private val binding get() = _binding!!
@@ -110,6 +111,7 @@ class MatchesFragment : Fragment() {
             AddMatchRouter().launch(binding.root.context)
         }
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

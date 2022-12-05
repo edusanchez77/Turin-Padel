@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cbaelectronics.turinpadel.model.domain.*
 import com.cbaelectronics.turinpadel.util.Constants
+import com.cbaelectronics.turinpadel.util.Constants.DEFAULT_COUNT_REQUEST
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CANCEL
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_CONFIRM
 import com.cbaelectronics.turinpadel.util.Constants.FIXEDTURN_STATUS_DELETED
@@ -43,6 +44,7 @@ enum class DatabaseField(val key: String) {
     COMMENTS("comments"),
     SCHEDULE("schedule"),
     MATCHES("matches"),
+    MATCHES_DETAILS("matchesDetails"),
     REQUEST("request"),
 
     // Generic Field
@@ -99,8 +101,14 @@ enum class DatabaseField(val key: String) {
     MATCH_VACANTES("matchVacantes"),
     MATCH_CATEGORY("matchCategory"),
     MATCH_GENRE("matchGenre"),
-    MATCH_SOLICITUDES("matchSolicitudes"),
+    MATCH_REQUEST("matchRequest"),
     MATCH_USER("matchUser"),
+
+    // Matches Details
+    PLAYER1("player1"),
+    PLAYER2("player2"),
+    PLAYER3("player3"),
+    PLAYER4("player4"),
 
     // Request
     REQUEST_ADD_DATE("requestAddDate"),
@@ -121,6 +129,7 @@ object FirebaseDBService {
     private val postRef = FirebaseFirestore.getInstance().collection(DatabaseField.POST.key)
     private val commentsRef = FirebaseFirestore.getInstance().collection(DatabaseField.COMMENTS.key)
     private val matchRef = FirebaseFirestore.getInstance().collection(DatabaseField.MATCHES.key)
+    private val matchDetailsRef = FirebaseFirestore.getInstance().collection(DatabaseField.MATCHES_DETAILS.key)
     private val requestRef = FirebaseFirestore.getInstance().collection(DatabaseField.REQUEST.key)
 
     // Properties RealDataBase
@@ -683,10 +692,14 @@ object FirebaseDBService {
         }
     }
 
-    fun save(match: Match){
-        match.date.let {
-            matchRef.document().set(match.toJSON())
+
+    suspend fun save(match: Match): DocumentReference {
+
+        return withContext(Dispatchers.IO) {
+            matchRef.add(match.toJSON())
+                .await()
         }
+
     }
 
     fun load(): LiveData<MutableList<Match>>{
@@ -724,6 +737,78 @@ object FirebaseDBService {
             }
 
         return mutableList
+    }
+
+    fun save(matchDetails: MatchDetails){
+        matchDetails.matchId.let {
+            matchDetailsRef.document().set(matchDetails.toJSON())
+        }
+    }
+
+    fun loadMatchDetails(id: String): LiveData<MutableList<MatchDetails>>{
+
+        val mutableList = MutableLiveData<MutableList<MatchDetails>>()
+
+        id.let { id ->
+            matchDetailsRef
+                .document()
+                .addSnapshotListener { value, error ->
+                    value.let { documentSnapshot ->
+                        val matchId = value?.getString(DatabaseField.MATCH_ID.key)
+                        if(matchId == id){
+
+                            val listData = mutableListOf<MatchDetails>()
+                            val datosUserMap = value?.data?.get(DatabaseField.MATCH_USER.key) as Map<String, String>
+                            val player1Map = value.data?.get(DatabaseField.PLAYER1.key) as Map<String, String>
+                            val player2Map = value.data?.get(DatabaseField.PLAYER2.key) as Map<String, String>
+                            val player3Map = value.data?.get(DatabaseField.PLAYER3.key) as Map<String, String>
+                            val player4Map = value.data?.get(DatabaseField.PLAYER4.key) as Map<String, String>
+
+                            val date = value.getDate(DatabaseField.MATCH_DATE.key)
+                            val category = value.getString(DatabaseField.MATCH_CATEGORY.key)
+                            val genre = value.getString(DatabaseField.MATCH_GENRE.key)
+                            val vacantes = value.getLong(DatabaseField.MATCH_VACANTES.key)?.toInt()
+                            val request = value.getLong(DatabaseField.MATCH_REQUEST.key)?.toInt()
+
+                            val usrEmail = datosUserMap.get(DatabaseField.EMAIL.key)
+                            val usrName = datosUserMap.get(DatabaseField.DISPLAY_NAME.key)
+                            val usrPhoto = datosUserMap.get(DatabaseField.PROFILE_IMAGE_URL.key)
+                            val usrToken = datosUserMap.get(DatabaseField.TOKEN.key)
+                            val player1Email = player1Map.get(DatabaseField.EMAIL.key)
+                            val player1Name = player1Map.get(DatabaseField.DISPLAY_NAME.key)
+                            val player1Photo = player1Map.get(DatabaseField.PROFILE_IMAGE_URL.key)
+                            val player1Token = player1Map.get(DatabaseField.TOKEN.key)
+                            val player2Email = player2Map.get(DatabaseField.EMAIL.key)
+                            val player2Name = player2Map.get(DatabaseField.DISPLAY_NAME.key)
+                            val player2Photo = player2Map.get(DatabaseField.PROFILE_IMAGE_URL.key)
+                            val player2Token = player2Map.get(DatabaseField.TOKEN.key)
+                            val player3Email = player3Map.get(DatabaseField.EMAIL.key)
+                            val player3Name = player3Map.get(DatabaseField.DISPLAY_NAME.key)
+                            val player3Photo = player3Map.get(DatabaseField.PROFILE_IMAGE_URL.key)
+                            val player3Token = player3Map.get(DatabaseField.TOKEN.key)
+                            val player4Email = player4Map.get(DatabaseField.EMAIL.key)
+                            val player4Name = player4Map.get(DatabaseField.DISPLAY_NAME.key)
+                            val player4Photo = player4Map.get(DatabaseField.PROFILE_IMAGE_URL.key)
+                            val player4Token = player4Map.get(DatabaseField.TOKEN.key)
+
+                            val datosUser = User(usrName, usrEmail, usrPhoto, usrToken)
+                            val player1 = User(player1Name, player1Email, player1Photo, player1Token)
+                            val player2 = User(player2Name, player2Email, player2Photo, player2Token)
+                            val player3 = User(player3Name, player3Email, player3Photo, player3Token)
+                            val player4 = User(player4Name, player4Email, player4Photo, player4Token)
+
+                            val matchDetails = MatchDetails(id, datosUser, date!!, genre!!, category!!, vacantes!!, request!!, player1, player2, player3, player4)
+                            listData.add(matchDetails)
+
+                            mutableList.value = listData
+                        }
+                    }
+                }
+
+        }
+
+        return mutableList
+
     }
 
 }

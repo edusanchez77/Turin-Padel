@@ -41,6 +41,7 @@ data class User(
         return JSON
     }
 
+
     private fun settingsToJSON(): MutableMap<String, Any> {
         return settings?.toJSON() ?: mutableMapOf()
     }

@@ -55,7 +55,6 @@ class CommentsActivity : AppCompatActivity() {
         // Data
         val bundle = intent.extras
         postJSON = bundle?.getString(DatabaseField.POST.key).toString()
-        Log.d("NotificationFixedTurn CommentPostJson", postJSON)
         post = Post.fromJson(postJSON)!!
 
         // Localize
